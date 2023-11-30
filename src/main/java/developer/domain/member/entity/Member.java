@@ -26,6 +26,11 @@ public class Member extends Auditable {
     @Column(nullable = false)
     private String checkPassword;
 
+    @Enumerated(EnumType.STRING)
+    private SocialType socialType;
+
+    private String socialId;
+
     @Column(nullable = false)
     private String userName;
 
@@ -34,6 +39,9 @@ public class Member extends Auditable {
 
     @Column(nullable = false)
     private String phoneNumber;
+
+
+    private String imgURL;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();

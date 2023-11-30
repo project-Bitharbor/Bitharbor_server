@@ -4,10 +4,13 @@ import developer.domain.member.entity.Member;
 import developer.domain.member.repository.MemberRepository;
 import developer.global.exception.BusinessLogicException;
 import developer.global.exception.ExceptionCode;
+import developer.login.jwt.util.CustomAuthorityUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 //import org.springframework.mail.javamail.JavaMailSender;
 //import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,17 +22,18 @@ public class MemberService {
 
     private final MemberRepository repository;
 
-     //private final PasswordEncoder passwordEncoder;
-    // private final CustomAuthorityUtils authorityUtils;
-     // private final JavaMailSender javaMailSender;
+     private final PasswordEncoder passwordEncoder;
+     private final CustomAuthorityUtils authorityUtils;
+      private final JavaMailSender javaMailSender;
 
     public Member createMember(Member member) {
 
-//         String encryptedPassword = passwordEncoder.encode(member.getPassword());
-//         member.setPassword(encryptedPassword);
+         String encryptedPassword = passwordEncoder.encode(member.getPassword());
+         member.setPassword(encryptedPassword);
+        member.setCheckPassword(encryptedPassword);
 
-        // List<String> roles = authorityUtils.createRoles(member.getEmail());
-        // member.setRoles(roles);
+         List<String> roles = authorityUtils.createRoles(member.getEmail());
+         member.setRoles(roles);
 
         return repository.save(member);
     }
@@ -48,10 +52,11 @@ public class MemberService {
                 .ifPresent(findMember::setPhoneNumber);
 
 //        변경된 비밀번호 암호화 해서 저장
-//        if (member.getPassword() != null) {
-//            String encryptedPassword = passwordEncoder.encode(findMember.getPassword());
-//            findMember.setPassword(encryptedPassword);
-//        }
+        if (member.getPassword() != null) {
+            String encryptedPassword = passwordEncoder.encode(findMember.getPassword());
+            findMember.setPassword(encryptedPassword);
+            findMember.setCheckPassword(encryptedPassword);
+        }
             return repository.save(findMember);
     }
 
