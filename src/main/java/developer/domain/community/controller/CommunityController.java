@@ -4,7 +4,10 @@ import com.google.gson.Gson;
 import developer.domain.community.dto.CommunityDto;
 import developer.domain.community.entity.Community;
 import developer.domain.community.mapper.CommunityMapper;
+import developer.domain.community.repository.CommunityRepository;
 import developer.domain.community.service.CommunityService;
+import developer.domain.member.entity.Member;
+import developer.domain.member.service.MemberService;
 import developer.global.response.MultiResponse;
 import developer.global.response.PageInfo;
 import developer.global.response.SingleResponse;
@@ -24,7 +27,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -35,6 +40,9 @@ import java.util.stream.Collectors;
 public class CommunityController {
     private final CommunityService service;
     private final CommunityMapper mapper;
+    private final CommunityRepository repository;
+    private final MemberService memberService;
+
     @PostMapping
     public ResponseEntity Postpost(@Validated @RequestBody CommunityDto.Post post) {
 //        Community newPost = mapper.communityPostDtoToCommunity(post);
@@ -48,16 +56,18 @@ public class CommunityController {
 
     @Transactional
     @PatchMapping("/{post-id}")
-    public ResponseEntity patchPost(@Validated @RequestBody CommunityDto.Patch patch) {
-//        Post newPost = mapper.patchPostDtoToPost(patch);
-//
-//        Post updatedPost = service.savePost(newPost);
-//
-//        URI uri = URICreator.createUri("/post", createdPost.getPostId());
-//
-//        return new ResponseEntity(new SingleResponse<>(mapper.postToPostResponseDto(updatedPost)), HttpStatus.OK);
+    public ResponseEntity patchPost(@PathVariable("post-id") @Positive long postId,
+                                    @Validated @RequestBody CommunityDto.Patch patch) {
 
-        return null;
+        Member member = memberService.findMember(patch.getMemberId());
+
+        Community newPatch = mapper.communityPatchDtoToCommunity(patch);
+        newPatch.setMember(member);
+
+        Community updatedPost = service.updatePost(newPatch,postId);
+
+
+        return new ResponseEntity(new SingleResponse<>(mapper.communityToCommunityResponseDto(updatedPost)),HttpStatus.OK);
     }
 
     @GetMapping

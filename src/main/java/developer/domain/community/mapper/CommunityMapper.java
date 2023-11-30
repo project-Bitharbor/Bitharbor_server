@@ -5,12 +5,16 @@ import developer.domain.community.entity.Community;
 import org.mapstruct.Mapper;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface CommunityMapper {
     Community communityPostDtoToCommunity(CommunityDto.Post requestBody);
 
-//    CommunityDto.Response communityToCommunityResponseDto(Community community);
+    Community communityPatchDtoToCommunity(CommunityDto.Patch requestBody);
+
+    // CommunityDto.Response communityToCommunityResponseDto(Community community);
     default CommunityDto.Response communityToCommunityResponseDto(Community community) {
         if ( community == null ) {
             return null;
@@ -21,6 +25,8 @@ public interface CommunityMapper {
         String title = null;
         String body = null;
         String imgURL = null;
+        String category = null;
+        List<String> tags = null;
         LocalDateTime createdAt = null;
         LocalDateTime modifiedAt = null;
 
@@ -29,11 +35,16 @@ public interface CommunityMapper {
         title = community.getTitle();
         body = community.getBody();
         imgURL = community.getImgURL();
+        category = community.getCategory();
+        List<String> list = community.getTags();
+        if ( list != null ) {
+            tags = new ArrayList<String>( list );
+        }
         createdAt = community.getCreatedAt();
         modifiedAt = community.getModifiedAt();
         userNickname = community.getMember().getNickname();
 
-        CommunityDto.Response response = new CommunityDto.Response( userNickname, communityId, title, body, imgURL, createdAt, modifiedAt );
+        CommunityDto.Response response = new CommunityDto.Response( userNickname, communityId, title, body, imgURL,category,tags, createdAt, modifiedAt );
 
         return response;
     }
