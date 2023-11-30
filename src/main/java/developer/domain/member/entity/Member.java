@@ -23,7 +23,7 @@ public class Member extends Auditable {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column
     private String checkPassword;
 
     @Enumerated(EnumType.STRING)
