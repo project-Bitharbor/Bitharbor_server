@@ -66,13 +66,13 @@ public class SecurityConfiguration {
                         .antMatchers("/members/**").hasRole("MEMBER")
 
                         .antMatchers(HttpMethod.GET, "/community/**").permitAll()
-                        .antMatchers("/community/**").hasRole("MEMBER")
+                        .antMatchers("/community/**").permitAll()
 
                         .antMatchers(HttpMethod.GET, "/knowledge/**").permitAll()
-                        .antMatchers("/knowledge/**").hasRole("MEMBER")
+                        .antMatchers("/knowledge/**").permitAll()
 
                         .antMatchers(HttpMethod.GET, "/qna/**").permitAll()
-                        .antMatchers("/qna/**").hasRole("MEMBER")
+                        .antMatchers("/qna/**").permitAll()
 
                         .anyRequest().permitAll()
                         .and()
