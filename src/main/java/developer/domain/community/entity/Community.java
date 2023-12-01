@@ -24,7 +24,7 @@ public class Community extends Auditable {
     @Column(nullable = false)
     private String imgURL;
     @Column
-    private Long view;
+    private int view;
     @Column
     private String category;
     @ElementCollection

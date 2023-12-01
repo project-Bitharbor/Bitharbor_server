@@ -98,6 +98,8 @@ public class CommunityController {
     @GetMapping("/{community-id}")
     public ResponseEntity getPost(@PathVariable("community-id") @Positive long communityId) {
         Community find = service.findPost(communityId);
+        find.setView(find.getView() + 1);
+        repository.save(find);
 
         return new ResponseEntity(new SingleResponse<>(mapper.communityToCommunityResponseDto(find)), HttpStatus.OK);
     }

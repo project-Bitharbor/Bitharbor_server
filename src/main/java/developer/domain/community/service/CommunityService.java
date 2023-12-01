@@ -67,6 +67,7 @@ public class CommunityService {
 
         return repository.findByCommunityId(postId);
 
+
     }
 
     public Page<Community> findAllPost(Pageable pageable) {

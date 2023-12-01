@@ -29,7 +29,7 @@ import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/boards/{boardId}")
+@RequestMapping("/community/{communityId}")
 public class CommentController {
 
     private final CommentService commentService;
@@ -41,10 +41,12 @@ public class CommentController {
 
     @PostMapping
     public ResponseEntity postComment(@PathVariable("communityId") long communityId,
-                                      @RequestBody CommentDto.Post requestBody,
-                                      @RequestHeader("Authorization") String authorization) {
+                                      @RequestBody CommentDto.Post requestBody
+//            ,
+//                                      @RequestHeader("Authorization") String authorization
+    ) {
 
-        authorization = authorization.replaceAll("Bearer ","");
+//        authorization = authorization.replaceAll("Bearer ","");
         Member requestUser = memberService.findMember(requestBody.getMemberId());
         Community community = communityService.findPost(communityId);
 

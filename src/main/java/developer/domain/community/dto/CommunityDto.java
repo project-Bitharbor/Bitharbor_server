@@ -47,6 +47,8 @@ public class CommunityDto {
         private String imgURL;
         private String category;
         private List<String> tags;
+        private Integer view;
+        private Integer commentCount;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
     }
