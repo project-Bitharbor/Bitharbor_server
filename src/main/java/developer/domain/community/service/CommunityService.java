@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,7 +47,7 @@ public class CommunityService {
 
         Community findPost = repository.findByCommunityId(postId);
 
-        verifiedPostUser(findPost, member.getMemberId());
+        verifiedPostMember(findPost, member.getMemberId());
 
         Optional.ofNullable(patch.getTitle())
                 .ifPresent(findPost::setTitle);
@@ -76,11 +77,11 @@ public class CommunityService {
 
     }
 
-    public void deletePost (long postId,long userId) {
+    public void deletePost (long postId,long memberId) {
 
         Community post = existsPost(postId);
 
-        verifiedPostUser(post, userId);
+        verifiedPostMember(post, memberId);
 
         repository.deleteById(postId);
     }
@@ -92,7 +93,7 @@ public class CommunityService {
         return findId;
     }
 
-    public void verifiedPostUser(Community post, long memberId) {
+    public void verifiedPostMember(Community post, long memberId) {
         if (post.getMember().getMemberId() != memberId) {
             throw new BusinessLogicException(ExceptionCode.POST_NOT_WRITE);
         }

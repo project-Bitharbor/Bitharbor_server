@@ -36,6 +36,9 @@ public class Community extends Auditable {
     @Column
     private int commentCount = comments.size();
 
+    @Column
+    private String postTime;
+
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     private Member member;

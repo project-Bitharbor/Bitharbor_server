@@ -49,6 +49,7 @@ public class CommunityDto {
         private List<String> tags;
         private Integer view;
         private Integer commentCount;
+        private String postTime;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
     }

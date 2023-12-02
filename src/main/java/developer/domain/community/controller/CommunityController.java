@@ -8,6 +8,8 @@ import developer.domain.community.repository.CommunityRepository;
 import developer.domain.community.service.CommunityService;
 import developer.domain.member.entity.Member;
 import developer.domain.member.service.MemberService;
+import developer.global.exception.BusinessLogicException;
+import developer.global.exception.ExceptionCode;
 import developer.global.response.MultiResponse;
 import developer.global.response.PageInfo;
 import developer.global.response.SingleResponse;
@@ -27,6 +29,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -98,14 +102,38 @@ public class CommunityController {
     @GetMapping("/{community-id}")
     public ResponseEntity getPost(@PathVariable("community-id") @Positive long communityId) {
         Community find = service.findPost(communityId);
+        find.setPostTime(calculateTimeDifference(find.getCreatedAt()));
         find.setView(find.getView() + 1);
         repository.save(find);
 
         return new ResponseEntity(new SingleResponse<>(mapper.communityToCommunityResponseDto(find)), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{post-id}")
-    public ResponseEntity PatchPost(@PathVariable("post-id") @Positive long postId) {
-        return null;
+    @DeleteMapping("/{post-id}/member/{member-id}")
+    public ResponseEntity PatchPost(@PathVariable("post-id") @Positive long postId
+                                    ,@PathVariable("member-id") @Positive long memberId
+//            ,
+//                                    @RequestHeader("Authorization") String authorization
+    ) {
+
+//        authorization = authorization.replaceAll("Bearer ","");
+//        Member member = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
+
+        Member member = memberService.findMember(memberId);
+
+        service.deletePost(postId,memberId);
+
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    public String calculateTimeDifference(LocalDateTime createdAt) {
+        long hoursDifference = java.time.Duration.between(createdAt, LocalDateTime.now() ).toHours();
+        if (hoursDifference < 1) {
+            return "방금 전";
+        } else if (hoursDifference < 24) {
+            return hoursDifference + "시간 전";
+        } else {
+            return (hoursDifference / 24) + "일 전";
+        }
     }
 }
