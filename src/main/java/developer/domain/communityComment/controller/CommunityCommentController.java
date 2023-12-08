@@ -3,10 +3,10 @@ package developer.domain.communityComment.controller;
 
 import developer.domain.community.entity.Community;
 import developer.domain.community.service.CommunityService;
-import developer.domain.communityComment.dto.CommentDto;
-import developer.domain.communityComment.entity.Comment;
-import developer.domain.communityComment.mapper.CommentMapper;
-import developer.domain.communityComment.service.CommentService;
+import developer.domain.communityComment.dto.CommunityCommentDto;
+import developer.domain.communityComment.entity.CommunityComment;
+import developer.domain.communityComment.mapper.CommunityCommentMapper;
+import developer.domain.communityComment.service.CommunityCommentService;
 import developer.domain.member.entity.Member;
 import developer.domain.member.service.MemberService;
 import developer.global.exception.BusinessLogicException;
@@ -30,10 +30,10 @@ import java.util.Objects;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/community/{communityId}")
-public class CommentController {
+public class CommunityCommentController {
 
-    private final CommentService commentService;
-    private final CommentMapper mapper;
+    private final CommunityCommentService communityCommentService;
+    private final CommunityCommentMapper mapper;
     private final CommunityService communityService;
     private final MemberService memberService;
      private final JwtToken jwtToken;
@@ -41,7 +41,7 @@ public class CommentController {
 
     @PostMapping
     public ResponseEntity postComment(@PathVariable("communityId") long communityId,
-                                      @RequestBody CommentDto.Post requestBody
+                                      @RequestBody CommunityCommentDto.Post requestBody
 //            ,
 //                                      @RequestHeader("Authorization") String authorization
     ) {
@@ -50,17 +50,17 @@ public class CommentController {
         Member requestUser = memberService.findMember(requestBody.getMemberId());
         Community community = communityService.findPost(communityId);
 
-        Comment comment = mapper.commentPostDtoToComment(requestBody);
-        comment.setCommunity(community);
-        comment.setMember(requestUser);
-        commentService.createComment(comment);
+        CommunityComment communityComment = mapper.commentPostDtoToComment(requestBody);
+        communityComment.setCommunity(community);
+        communityComment.setMember(requestUser);
+        communityCommentService.createComment(communityComment);
 
         community.setCommentCount(community.getCommentCount() + 1);
         communityService.updatePost(community,communityId);
 
 
         URI uri = UriComponentsBuilder.newInstance()
-                .path("/"+communityId+"/" + comment.getCommentId())
+                .path("/"+communityId+"/" + communityComment.getCommentId())
                 .build().toUri();
 
         return ResponseEntity.created(uri).build();
@@ -69,21 +69,21 @@ public class CommentController {
     @PatchMapping("/{commentId}")
     public ResponseEntity patchComment(
             @PathVariable("commentId") long commentId,
-            @RequestBody CommentDto.Patch requestBody,
+            @RequestBody CommunityCommentDto.Patch requestBody,
             @RequestHeader("Authorization") String authorization) {
 
         authorization = authorization.replaceAll("Bearer ","");
         Member requestMember = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
 
-        Comment comment = commentService.findComment(commentId);
-        Member writer = comment.getMember();
+        CommunityComment communityComment = communityCommentService.findComment(commentId);
+        Member writer = communityComment.getMember();
 
         if(Objects.equals(writer.getMemberId(), requestMember.getMemberId())){
-            comment = mapper.commentPatchDtoToComment(requestBody);
-            comment.setCommentId(commentId);
-            Comment response = commentService.updateComment(comment);
+            communityComment = mapper.commentPatchDtoToComment(requestBody);
+            communityComment.setCommentId(commentId);
+            CommunityComment response = communityCommentService.updateComment(communityComment);
 
-            CommentDto.Response responseDto = mapper.commentToCommentResponseDto(response);
+            CommunityCommentDto.Response responseDto = mapper.commentToCommentResponseDto(response);
 
             return new ResponseEntity<>(new SingleResponse<>(responseDto), HttpStatus.OK);
         }
@@ -100,12 +100,12 @@ public class CommentController {
         authorization = authorization.replaceAll("Bearer ","");
         Member requestMember = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
 
-        Comment comment = commentService.findComment(commentId);
-        Member writer = comment.getMember();
+        CommunityComment communityComment = communityCommentService.findComment(commentId);
+        Member writer = communityComment.getMember();
 
         if(Objects.equals(writer.getMemberId(), requestMember.getMemberId())){
 
-            commentService.deleteComment(commentId);
+            communityCommentService.deleteComment(commentId);
             Community community = communityService.findPost(communityId);
 
             community.setCommentCount(community.getCommentCount() - 1);
@@ -125,10 +125,10 @@ public class CommentController {
 
 
         Pageable pageable = PageRequest.of(page-1, size);
-        Page<Comment> commentPage = commentService.findComments(pageable);
+        Page<CommunityComment> commentPage = communityCommentService.findComments(pageable);
 
 
-        List<CommentDto.Response> responses =
+        List<CommunityCommentDto.Response> responses =
                 mapper.commentPageToCommentResponseListDto(commentPage);
 
 
@@ -139,9 +139,9 @@ public class CommentController {
     @GetMapping("{commentId}")
     public ResponseEntity getComment(
             @PathVariable("commentId") Long commentId) {
-        Comment comment = commentService.findComment(commentId);
+        CommunityComment communityComment = communityCommentService.findComment(commentId);
 
-        CommentDto.Response responseDto = mapper.commentToCommentResponseDto(comment);
+        CommunityCommentDto.Response responseDto = mapper.commentToCommentResponseDto(communityComment);
 
         return new ResponseEntity<>(new SingleResponse<>(responseDto), HttpStatus.OK);
     }

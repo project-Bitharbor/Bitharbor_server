@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-public class Comment extends Auditable {
+public class CommunityComment extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long commentId;
@@ -35,7 +35,7 @@ public class Comment extends Auditable {
 
 
     @Builder
-    public Comment(long commentId, String content, Community community, Member member) {
+    public CommunityComment(long commentId, String content, Community community, Member member) {
         this.commentId = commentId;
         this.content = content;
         this.community = community;
