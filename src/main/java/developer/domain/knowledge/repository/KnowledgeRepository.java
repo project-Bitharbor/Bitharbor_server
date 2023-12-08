@@ -1,4 +1,8 @@
 package developer.domain.knowledge.repository;
 
-public class KnowledgeRepository {
+import developer.domain.knowledge.entity.Knowledge;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface KnowledgeRepository extends JpaRepository<Knowledge,Long> {
+    Knowledge findByKnowledgeId(Long knowledgeId);
 }
