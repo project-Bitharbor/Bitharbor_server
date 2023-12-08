@@ -1,13 +1,12 @@
 package developer.domain.community.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import developer.domain.communityComment.entity.Comment;
+import developer.domain.communityComment.entity.CommunityComment;
 import developer.domain.member.entity.Member;
 import developer.global.audit.Auditable;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,10 +30,10 @@ public class Community extends Auditable {
     private List<String> tags;
     @OneToMany(mappedBy = "community", cascade = CascadeType.ALL)
     @JsonIgnore
-    List<Comment> comments = new ArrayList<>();
+    List<CommunityComment> communityComments = new ArrayList<>();
 
     @Column
-    private int commentCount = comments.size();
+    private int commentCount = communityComments.size();
 
     @Column
     private String postTime;

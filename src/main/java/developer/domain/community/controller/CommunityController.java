@@ -77,8 +77,9 @@ public class CommunityController {
     @GetMapping
     public ResponseEntity getAllCarePost(@RequestParam(defaultValue = "0") int page,
                                          @RequestParam(defaultValue = "10") int size) {
-
-        Pageable pageable = PageRequest.of(page, size, Sort.by("communityId").descending());
+        // default 값이 아닌 경우는 page 번호를 1번부터 받음.
+        if (page != 0) page -= 1;
+        Pageable pageable = PageRequest.of(page, size, Sort.by("communityId"));
         Page<Community> postPage = service.findAllPost(pageable);
 
         List<CommunityDto.Response> response = postPage
@@ -109,8 +110,8 @@ public class CommunityController {
         return new ResponseEntity(new SingleResponse<>(mapper.communityToCommunityResponseDto(find)), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{post-id}/member/{member-id}")
-    public ResponseEntity PatchPost(@PathVariable("post-id") @Positive long postId
+    @DeleteMapping("/{community-id}/member/{member-id}")
+    public ResponseEntity PatchPost(@PathVariable("community-id") @Positive long communityId
                                     ,@PathVariable("member-id") @Positive long memberId
 //            ,
 //                                    @RequestHeader("Authorization") String authorization
@@ -121,7 +122,7 @@ public class CommunityController {
 
         Member member = memberService.findMember(memberId);
 
-        service.deletePost(postId,memberId);
+        service.deletePost(communityId,memberId);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
