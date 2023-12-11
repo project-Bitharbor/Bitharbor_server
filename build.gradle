@@ -21,6 +21,20 @@ repositories {
 	mavenCentral()
 }
 
+ext {
+	// springCloudVersion setting
+	set('springCloudVersion', "2021.0.8")
+	// API 문서 스니펫이 생성될 경로 지정
+	snippetsDir = file('build/generated-snippets')
+}
+
+// dependencyManagement setting
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
@@ -39,9 +53,17 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	runtimeOnly	'io.jsonwebtoken:jjwt-jackson:0.11.5'
+	runtimeOnly 'mysql:mysql-connector-java'
 	implementation 'com.jayway.jsonpath:json-path:2.7.0'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'org.apache.commons:commons-lang3:3.12.0'
+
+//	 AWS paramStore 사용 Spring boot 버전 호환 상세 : https://spring.io/projects/spring-cloud
+//	 S3 Client 활성화
+	implementation "org.springframework.cloud:spring-cloud-starter-aws-parameter-store-config:2.2.6.RELEASE"
+	implementation 'io.awspring.cloud:spring-cloud-starter-aws-parameter-store-config:2.4.4'
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
 }
 
 tasks.named('bootBuildImage') {
