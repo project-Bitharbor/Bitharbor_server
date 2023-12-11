@@ -46,7 +46,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
             proImg = String.valueOf(oAuth2User.getAttributes().get("picture"));
             oauth = SocialType.GOOGLE;
         }
-        else {
+        else if ("kakao".equals(type))  {
             Map<String, Object> attributes = oAuth2User.getAttributes();
             Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
             email = (String) kakaoAccount.get("email");
@@ -54,6 +54,15 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
             nickName = (String) profile.get("nickname");
             proImg = (String) profile.get("profile_image_url");
             oauth = SocialType.KAKAO;
+        }
+        else {
+            Map<String, Object> attributes = oAuth2User.getAttributes();
+            Map<String, Object> naverAccount = (Map<String, Object>) attributes.get("response");
+            email = (String) naverAccount.get("email");
+            Map<String, Object> profile = (Map<String, Object>) naverAccount.get("profile");
+            nickName = (String) profile.get("nickname");
+            proImg = (String) profile.get("profile_image");
+            oauth = SocialType.NAVER;
         }
 
         Member member;
