@@ -20,6 +20,7 @@ public class Member extends Auditable {
     @Column(nullable = false, unique = true)
     private String email;
 
+    //Todo: 비밀번호 변경 관련 코딩하기!!
     @Column(nullable = false)
     private String password;
 
@@ -35,7 +36,7 @@ public class Member extends Auditable {
     private String userName;
 
     @Column(nullable = false)
-    private String nickname;
+    private String userNickname;
 
     @Column(nullable = false)
     private String phoneNumber;

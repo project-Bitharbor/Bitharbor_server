@@ -46,8 +46,8 @@ public class MemberService {
                 .ifPresent(findMember::setUserName);
         Optional.ofNullable(member.getPassword())
                 .ifPresent(findMember::setPassword);
-        Optional.ofNullable(member.getNickname())
-                .ifPresent(findMember::setNickname);
+        Optional.ofNullable(member.getUserNickname())
+                .ifPresent(findMember::setUserNickname);
         Optional.ofNullable(member.getPhoneNumber())
                 .ifPresent(findMember::setPhoneNumber);
 

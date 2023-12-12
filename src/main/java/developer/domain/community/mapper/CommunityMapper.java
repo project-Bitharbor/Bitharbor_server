@@ -48,7 +48,7 @@ public interface CommunityMapper {
         postTime = community.getPostTime();
         createdAt = community.getCreatedAt();
         modifiedAt = community.getModifiedAt();
-        userNickname = community.getMember().getNickname();
+        userNickname = community.getMember().getUserNickname();
 
         CommunityDto.Response response = new CommunityDto.Response( userNickname, communityId, title, body, imgURL,category,tags, view, commentCount,postTime, createdAt, modifiedAt );
 

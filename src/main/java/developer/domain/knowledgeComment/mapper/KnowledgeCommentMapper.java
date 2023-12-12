@@ -28,7 +28,7 @@ public interface KnowledgeCommentMapper {
         response.knowledgeId( comment.getKnowledge().getKnowledgeId() );
         response.createdAt( comment.getCreatedAt() );
 
-        response.nickName( comment.getMember().getNickname() );
+        response.nickName( comment.getMember().getUserNickname() );
         response.profileImgUrl( comment.getMember().getImgURL() );
 
         return response.build();

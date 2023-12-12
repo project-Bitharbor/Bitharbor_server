@@ -51,7 +51,7 @@ public interface KnowledgeMapper {
         postTime = knowledge.getPostTime();
         createdAt = knowledge.getCreatedAt();
         modifiedAt = knowledge.getModifiedAt();
-        userNickname = knowledge.getMember().getNickname();
+        userNickname = knowledge.getMember().getUserNickname();
 
         KnowledgeDto.Response response = new KnowledgeDto.Response( userNickname, knowledgeId, title, body, imgURL,category,tags, view, commentCount,postTime, createdAt, modifiedAt );
 

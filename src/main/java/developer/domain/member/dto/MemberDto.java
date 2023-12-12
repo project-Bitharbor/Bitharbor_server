@@ -24,7 +24,7 @@ public class MemberDto {
         @NotBlank
         private String userName;
         @NotBlank
-        private String nickname;
+        private String userNickname;
         @NotBlank
         private String phoneNumber;
     }
@@ -33,11 +33,13 @@ public class MemberDto {
     @NoArgsConstructor
     public static class Patch {
         private long memberId;
+        private String currentPassword;
         private String password;
+        private String checkPassword;
         @NotBlank
         private String userName;
         @NotBlank
-        private String nickname;
+        private String userNickname;
         @NotBlank
         private String phoneNumber;
 
@@ -55,7 +57,7 @@ public class MemberDto {
         private long memberId;
         private String email;
         private String userName;
-        private String nickname;
+        private String userNickname;
         private String phoneNumber;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;

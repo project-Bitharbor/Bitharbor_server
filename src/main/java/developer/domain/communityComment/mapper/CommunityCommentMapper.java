@@ -26,7 +26,7 @@ public interface CommunityCommentMapper {
         response.communityId( comment.getCommunity().getCommunityId() );
         response.createdAt( comment.getCreatedAt() );
 
-        response.nickName( comment.getMember().getNickname() );
+        response.nickName( comment.getMember().getUserNickname() );
         response.profileImgUrl( comment.getMember().getImgURL() );
 
         return response.build();
