@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev
+    active: local
   mail:
     host: smtp.gmail.com
     port: 587
@@ -121,7 +121,7 @@ spring:
             redirect-uri:
 
 jwt:
-  secretKey: ${JWT_SECRET_KEY}
+  secretKey:
   access:
     expiration: 360000
     header: Authorization
@@ -132,14 +132,6 @@ jwt:
 mail:
   address:
     admin: admin@gmail.com
-
-logging:
-  level:
-    Bitharbor_server: DEBUG
-    org:
-      springframework:
-        orm:
-          jpa: DEBUG
 
 
 #config:
@@ -176,16 +168,16 @@ spring:
         registration:
           google:
             clientId: ${GOOGLE_CLIENT_ID}
-            clientSecret: ${GOOGLE_CLIENT_SECRET}
-            redirect-uri: ${redirect-uri}
+            clientSecret: {GOOGLE_CLIENT_SECRET}
+            redirect-uri: '{baseUrl}/{action}/oauth2/code/{registrationId}'
           kakao:
             clientId: ${KAKAO_CLIENT_ID}
             clientSecret: ${KAKAO_CLIENT_SECRET}
-            redirect-uri: ${redirect-uri}
+            redirect-uri: '{baseUrl}/{action}/oauth2/code/{registrationId}'
           naver:
             clientId: ${NAVER_CLIENT_ID}
             clientSecret: ${NAVER_SECRET_KEY}
-            redirect-uri: ${redirect-uri}
+            redirect-uri: '{baseUrl}/{action}/oauth2/code/{registrationId}'
 
 aws:
   accessKeyId:
