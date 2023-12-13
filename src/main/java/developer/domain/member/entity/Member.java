@@ -26,6 +26,8 @@ public class Member extends Auditable {
 
     @Column
     private String checkPassword;
+    @Column
+    private String currentPassword;
 
     @Enumerated(EnumType.STRING)
     private SocialType socialType;

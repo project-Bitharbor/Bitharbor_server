@@ -5,18 +5,25 @@ import developer.domain.member.entity.Member;
 import developer.domain.member.mapper.MemberMapper;
 import developer.domain.member.repository.MemberRepository;
 import developer.domain.member.service.MemberService;
+import developer.global.exception.BusinessLogicException;
+import developer.global.exception.ExceptionCode;
 import developer.global.response.SingleResponse;
 import developer.global.utils.URICreator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/members")
@@ -29,11 +36,20 @@ public class MemberController {
     private final MemberService memberService;
     private final MemberMapper mapper;
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
 
     @PostMapping
-    public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody) {
+    public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody, BindingResult bindingResult) {
+
         Member member = mapper.memberPostDtoToMember(requestBody);
+
+        if (bindingResult.hasErrors()) {
+            // DTO 검증에 실패한 경우
+            List<ObjectError> errors = bindingResult.getAllErrors();
+            String errorMessage = errors.get(0).getDefaultMessage();
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMessage);
+        }
 
         if (memberRepository.existsByEmail(requestBody.getEmail())) {
             String errorMessage = "이메일 중복! 다른 이메일을 사용해주세요!";
@@ -47,7 +63,7 @@ public class MemberController {
 
         Member createdMember = memberService.createMember(member);
 
-        URI uri = URICreator.createUri("/community", createdMember.getMemberId());
+        URI uri = URICreator.createUri("/members", createdMember.getMemberId());
 
         return ResponseEntity.created(uri).build();
     }
@@ -61,6 +77,16 @@ public class MemberController {
 //        String currentUserName = authentication.getPrincipal().toString()
         Member member = mapper.memberPatchDtoToMember(requestBody);
         member.setMemberId(memberId);
+
+        if (!passwordEncoder.matches(member.getCurrentPassword(), memberRepository.findByMemberId(memberId).getPassword())) {
+            String errorMessage = "기존 비밀번호가 다릅니다. 비밀번호를 확인해주세요!";
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMessage);
+        }
+
+        if(!requestBody.getPassword().equals(requestBody.getCheckPassword()) ) {
+            String errorMessage = "확인 비밀번호가 다릅니다. 비밀번호를 확인해주세요!";
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMessage);
+        }
 
         Member findedMember = memberService.updateMember(member);
         MemberDto.Response response = mapper.memberToMemberResponseDto(findedMember);

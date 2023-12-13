@@ -46,10 +46,13 @@ public class MemberService {
                 .ifPresent(findMember::setUserName);
         Optional.ofNullable(member.getPassword())
                 .ifPresent(findMember::setPassword);
+        Optional.ofNullable(member.getCheckPassword())
+                .ifPresent(findMember::setCheckPassword);
         Optional.ofNullable(member.getUserNickname())
                 .ifPresent(findMember::setUserNickname);
         Optional.ofNullable(member.getPhoneNumber())
                 .ifPresent(findMember::setPhoneNumber);
+
 
 //        변경된 비밀번호 암호화 해서 저장
         if (member.getPassword() != null) {
