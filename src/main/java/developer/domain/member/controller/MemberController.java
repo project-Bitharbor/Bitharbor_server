@@ -40,16 +40,9 @@ public class MemberController {
 
 
     @PostMapping
-    public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody, BindingResult bindingResult) {
+    public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody) {
 
         Member member = mapper.memberPostDtoToMember(requestBody);
-
-        if (bindingResult.hasErrors()) {
-            // DTO 검증에 실패한 경우
-            List<ObjectError> errors = bindingResult.getAllErrors();
-            String errorMessage = errors.get(0).getDefaultMessage();
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMessage);
-        }
 
         if (memberRepository.existsByEmail(requestBody.getEmail())) {
             String errorMessage = "이메일 중복! 다른 이메일을 사용해주세요!";

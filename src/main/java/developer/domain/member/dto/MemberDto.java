@@ -20,13 +20,8 @@ public class MemberDto {
         @Email
         private String email;
         @NotBlank
-        @NotBlank(message = "비밀번호는 필수 항목입니다.")
-        @Size(min = 8, max = 16, message = "비밀번호는 8자에서 16자 사이어야 합니다.")
-        @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]+$", message = "특수문자(@$!%*?&)를 최소 1개 포함해야 합니다.")
         private String password;
         @NotBlank
-        @Size(min = 8, max = 16, message = "비밀번호는 8자에서 16자 사이어야 합니다.")
-        @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]+$", message = "특수문자(@$!%*?&)를 최소 1개 포함해야 합니다.")
         private String checkPassword;
         @NotBlank
         private String userName;
@@ -40,14 +35,8 @@ public class MemberDto {
     @NoArgsConstructor
     public static class Patch {
         private long memberId;
-        @Size(min = 8, max = 16, message = "비밀번호는 8자에서 16자 사이어야 합니다.")
-        @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]+$", message = "특수문자(@$!%*?&)를 최소 1개 포함해야 합니다.")
         private String currentPassword;
-        @Size(min = 8, max = 16, message = "비밀번호는 8자에서 16자 사이어야 합니다.")
-        @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]+$", message = "특수문자(@$!%*?&)를 최소 1개 포함해야 합니다.")
         private String password;
-        @Size(min = 8, max = 16, message = "비밀번호는 8자에서 16자 사이어야 합니다.")
-        @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]+$", message = "특수문자(@$!%*?&)를 최소 1개 포함해야 합니다.")
         private String checkPassword;
         @NotBlank
         private String userName;
