@@ -70,7 +70,6 @@ public class KnowledgeController {
 
         Knowledge updatedPost = service.updatePost(newPatch,knowledgeId);
 
-
         return new ResponseEntity(new SingleResponse<>(mapper.knowledgeToKnowledgeResponseDto(updatedPost)), HttpStatus.OK);
     }
 

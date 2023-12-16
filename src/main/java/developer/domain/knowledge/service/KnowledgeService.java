@@ -68,10 +68,7 @@ public class KnowledgeService {
     }
 
     public Knowledge findPost(long postId) {
-
         return repository.findByKnowledgeId(postId);
-
-
     }
 
     public Page<Knowledge> findAllPost(Pageable pageable) {
