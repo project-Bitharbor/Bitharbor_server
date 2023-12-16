@@ -89,6 +89,7 @@ public class SecurityConfiguration {
 
         configuration.addAllowedOriginPattern("http://localhost:3000");
         configuration.addAllowedOriginPattern("http://localhost:8080");
+        configuration.addAllowedOriginPattern("http://ec2-13-125-193-97.ap-northeast-2.compute.amazonaws.com:8080");
         configuration.addAllowedOriginPattern("*");
 
         configuration.addAllowedHeader("*");
