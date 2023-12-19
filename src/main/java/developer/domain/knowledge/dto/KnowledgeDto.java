@@ -41,7 +41,7 @@ public class KnowledgeDto {
     @AllArgsConstructor
     public static class Response {
         private String userNickname;
-        private Long communityId;
+        private Long knowledgeId;
         private String title;
         private String body;
         private String imgURL;
