@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class KnowledgeDto {
+public class QnaDto {
 
     @Getter
     @Setter
@@ -41,7 +41,7 @@ public class KnowledgeDto {
     @AllArgsConstructor
     public static class Response {
         private String userNickname;
-        private Long communityId;
+        private Long qnaId;
         private String title;
         private String body;
         private String imgURL;

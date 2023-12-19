@@ -2,7 +2,7 @@ package developer.domain.qna.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import developer.domain.member.entity.Member;
-import developer.domain.qnaComment.entity.KnowledgeComment;
+import developer.domain.qnaComment.entity.QnaComment;
 import developer.global.audit.Auditable;
 import lombok.*;
 
@@ -16,11 +16,11 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Knowledge extends Auditable {
+public class Qna extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long knowledgeId;
+    private Long qnaId;
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)
@@ -33,12 +33,12 @@ public class Knowledge extends Auditable {
     private String category;
     @ElementCollection
     private List<String> tags;
-    @OneToMany(mappedBy = "knowledge", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "qna", cascade = CascadeType.ALL)
     @JsonIgnore
-    List<KnowledgeComment> knowledgeComments = new ArrayList<>();
+    List<QnaComment> qnaComments = new ArrayList<>();
 
     @Column
-    private int commentCount = knowledgeComments.size();
+    private int commentCount = qnaComments.size();
 
     @Column
     private String postTime;

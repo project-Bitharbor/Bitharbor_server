@@ -4,12 +4,12 @@ package developer.domain.qna.service;
 import developer.domain.community.entity.Community;
 import developer.domain.member.entity.Member;
 import developer.domain.member.service.MemberService;
-import developer.domain.qna.dto.KnowledgeDto;
-import developer.domain.qna.mapper.KnowledgeMapper;
-import developer.domain.qna.repository.KnowledgeRepository;
+import developer.domain.qna.dto.QnaDto;
+import developer.domain.qna.entity.Qna;
+import developer.domain.qna.mapper.QnaMapper;
+import developer.domain.qna.repository.QnaRepository;
 import developer.global.exception.BusinessLogicException;
 import developer.global.exception.ExceptionCode;
-import developer.domain.qna.entity.Knowledge;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -25,27 +25,26 @@ import java.util.Optional;
 @Transactional
 @Slf4j
 @RequiredArgsConstructor
-public class KnowledgeService {
+public class QnaService {
 
-    private final KnowledgeRepository repository;
-    private final KnowledgeMapper mapper;
+    private final QnaRepository repository;
+    private final QnaMapper mapper;
     private final MemberService memberService;
 
-    public Knowledge savePost(KnowledgeDto.Post knowledge) {
+    public developer.domain.qna.entity.Qna savePost(QnaDto.Post qna) {
 
-        Member member = memberService.verifiedMember(knowledge.getMemberId());
-        Knowledge newKnowledge = mapper.knowledgePostDtoToKnowledge(knowledge);
-        newKnowledge.setMember(member);
+        Member member = memberService.verifiedMember(qna.getMemberId());
+        Qna newQna = mapper.qnaPostDtoToQna(qna);
+        newQna.setMember(member);
 
-
-        return repository.save(newKnowledge);
+        return repository.save(newQna);
     }
 
-    public Knowledge updatePost(Knowledge patch, Long postId)   {
+    public developer.domain.qna.entity.Qna updatePost(Qna patch, Long postId)   {
 
         Member member = memberService.verifiedMember(patch.getMember().getMemberId());
 
-        Knowledge findPost = repository.findByKnowledgeId(postId);
+        Qna findPost = repository.findByQnaId(postId);
 
         verifiedPostMember(findPost, member.getMemberId());
 
@@ -64,11 +63,11 @@ public class KnowledgeService {
         return repository.save(findPost);
     }
 
-    public Knowledge findPost(long postId) {
-        return repository.findByKnowledgeId(postId);
+    public Qna findPost(long postId) {
+        return repository.findByQnaId(postId);
     }
 
-    public Page<Knowledge> findAllPost(Pageable pageable) {
+    public Page<Qna> findAllPost(Pageable pageable) {
 
         return repository.findAll(pageable);
 
@@ -76,26 +75,26 @@ public class KnowledgeService {
 
     public void deletePost (long postId,long memberId) {
 
-        Knowledge post = existsPost(postId);
+        Qna post = existsPost(postId);
 
         verifiedPostMember(post, memberId);
 
         repository.deleteById(postId);
     }
 
-    public Knowledge existsPost (long postId) {
-        Optional<Knowledge> optional = repository.findById(postId);
-        Knowledge findId = optional.orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
+    public Qna existsPost (long postId) {
+        Optional<Qna> optional = repository.findById(postId);
+        Qna findId = optional.orElseThrow(() -> new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
 
         return findId;
     }
 
-    public void verifiedPostMember(Knowledge post, long memberId) {
+    public void verifiedPostMember(Qna post, long memberId) {
         if (post.getMember().getMemberId() != memberId) {
             throw new BusinessLogicException(ExceptionCode.POST_NOT_WRITE);
         }
     }
-    public Page<Community> findUserCarePost (Pageable pageable, List<Community> carePosts) {
+    public Page<Qna> findUserQna (Pageable pageable, List<Qna> carePosts) {
 
         return new PageImpl<>(carePosts, pageable, carePosts.size());
     }
