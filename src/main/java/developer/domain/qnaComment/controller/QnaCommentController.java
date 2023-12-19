@@ -3,16 +3,16 @@ package developer.domain.qnaComment.controller;
 
 import developer.domain.member.entity.Member;
 import developer.domain.member.service.MemberService;
-import developer.domain.qnaComment.dto.KnowledgeCommentDto;
-import developer.domain.qnaComment.entity.KnowledgeComment;
-import developer.domain.qnaComment.service.KnowledgeCommentService;
+import developer.domain.qnaComment.dto.QnaCommentDto;
+import developer.domain.qnaComment.entity.QnaComment;
+import developer.domain.qnaComment.service.QnaCommentService;
 import developer.global.exception.BusinessLogicException;
 import developer.global.exception.ExceptionCode;
 import developer.global.response.MultiResponse;
 import developer.global.response.SingleResponse;
-import developer.domain.qna.entity.Knowledge;
-import developer.domain.qna.service.KnowledgeService;
-import developer.domain.qnaComment.mapper.KnowledgeCommentMapper;
+import developer.domain.qna.entity.Qna;
+import developer.domain.qna.service.QnaService;
+import developer.domain.qnaComment.mapper.QnaCommentMapper;
 import developer.login.oauth.userInfo.JwtToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,38 +29,38 @@ import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/knowledge/{knowledgeId}")
-public class KnowledgeCommentController {
+@RequestMapping("/qna/{qnaId}")
+public class QnaCommentController {
 
-    private final KnowledgeCommentService knowledgeCommentService;
-    private final KnowledgeCommentMapper mapper;
-    private final KnowledgeService knowledgeService;
+    private final QnaCommentService qnaCommentService;
+    private final QnaCommentMapper mapper;
+    private final QnaService qnaService;
     private final MemberService memberService;
      private final JwtToken jwtToken;
 
 
     @PostMapping
-    public ResponseEntity postComment(@PathVariable("knowledgeId") long knowledgeId,
-                                      @RequestBody KnowledgeCommentDto.Post requestBody
+    public ResponseEntity postComment(@PathVariable("qnaId") long qnaId,
+                                      @RequestBody QnaCommentDto.Post requestBody
 //            ,
 //                                      @RequestHeader("Authorization") String authorization
     ) {
 
 //        authorization = authorization.replaceAll("Bearer ","");
         Member requestUser = memberService.findMember(requestBody.getMemberId());
-        Knowledge knowledge = knowledgeService.findPost(knowledgeId);
+        Qna qna = qnaService.findPost(qnaId);
 
-        KnowledgeComment knowledgeComment = mapper.commentPostDtoToComment(requestBody);
-        knowledgeComment.setKnowledge(knowledge);
-        knowledgeComment.setMember(requestUser);
-        knowledgeCommentService.createComment(knowledgeComment);
+        QnaComment qnaComment = mapper.commentPostDtoToComment(requestBody);
+        qnaComment.setQna(qna);
+        qnaComment.setMember(requestUser);
+        qnaCommentService.createComment(qnaComment);
 
-        knowledge.setCommentCount(knowledge.getCommentCount() + 1);
-        knowledgeService.updatePost(knowledge,knowledgeId);
+        qna.setCommentCount(qna.getCommentCount() + 1);
+        qnaService.updatePost(qna,qnaId);
 
 
         URI uri = UriComponentsBuilder.newInstance()
-                .path("/"+knowledgeId+"/" + knowledgeComment.getCommentId())
+                .path("/"+qnaId+"/" + qnaComment.getCommentId())
                 .build().toUri();
 
         return ResponseEntity.created(uri).build();
@@ -69,21 +69,21 @@ public class KnowledgeCommentController {
     @PatchMapping("/{commentId}")
     public ResponseEntity patchComment(
             @PathVariable("commentId") long commentId,
-            @RequestBody KnowledgeCommentDto.Patch requestBody,
+            @RequestBody QnaCommentDto.Patch requestBody,
             @RequestHeader("Authorization") String authorization) {
 
         authorization = authorization.replaceAll("Bearer ","");
         Member requestMember = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
 
-        KnowledgeComment knowledgeComment = knowledgeCommentService.findComment(commentId);
-        Member writer = knowledgeComment.getMember();
+        QnaComment qnaComment = qnaCommentService.findComment(commentId);
+        Member writer = qnaComment.getMember();
 
         if(Objects.equals(writer.getMemberId(), requestMember.getMemberId())){
-            knowledgeComment = mapper.commentPatchDtoToComment(requestBody);
-            knowledgeComment.setCommentId(commentId);
-            KnowledgeComment response = knowledgeCommentService.updateComment(knowledgeComment);
+            qnaComment = mapper.commentPatchDtoToComment(requestBody);
+            qnaComment.setCommentId(commentId);
+            QnaComment response = qnaCommentService.updateComment(qnaComment);
 
-            KnowledgeCommentDto.Response responseDto = mapper.commentToCommentResponseDto(response);
+            QnaCommentDto.Response responseDto = mapper.commentToCommentResponseDto(response);
 
             return new ResponseEntity<>(new SingleResponse<>(responseDto), HttpStatus.OK);
         }
@@ -93,23 +93,23 @@ public class KnowledgeCommentController {
 
     @DeleteMapping("/{commentId}")
     public ResponseEntity deleteComment(
-            @PathVariable("knowledgeId") long knowledgeId,
+            @PathVariable("qnaId") long qnaId,
             @PathVariable("commentId") long commentId,
             @RequestHeader("Authorization") String authorization) {
 
         authorization = authorization.replaceAll("Bearer ","");
         Member requestMember = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
 
-        KnowledgeComment communityComment = knowledgeCommentService.findComment(commentId);
+        QnaComment communityComment = qnaCommentService.findComment(commentId);
         Member writer = communityComment.getMember();
 
         if(Objects.equals(writer.getMemberId(), requestMember.getMemberId())){
 
-            knowledgeCommentService.deleteComment(commentId);
-            Knowledge knowledge = knowledgeService.findPost(knowledgeId);
+            qnaCommentService.deleteComment(commentId);
+            Qna qna = qnaService.findPost(qnaId);
 
-            knowledge.setCommentCount(knowledge.getCommentCount() - 1);
-            knowledgeService.updatePost(knowledge,commentId);
+            qna.setCommentCount(qna.getCommentCount() - 1);
+            qnaService.updatePost(qna,commentId);
 
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -125,10 +125,10 @@ public class KnowledgeCommentController {
 
 
         Pageable pageable = PageRequest.of(page-1, size);
-        Page<KnowledgeComment> commentPage = knowledgeCommentService.findComments(pageable);
+        Page<QnaComment> commentPage = qnaCommentService.findComments(pageable);
 
 
-        List<KnowledgeCommentDto.Response> responses =
+        List<QnaCommentDto.Response> responses =
                 mapper.commentPageToCommentResponseListDto(commentPage);
 
 
@@ -139,9 +139,9 @@ public class KnowledgeCommentController {
     @GetMapping("{commentId}")
     public ResponseEntity getComment(
             @PathVariable("commentId") Long commentId) {
-        KnowledgeComment communityComment = knowledgeCommentService.findComment(commentId);
+        QnaComment communityComment = qnaCommentService.findComment(commentId);
 
-        KnowledgeCommentDto.Response responseDto = mapper.commentToCommentResponseDto(communityComment);
+        QnaCommentDto.Response responseDto = mapper.commentToCommentResponseDto(communityComment);
 
         return new ResponseEntity<>(new SingleResponse<>(responseDto), HttpStatus.OK);
     }

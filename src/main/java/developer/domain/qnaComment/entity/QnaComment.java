@@ -3,7 +3,7 @@ package developer.domain.qnaComment.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import developer.domain.member.entity.Member;
 import developer.global.audit.Auditable;
-import developer.domain.qna.entity.Knowledge;
+import developer.domain.qna.entity.Qna;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-public class KnowledgeComment extends Auditable {
+public class QnaComment extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long commentId;
@@ -23,9 +23,9 @@ public class KnowledgeComment extends Auditable {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name="knowledgeId")
+    @JoinColumn(name="qnaId")
     @JsonIgnore
-    private Knowledge knowledge;
+    private Qna qna;
 
 
     @ManyToOne
@@ -35,10 +35,10 @@ public class KnowledgeComment extends Auditable {
 
 
     @Builder
-    public KnowledgeComment(long commentId, String content, Knowledge knowledge, Member member) {
+    public QnaComment(long commentId, String content, Qna qna, Member member) {
         this.commentId = commentId;
         this.content = content;
-        this.knowledge = knowledge;
+        this.qna = qna;
         this.member = member;
     }
 

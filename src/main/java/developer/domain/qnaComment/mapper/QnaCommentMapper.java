@@ -1,7 +1,7 @@
 package developer.domain.qnaComment.mapper;
 
-import developer.domain.qnaComment.dto.KnowledgeCommentDto;
-import developer.domain.qnaComment.entity.KnowledgeComment;
+import developer.domain.qnaComment.dto.QnaCommentDto;
+import developer.domain.qnaComment.entity.QnaComment;
 import org.mapstruct.Mapper;
 import org.springframework.data.domain.Page;
 
@@ -9,21 +9,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
-public interface KnowledgeCommentMapper {
+public interface QnaCommentMapper {
 
-    KnowledgeComment commentPostDtoToComment(KnowledgeCommentDto.Post postDto);
-    KnowledgeComment commentPatchDtoToComment(KnowledgeCommentDto.Patch patchDto);
+    QnaComment commentPostDtoToComment(QnaCommentDto.Post postDto);
+    QnaComment commentPatchDtoToComment(QnaCommentDto.Patch patchDto);
 
-    default KnowledgeCommentDto.Response commentToCommentResponseDto(KnowledgeComment comment) {
+    default QnaCommentDto.Response commentToCommentResponseDto(QnaComment comment) {
         if ( comment == null ) {
             return null;
         }
 
-        KnowledgeCommentDto.Response.ResponseBuilder response = KnowledgeCommentDto.Response.builder();
+        QnaCommentDto.Response.ResponseBuilder response = QnaCommentDto.Response.builder();
 
         response.commentId( comment.getCommentId() );
         response.content( comment.getContent() );
-        response.knowledgeId( comment.getKnowledge().getKnowledgeId() );
+        response.qnaId( comment.getQna().getQnaId() );
         response.createdAt( comment.getCreatedAt() );
 
         response.nickName( comment.getMember().getUserNickname() );
@@ -32,12 +32,12 @@ public interface KnowledgeCommentMapper {
         return response.build();
     }
 
-    default List<KnowledgeCommentDto.Response> commentListToCommentResponseListDto(List<KnowledgeComment> commentList){
+    default List<QnaCommentDto.Response> commentListToCommentResponseListDto(List<QnaComment> commentList){
 
         if(commentList == null)
             return null;
 
-        List<KnowledgeCommentDto.Response> response =  commentList
+        List<QnaCommentDto.Response> response =  commentList
                 .stream()
                 .map(comment->commentToCommentResponseDto(comment))
                 .collect(Collectors.toList());
@@ -45,12 +45,12 @@ public interface KnowledgeCommentMapper {
         return response;
     }
 
-    default List<KnowledgeCommentDto.Response> commentPageToCommentResponseListDto(Page<KnowledgeComment> commentPage){
+    default List<QnaCommentDto.Response> commentPageToCommentResponseListDto(Page<QnaComment> commentPage){
 
         if(commentPage == null)
             return null;
 
-        List<KnowledgeCommentDto.Response> response =                 commentPage
+        List<QnaCommentDto.Response> response = commentPage
                 .stream()
                 .map(comment->commentToCommentResponseDto(comment))
                 .collect(Collectors.toList());

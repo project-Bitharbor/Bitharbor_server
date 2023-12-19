@@ -8,7 +8,7 @@ import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
-public class KnowledgeCommentDto {
+public class QnaCommentDto {
     @Getter
     @Setter
     @AllArgsConstructor
@@ -46,7 +46,7 @@ public class KnowledgeCommentDto {
     public static class Response{
         private long commentId;
         private String content;
-        private long knowledgeId;
+        private long qnaId;
         private LocalDateTime createdAt;
 
         private String nickName;
