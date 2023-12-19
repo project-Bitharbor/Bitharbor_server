@@ -1,5 +1,8 @@
 package developer.domain.member.entity;
 
+import developer.domain.community.entity.Community;
+import developer.domain.knowledge.entity.Knowledge;
+import developer.domain.qna.entity.Qna;
 import developer.global.audit.Auditable;
 import lombok.*;
 
@@ -45,6 +48,15 @@ public class Member extends Auditable {
 
 
     private String imgURL;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Community> communities = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Knowledge> knowledges = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Qna> qnas = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
