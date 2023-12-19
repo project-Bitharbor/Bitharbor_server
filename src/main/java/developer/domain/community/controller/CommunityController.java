@@ -14,6 +14,7 @@ import developer.global.response.MultiResponse;
 import developer.global.response.PageInfo;
 import developer.global.response.SingleResponse;
 import developer.global.utils.URICreator;
+import developer.login.oauth.userInfo.JwtToken;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.Page;
@@ -46,12 +47,20 @@ public class CommunityController {
     private final CommunityMapper mapper;
     private final CommunityRepository repository;
     private final MemberService memberService;
+    private final JwtToken jwtToken;
 
     @PostMapping
-    public ResponseEntity Postpost(@Validated @RequestBody CommunityDto.Post post) {
-//        Community newPost = mapper.communityPostDtoToCommunity(post);
+    public ResponseEntity Postpost(@Validated @RequestBody CommunityDto.Post post,
+                                   @RequestHeader("Authorization") String authorization) {
 
-        Community createdPost = service.savePost(post);
+        authorization = authorization.replaceAll("Bearer ","");
+        Member member = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
+
+        Community newPost = mapper.communityPostDtoToCommunity(post);
+
+        newPost.setMember(member);
+
+        Community createdPost = service.savePost(newPost);
 
         URI uri = URICreator.createUri("/post", createdPost.getCommunityId());
 
@@ -61,9 +70,11 @@ public class CommunityController {
     @Transactional
     @PatchMapping("/{post-id}")
     public ResponseEntity patchPost(@PathVariable("post-id") @Positive long postId,
-                                    @Validated @RequestBody CommunityDto.Patch patch) {
+                                    @Validated @RequestBody CommunityDto.Patch patch,
+                                    @RequestHeader("Authorization") String authorization) {
 
-        Member member = memberService.findMember(patch.getMemberId());
+        authorization = authorization.replaceAll("Bearer ","");
+        Member member = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
 
         Community newPatch = mapper.communityPatchDtoToCommunity(patch);
         newPatch.setMember(member);
@@ -110,19 +121,15 @@ public class CommunityController {
         return new ResponseEntity(new SingleResponse<>(mapper.communityToCommunityResponseDto(find)), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{community-id}/member/{member-id}")
-    public ResponseEntity PatchPost(@PathVariable("community-id") @Positive long communityId
-                                    ,@PathVariable("member-id") @Positive long memberId
-//            ,
-//                                    @RequestHeader("Authorization") String authorization
+    @DeleteMapping("/{community-id}")
+    public ResponseEntity PatchPost(@PathVariable("community-id") @Positive long communityId,
+                                    @RequestHeader("Authorization") String authorization
     ) {
 
-//        authorization = authorization.replaceAll("Bearer ","");
-//        Member member = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
+        authorization = authorization.replaceAll("Bearer ","");
+        Member member = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
 
-        Member member = memberService.findMember(memberId);
-
-        service.deletePost(communityId,memberId);
+        service.deletePost(communityId,member.getMemberId());
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }

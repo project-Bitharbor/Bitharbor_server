@@ -14,7 +14,6 @@ public class CommunityDto {
     @Getter
     @Setter
     public static class Post {
-        private Long memberId;
         @NotBlank(message = "제목은 필수 입력 사항입니다.")
         @Size(max = 250, message = "제목은 250자를 넘을 수 없습니다.")
         private String title;
@@ -28,7 +27,6 @@ public class CommunityDto {
 
     @Getter @Setter
     public static class Patch {
-        private Long memberId;
         @Size(max = 250, message = "제목은 250자를 넘을 수 없습니다.")
         private String title;
         private String body;

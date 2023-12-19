@@ -31,14 +31,9 @@ public class CommunityService {
     private final CommunityMapper mapper;
     private final MemberService memberService;
 
-    public Community savePost(CommunityDto.Post community) {
+    public Community savePost(Community community) {
 
-        Member member = memberService.verifiedMember(community.getMemberId());
-        Community newCommunity = mapper.communityPostDtoToCommunity(community);
-        newCommunity.setMember(member);
-
-
-        return repository.save(newCommunity);
+        return repository.save(community);
     }
 
     public Community updatePost(Community patch,Long postId)   {
