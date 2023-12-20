@@ -1,5 +1,6 @@
 package developer.domain.member.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import developer.domain.community.entity.Community;
 import developer.domain.knowledge.entity.Knowledge;
 import developer.domain.qna.entity.Qna;
@@ -50,12 +51,15 @@ public class Member extends Auditable {
     private String imgURL;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private List<Community> communities = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private List<Knowledge> knowledges = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private List<Qna> qnas = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)

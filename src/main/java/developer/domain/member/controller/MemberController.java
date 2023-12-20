@@ -98,7 +98,7 @@ public class MemberController {
                 HttpStatus.OK);
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity getMembers() {
         List<Member> members = memberService.findMembers();
         return new ResponseEntity<>(
