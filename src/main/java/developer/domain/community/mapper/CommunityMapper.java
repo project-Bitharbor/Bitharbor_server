@@ -37,8 +37,8 @@ public interface CommunityMapper {
         LocalDateTime modifiedAt = null;
 
 
-        communityId = community.getCommunityId();
         memberId = community.getMember().getMemberId();
+        communityId = community.getCommunityId();
         title = community.getTitle();
         body = community.getBody();
         imgURL = community.getImgURL();
@@ -54,7 +54,7 @@ public interface CommunityMapper {
         modifiedAt = community.getModifiedAt();
         userNickname = community.getMember().getUserNickname();
 
-        CommunityDto.Response response = new CommunityDto.Response( userNickname, communityId, memberId, title, body, imgURL,category,tags, view, comments, commentCount,postTime, createdAt, modifiedAt );
+        CommunityDto.Response response = new CommunityDto.Response( userNickname, memberId, communityId, title, body, imgURL,category,tags, view, comments, commentCount,postTime, createdAt, modifiedAt );
 
         return response;
     }
