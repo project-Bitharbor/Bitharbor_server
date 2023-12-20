@@ -17,6 +17,7 @@ import developer.global.response.MultiResponse;
 import developer.global.response.PageInfo;
 import developer.global.response.SingleResponse;
 import developer.global.utils.URICreator;
+import developer.login.oauth.userInfo.JwtToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -46,12 +47,20 @@ public class KnowledgeController {
     private final KnowledgeMapper mapper;
     private final KnowledgeRepository repository;
     private final MemberService memberService;
+    private final JwtToken jwtToken;
 
     @PostMapping
-    public ResponseEntity Postpost(@Validated @RequestBody KnowledgeDto.Post post) {
-//        Knowledge newPost = mapper.knowledgePostDtoToKnowledge(post);
+    public ResponseEntity Postpost(@Validated @RequestBody KnowledgeDto.Post post,
+                                   @RequestHeader("Authorization") String authorization) {
 
-        Knowledge createdPost = service.savePost(post);
+        authorization = authorization.replaceAll("Bearer ","");
+        Member member = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
+
+        Knowledge newPost = mapper.knowledgePostDtoToKnowledge(post);
+
+        newPost.setMember(member);
+
+        Knowledge createdPost = service.savePost(newPost);
 
         URI uri = URICreator.createUri("/knowledge", createdPost.getKnowledgeId());
 
@@ -61,9 +70,11 @@ public class KnowledgeController {
     @Transactional
     @PatchMapping("/{knowledge-id}")
     public ResponseEntity patchPost(@PathVariable("knowledge-id") @Positive long knowledgeId,
-                                    @Validated @RequestBody KnowledgeDto.Patch patch) {
+                                    @Validated @RequestBody KnowledgeDto.Patch patch,
+                                    @RequestHeader("Authorization") String authorization) {
 
-        Member member = memberService.findMember(patch.getMemberId());
+        authorization = authorization.replaceAll("Bearer ","");
+        Member member = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
 
         Knowledge newPatch = mapper.knowledgePatchDtoToKnowledge(patch);
         newPatch.setMember(member);
@@ -108,19 +119,15 @@ public class KnowledgeController {
         return new ResponseEntity(new SingleResponse<>(mapper.knowledgeToKnowledgeResponseDto(find)), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{knowledge-id}/member/{member-id}")
-    public ResponseEntity PatchPost(@PathVariable("knowledge-id") @Positive long knowledgeId
-            ,@PathVariable("member-id") @Positive long memberId
-//            ,
-//                                    @RequestHeader("Authorization") String authorization
+    @DeleteMapping("/{knowledge-id}")
+    public ResponseEntity PatchPost(@PathVariable("knowledge-id") @Positive long knowledgeId,
+                                    @RequestHeader("Authorization") String authorization
     ) {
 
-//        authorization = authorization.replaceAll("Bearer ","");
-//        Member member = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
+        authorization = authorization.replaceAll("Bearer ","");
+        Member member = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
 
-        Member member = memberService.findMember(memberId);
-
-        service.deletePost(knowledgeId,memberId);
+        service.deletePost(knowledgeId, member.getMemberId());
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }

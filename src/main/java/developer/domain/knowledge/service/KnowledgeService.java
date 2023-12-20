@@ -34,14 +34,9 @@ public class KnowledgeService {
     private final KnowledgeMapper mapper;
     private final MemberService memberService;
 
-    public Knowledge savePost(KnowledgeDto.Post knowledge) {
+    public Knowledge savePost(Knowledge knowledge) {
 
-        Member member = memberService.verifiedMember(knowledge.getMemberId());
-        Knowledge newKnowledge = mapper.knowledgePostDtoToKnowledge(knowledge);
-        newKnowledge.setMember(member);
-
-
-        return repository.save(newKnowledge);
+        return repository.save(knowledge);
     }
 
     public Knowledge updatePost(Knowledge patch,Long postId)   {
