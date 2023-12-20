@@ -1,5 +1,6 @@
 package developer.domain.community.dto;
 
+import developer.domain.communityComment.dto.CommunityCommentDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,6 +40,7 @@ public class CommunityDto {
     @AllArgsConstructor
     public static class Response {
         private String userNickname;
+        private Long memberId;
         private Long communityId;
         private String title;
         private String body;
@@ -46,6 +48,7 @@ public class CommunityDto {
         private String category;
         private List<String> tags;
         private Integer view;
+        private List<CommunityCommentDto.Response> comments;
         private Integer commentCount;
         private String postTime;
         private LocalDateTime createdAt;

@@ -2,6 +2,7 @@ package developer.domain.community.mapper;
 
 import developer.domain.community.dto.CommunityDto;
 import developer.domain.community.entity.Community;
+import developer.domain.communityComment.dto.CommunityCommentDto;
 import org.mapstruct.Mapper;
 
 import java.time.LocalDateTime;
@@ -21,12 +22,14 @@ public interface CommunityMapper {
         }
 
         String userNickname = null;
+        Long memberId = null;
         Long communityId = null;
         String title = null;
         String body = null;
         String imgURL = null;
         String category = null;
         List<String> tags = null;
+        List<CommunityCommentDto.Response> comments = null;
         Integer commentCount = null;
         Integer view = null;
         String postTime = null;
@@ -35,6 +38,7 @@ public interface CommunityMapper {
 
 
         communityId = community.getCommunityId();
+        memberId = community.getMember().getMemberId();
         title = community.getTitle();
         body = community.getBody();
         imgURL = community.getImgURL();
@@ -50,7 +54,7 @@ public interface CommunityMapper {
         modifiedAt = community.getModifiedAt();
         userNickname = community.getMember().getUserNickname();
 
-        CommunityDto.Response response = new CommunityDto.Response( userNickname, communityId, title, body, imgURL,category,tags, view, commentCount,postTime, createdAt, modifiedAt );
+        CommunityDto.Response response = new CommunityDto.Response( userNickname, communityId, memberId, title, body, imgURL,category,tags, view, comments, commentCount,postTime, createdAt, modifiedAt );
 
         return response;
     }

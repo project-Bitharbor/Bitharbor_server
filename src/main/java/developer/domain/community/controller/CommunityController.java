@@ -6,6 +6,7 @@ import developer.domain.community.entity.Community;
 import developer.domain.community.mapper.CommunityMapper;
 import developer.domain.community.repository.CommunityRepository;
 import developer.domain.community.service.CommunityService;
+import developer.domain.communityComment.mapper.CommunityCommentMapper;
 import developer.domain.member.entity.Member;
 import developer.domain.member.service.MemberService;
 import developer.global.exception.BusinessLogicException;
@@ -47,6 +48,7 @@ public class CommunityController {
     private final CommunityMapper mapper;
     private final CommunityRepository repository;
     private final MemberService memberService;
+    private final CommunityCommentMapper commentMapper;
     private final JwtToken jwtToken;
 
     @PostMapping
@@ -118,7 +120,10 @@ public class CommunityController {
         find.setView(find.getView() + 1);
         repository.save(find);
 
-        return new ResponseEntity(new SingleResponse<>(mapper.communityToCommunityResponseDto(find)), HttpStatus.OK);
+        CommunityDto.Response response = mapper.communityToCommunityResponseDto(find);
+        response.setComments(commentMapper.commentListToCommentResponseListDto(find.getCommunityComments()));
+
+        return new ResponseEntity(new SingleResponse<>(response), HttpStatus.OK);
     }
 
     @DeleteMapping("/{community-id}")
