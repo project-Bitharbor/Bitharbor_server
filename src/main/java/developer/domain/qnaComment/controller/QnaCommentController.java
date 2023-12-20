@@ -41,18 +41,17 @@ public class QnaCommentController {
 
     @PostMapping
     public ResponseEntity postComment(@PathVariable("qnaId") long qnaId,
-                                      @RequestBody QnaCommentDto.Post requestBody
-//            ,
-//                                      @RequestHeader("Authorization") String authorization
+                                      @RequestBody QnaCommentDto.Post requestBody,
+                                      @RequestHeader("Authorization") String authorization
     ) {
 
-//        authorization = authorization.replaceAll("Bearer ","");
-        Member requestUser = memberService.findMember(requestBody.getMemberId());
+        authorization = authorization.replaceAll("Bearer ","");
+        Member requestMember = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
         Qna qna = qnaService.findPost(qnaId);
 
         QnaComment qnaComment = mapper.commentPostDtoToComment(requestBody);
         qnaComment.setQna(qna);
-        qnaComment.setMember(requestUser);
+        qnaComment.setMember(requestMember);
         qnaCommentService.createComment(qnaComment);
 
         qna.setCommentCount(qna.getCommentCount() + 1);
