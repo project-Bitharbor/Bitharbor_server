@@ -12,6 +12,7 @@ import developer.global.response.PageInfo;
 import developer.global.response.SingleResponse;
 import developer.global.utils.URICreator;
 import developer.domain.qna.service.QnaService;
+import developer.login.oauth.userInfo.JwtToken;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -41,12 +42,19 @@ public class QnaController {
     private final QnaMapper mapper;
     private final QnaRepository repository;
     private final MemberService memberService;
+    private final JwtToken jwtToken;
 
     @PostMapping
-    public ResponseEntity Postpost(@Validated @RequestBody QnaDto.Post post) {
-//        Knowledge newPost = mapper.knowledgePostDtoToKnowledge(post);
+    public ResponseEntity Postpost(@Validated @RequestBody QnaDto.Post post,
+                                   @RequestHeader("authorization") String authorization) {
 
-        Qna createdPost = service.savePost(post);
+        authorization = authorization.replaceAll("Bearer ","");
+        Member member = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
+
+        Qna newPost = mapper.qnaPostDtoToQna(post);
+        newPost.setMember(member);
+
+        Qna createdPost = service.savePost(newPost);
 
         URI uri = URICreator.createUri("/qna", createdPost.getQnaId());
 
@@ -56,9 +64,11 @@ public class QnaController {
     @Transactional
     @PatchMapping("/{qna-id}")
     public ResponseEntity patchPost(@PathVariable("qna-id") @Positive long qnaId,
-                                    @Validated @RequestBody QnaDto.Patch patch) {
+                                    @Validated @RequestBody QnaDto.Patch patch,
+                                    @RequestHeader("Authorization") String authorization) {
 
-        Member member = memberService.findMember(patch.getMemberId());
+        authorization = authorization.replaceAll("Bearer ","");
+        Member member = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
 
         Qna newPatch = mapper.qnaPatchDtoToQna(patch);
         newPatch.setMember(member);

@@ -31,16 +31,12 @@ public class QnaService {
     private final QnaMapper mapper;
     private final MemberService memberService;
 
-    public developer.domain.qna.entity.Qna savePost(QnaDto.Post qna) {
+    public Qna savePost(Qna qna) {
 
-        Member member = memberService.verifiedMember(qna.getMemberId());
-        Qna newQna = mapper.qnaPostDtoToQna(qna);
-        newQna.setMember(member);
-
-        return repository.save(newQna);
+        return repository.save(qna);
     }
 
-    public developer.domain.qna.entity.Qna updatePost(Qna patch, Long postId)   {
+    public Qna updatePost(Qna patch, Long postId)   {
 
         Member member = memberService.verifiedMember(patch.getMember().getMemberId());
 
