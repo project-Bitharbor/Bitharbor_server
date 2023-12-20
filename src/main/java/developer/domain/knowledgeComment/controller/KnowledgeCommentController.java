@@ -30,7 +30,7 @@ import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/knowledge/{knowledgeId}")
+@RequestMapping("/knowledge/{knowledgeId}/comment")
 public class KnowledgeCommentController {
 
     private final KnowledgeCommentService knowledgeCommentService;
@@ -42,18 +42,17 @@ public class KnowledgeCommentController {
 
     @PostMapping
     public ResponseEntity postComment(@PathVariable("knowledgeId") long knowledgeId,
-                                      @RequestBody KnowledgeCommentDto.Post requestBody
-//            ,
-//                                      @RequestHeader("Authorization") String authorization
+                                      @RequestBody KnowledgeCommentDto.Post requestBody,
+                                      @RequestHeader("Authorization") String authorization
     ) {
 
-//        authorization = authorization.replaceAll("Bearer ","");
-        Member requestUser = memberService.findMember(requestBody.getMemberId());
+        authorization = authorization.replaceAll("Bearer ","");
+        Member requestMember = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
         Knowledge knowledge = knowledgeService.findPost(knowledgeId);
 
         KnowledgeComment knowledgeComment = mapper.commentPostDtoToComment(requestBody);
         knowledgeComment.setKnowledge(knowledge);
-        knowledgeComment.setMember(requestUser);
+        knowledgeComment.setMember(requestMember);
         knowledgeCommentService.createComment(knowledgeComment);
 
         knowledge.setCommentCount(knowledge.getCommentCount() + 1);
