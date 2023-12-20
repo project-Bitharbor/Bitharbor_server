@@ -23,7 +23,7 @@ public interface CommunityCommentMapper {
 
         response.commentId( comment.getCommentId() );
         response.content( comment.getContent() );
-        response.communityId( comment.getCommunity().getCommunityId() );
+        response.communityId( comment.getCommunityId() );
         response.createdAt( comment.getCreatedAt() );
         response.nickName( comment.getMember().getUserNickname() );
         response.profileImgUrl( comment.getMember().getImgURL() );

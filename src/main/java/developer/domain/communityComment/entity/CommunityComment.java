@@ -42,7 +42,7 @@ public class CommunityComment extends Auditable {
         this.member = member;
     }
 
-    public long getCommentId() {
-        return commentId;
+    public long getCommunityId() {
+        return community.getCommunityId();
     }
 }
