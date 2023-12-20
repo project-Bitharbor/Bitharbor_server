@@ -30,11 +30,8 @@ public class CommunityCommentDto {
     @AllArgsConstructor
     @Builder
     public static class Patch{
-
-
         @NotBlank(message="content not null")
         private String content;
-
 
         Patch(){}
 
@@ -48,9 +45,7 @@ public class CommunityCommentDto {
         private String content;
         private long communityId;
         private LocalDateTime createdAt;
-
         private String nickName;
-
         private String profileImgUrl;
         Response(){}
 

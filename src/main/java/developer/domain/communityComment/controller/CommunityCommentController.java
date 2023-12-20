@@ -29,7 +29,7 @@ import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/community/{communityId}")
+@RequestMapping("/community/{communityId}/comment")
 public class CommunityCommentController {
 
     private final CommunityCommentService communityCommentService;
@@ -41,18 +41,17 @@ public class CommunityCommentController {
 
     @PostMapping
     public ResponseEntity postComment(@PathVariable("communityId") long communityId,
-                                      @RequestBody CommunityCommentDto.Post requestBody
-//            ,
-//                                      @RequestHeader("Authorization") String authorization
+                                      @RequestBody CommunityCommentDto.Post requestBody,
+                                      @RequestHeader("Authorization") String authorization
     ) {
 
-//        authorization = authorization.replaceAll("Bearer ","");
-        Member requestUser = memberService.findMember(requestBody.getMemberId());
+        authorization = authorization.replaceAll("Bearer ","");
+        Member requestMember = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
         Community community = communityService.findPost(communityId);
 
         CommunityComment communityComment = mapper.commentPostDtoToComment(requestBody);
         communityComment.setCommunity(community);
-        communityComment.setMember(requestUser);
+        communityComment.setMember(requestMember);
         communityCommentService.createComment(communityComment);
 
         community.setCommentCount(community.getCommentCount() + 1);
@@ -117,26 +116,21 @@ public class CommunityCommentController {
         throw new BusinessLogicException(ExceptionCode.FORBIDDEN);
     }
 
-    @GetMapping("/comments")
+    @GetMapping
     public ResponseEntity getComments(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
-
-
         Pageable pageable = PageRequest.of(page-1, size);
         Page<CommunityComment> commentPage = communityCommentService.findComments(pageable);
-
 
         List<CommunityCommentDto.Response> responses =
                 mapper.commentPageToCommentResponseListDto(commentPage);
 
-
-
         return new ResponseEntity<>(new MultiResponse<>(responses, commentPage), HttpStatus.OK);
     }
 
-    @GetMapping("{commentId}")
+    @GetMapping("/{commentId}")
     public ResponseEntity getComment(
             @PathVariable("commentId") Long commentId) {
         CommunityComment communityComment = communityCommentService.findComment(commentId);
