@@ -28,7 +28,7 @@ jobs:
     
 # 작업 공간
     env:
-      working-directory: ./Bitharbor_server
+      working-directory: ./
 
     steps:
     - uses: actions/checkout@v3
