@@ -14,7 +14,6 @@ public class QnaCommentDto {
     @AllArgsConstructor
     @Builder
     public static class Post{
-        private Long memberId;
         @NotBlank(message="content is not null")
         private String content;
 

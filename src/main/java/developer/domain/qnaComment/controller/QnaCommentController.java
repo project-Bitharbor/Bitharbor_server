@@ -29,7 +29,7 @@ import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/qna/{qnaId}")
+@RequestMapping("/qna/{qnaId}/comment")
 public class QnaCommentController {
 
     private final QnaCommentService qnaCommentService;
@@ -116,7 +116,7 @@ public class QnaCommentController {
         throw new BusinessLogicException(ExceptionCode.FORBIDDEN);
     }
 
-    @GetMapping("/comments")
+    @GetMapping
     public ResponseEntity getComments(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size
@@ -135,7 +135,7 @@ public class QnaCommentController {
         return new ResponseEntity<>(new MultiResponse<>(responses, commentPage), HttpStatus.OK);
     }
 
-    @GetMapping("{commentId}")
+    @GetMapping("/{commentId}")
     public ResponseEntity getComment(
             @PathVariable("commentId") Long commentId) {
         QnaComment communityComment = qnaCommentService.findComment(commentId);
