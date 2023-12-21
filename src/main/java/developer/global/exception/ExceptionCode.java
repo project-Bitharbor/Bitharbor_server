@@ -3,6 +3,7 @@ package developer.global.exception;
 import lombok.Getter;
 
 public enum ExceptionCode {
+    BAD_REQUEST(400,"유효하지 않은 접근입니다."),
     MEMBER_NOT_FOUND(404, "회원이 존재하지 않습니다."),
     MEMBER_EXIST(402, "존재하는 회원입니다."),
     UNAUTHORIZED_MEMBER(401, "접근 권한이 없습니다."),
