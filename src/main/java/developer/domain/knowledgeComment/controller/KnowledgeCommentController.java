@@ -117,7 +117,7 @@ public class KnowledgeCommentController {
         throw new BusinessLogicException(ExceptionCode.FORBIDDEN);
     }
 
-    @GetMapping("/comments")
+    @GetMapping
     public ResponseEntity getComments(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size
@@ -136,7 +136,7 @@ public class KnowledgeCommentController {
         return new ResponseEntity<>(new MultiResponse<>(responses, commentPage), HttpStatus.OK);
     }
 
-    @GetMapping("{commentId}")
+    @GetMapping("/{commentId}")
     public ResponseEntity getComment(
             @PathVariable("commentId") Long commentId) {
         KnowledgeComment communityComment = knowledgeCommentService.findComment(commentId);
