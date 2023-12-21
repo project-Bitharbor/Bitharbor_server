@@ -11,6 +11,7 @@ import developer.domain.knowledge.entity.Knowledge;
 import developer.domain.knowledge.mapper.KnowledgeMapper;
 import developer.domain.knowledge.repository.KnowledgeRepository;
 import developer.domain.knowledge.service.KnowledgeService;
+import developer.domain.knowledgeComment.mapper.KnowledgeCommentMapper;
 import developer.domain.member.entity.Member;
 import developer.domain.member.service.MemberService;
 import developer.global.response.MultiResponse;
@@ -47,6 +48,7 @@ public class KnowledgeController {
     private final KnowledgeMapper mapper;
     private final KnowledgeRepository repository;
     private final MemberService memberService;
+    private final KnowledgeCommentMapper commentMapper;
     private final JwtToken jwtToken;
 
     @PostMapping
@@ -116,7 +118,10 @@ public class KnowledgeController {
         find.setView(find.getView() + 1);
         repository.save(find);
 
-        return new ResponseEntity(new SingleResponse<>(mapper.knowledgeToKnowledgeResponseDto(find)), HttpStatus.OK);
+        KnowledgeDto.Response response = mapper.knowledgeToKnowledgeResponseDto(find);
+        response.setComments(commentMapper.commentListToCommentResponseListDto(find.getKnowledgeComments()));
+
+        return new ResponseEntity(new SingleResponse<>(response), HttpStatus.OK);
     }
 
     @DeleteMapping("/{knowledge-id}")

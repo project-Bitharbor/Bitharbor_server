@@ -1,5 +1,6 @@
 package developer.domain.knowledge.dto;
 
+import developer.domain.knowledgeComment.dto.KnowledgeCommentDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -48,6 +49,7 @@ public class KnowledgeDto {
         private String category;
         private List<String> tags;
         private Integer view;
+        private List<KnowledgeCommentDto.Response> comments;
         private Integer commentCount;
         private String postTime;
         private LocalDateTime createdAt;
