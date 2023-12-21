@@ -1,5 +1,6 @@
 package developer.domain.qna.dto;
 
+import developer.domain.qnaComment.dto.QnaCommentDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -48,6 +49,7 @@ public class QnaDto {
         private String category;
         private List<String> tags;
         private Integer view;
+        private List<QnaCommentDto.Response> comments;
         private Integer commentCount;
         private String postTime;
         private LocalDateTime createdAt;

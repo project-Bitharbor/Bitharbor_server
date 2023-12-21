@@ -2,6 +2,7 @@ package developer.domain.qna.mapper;
 
 import developer.domain.qna.dto.QnaDto;
 import developer.domain.qna.entity.Qna;
+import developer.domain.qnaComment.dto.QnaCommentDto;
 import org.mapstruct.Mapper;
 
 import java.time.LocalDateTime;
@@ -28,6 +29,7 @@ public interface QnaMapper {
         String imgURL = null;
         String category = null;
         List<String> tags = null;
+        List<QnaCommentDto.Response> comments = null;
         Integer commentCount = null;
         Integer view = null;
         String postTime = null;
@@ -51,7 +53,7 @@ public interface QnaMapper {
         modifiedAt = qna.getModifiedAt();
         userNickname = qna.getMember().getUserNickname();
 
-        QnaDto.Response response = new QnaDto.Response( userNickname, qnaId, title, body, imgURL,category,tags, view, commentCount,postTime, createdAt, modifiedAt );
+        QnaDto.Response response = new QnaDto.Response( userNickname, qnaId, title, body, imgURL,category,tags, view, comments, commentCount,postTime, createdAt, modifiedAt );
 
         return response;
     }

@@ -7,6 +7,7 @@ import developer.domain.qna.dto.QnaDto;
 import developer.domain.qna.entity.Qna;
 import developer.domain.qna.mapper.QnaMapper;
 import developer.domain.qna.repository.QnaRepository;
+import developer.domain.qnaComment.mapper.QnaCommentMapper;
 import developer.global.response.MultiResponse;
 import developer.global.response.PageInfo;
 import developer.global.response.SingleResponse;
@@ -42,6 +43,7 @@ public class QnaController {
     private final QnaMapper mapper;
     private final QnaRepository repository;
     private final MemberService memberService;
+    private final QnaCommentMapper commentMapper;
     private final JwtToken jwtToken;
 
     @PostMapping
@@ -110,22 +112,21 @@ public class QnaController {
         find.setView(find.getView() + 1);
         repository.save(find);
 
-        return new ResponseEntity(new SingleResponse<>(mapper.qnaToQnaResponseDto(find)), HttpStatus.OK);
+        QnaDto.Response response = mapper.qnaToQnaResponseDto(find);
+        response.setComments(commentMapper.commentListToCommentResponseListDto(find.getQnaComments()));
+
+        return new ResponseEntity(new SingleResponse<>(response), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{qna-id}/member/{member-id}")
-    public ResponseEntity PatchPost(@PathVariable("qna-id") @Positive long qnaId
-            ,@PathVariable("member-id") @Positive long memberId
-//            ,
-//                                    @RequestHeader("Authorization") String authorization
+    @DeleteMapping("/{qna-id}")
+    public ResponseEntity PatchPost(@PathVariable("qna-id") @Positive long qnaId,
+                                    @RequestHeader("Authorization") String authorization
     ) {
 
-//        authorization = authorization.replaceAll("Bearer ","");
-//        Member member = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
+        authorization = authorization.replaceAll("Bearer ","");
+        Member member = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
 
-        Member member = memberService.findMember(memberId);
-
-        service.deletePost(qnaId,memberId);
+        service.deletePost(qnaId,member.getMemberId());
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
