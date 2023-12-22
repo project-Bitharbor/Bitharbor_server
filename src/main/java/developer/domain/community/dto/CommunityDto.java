@@ -48,12 +48,17 @@ public class CommunityDto {
         private String category;
         private List<String> tags;
         private Integer view;
-        private List<CommunityCommentDto.Response> comments;
+//        private List<CommunityCommentDto.Response> comments;
         private Integer commentCount;
         private String postTime;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
     }
 
+    @Getter @Setter
+    @AllArgsConstructor
+    public static class CommentResponse {
+        private List<CommunityCommentDto.Response> comments;
+    }
 
 }

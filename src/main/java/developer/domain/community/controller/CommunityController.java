@@ -121,6 +121,16 @@ public class CommunityController {
         repository.save(find);
 
         CommunityDto.Response response = mapper.communityToCommunityResponseDto(find);
+//        response.setComments(commentMapper.commentListToCommentResponseListDto(find.getCommunityComments()));
+
+        return new ResponseEntity(new SingleResponse<>(response), HttpStatus.OK);
+    }
+
+    @GetMapping("/{community-id}/comments")
+    public ResponseEntity getComments(@PathVariable("community-id") @Positive long communityId) {
+        Community find = service.findPost(communityId);
+
+        CommunityDto.CommentResponse response = mapper.communityToCommunityCommentResponseDto(find);
         response.setComments(commentMapper.commentListToCommentResponseListDto(find.getCommunityComments()));
 
         return new ResponseEntity(new SingleResponse<>(response), HttpStatus.OK);

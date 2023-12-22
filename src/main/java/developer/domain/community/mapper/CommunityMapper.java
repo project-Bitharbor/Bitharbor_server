@@ -15,7 +15,7 @@ public interface CommunityMapper {
 
     Community communityPatchDtoToCommunity(CommunityDto.Patch requestBody);
 
-    // CommunityDto.Response communityToCommunityResponseDto(Community community);
+     CommunityDto.CommentResponse communityToCommunityCommentResponseDto(Community community);
     default CommunityDto.Response communityToCommunityResponseDto(Community community) {
         if ( community == null ) {
             return null;
@@ -29,7 +29,6 @@ public interface CommunityMapper {
         String imgURL = null;
         String category = null;
         List<String> tags = null;
-        List<CommunityCommentDto.Response> comments = null;
         Integer commentCount = null;
         Integer view = null;
         String postTime = null;
@@ -54,7 +53,7 @@ public interface CommunityMapper {
         modifiedAt = community.getModifiedAt();
         userNickname = community.getMember().getUserNickname();
 
-        CommunityDto.Response response = new CommunityDto.Response( userNickname, memberId, communityId, title, body, imgURL,category,tags, view, comments, commentCount,postTime, createdAt, modifiedAt );
+        CommunityDto.Response response = new CommunityDto.Response( userNickname, memberId, communityId, title, body, imgURL,category,tags, view, commentCount,postTime, createdAt, modifiedAt );
 
         return response;
     }
