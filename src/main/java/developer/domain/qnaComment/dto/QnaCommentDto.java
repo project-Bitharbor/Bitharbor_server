@@ -47,9 +47,8 @@ public class QnaCommentDto {
         private String content;
         private long qnaId;
         private LocalDateTime createdAt;
-
         private String nickName;
-
+        private Long memberId;
         private String profileImgUrl;
         Response(){}
 

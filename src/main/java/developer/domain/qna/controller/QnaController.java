@@ -113,6 +113,15 @@ public class QnaController {
         repository.save(find);
 
         QnaDto.Response response = mapper.qnaToQnaResponseDto(find);
+
+        return new ResponseEntity(new SingleResponse<>(response), HttpStatus.OK);
+    }
+
+    @GetMapping("/{qna-id}")
+    public ResponseEntity getComments(@PathVariable("qna-id") @Positive long qnaId) {
+        Qna find = service.findPost(qnaId);
+
+        QnaDto.CommentResponse response = mapper.qnaToQnaCommentResponseDto(find);
         response.setComments(commentMapper.commentListToCommentResponseListDto(find.getQnaComments()));
 
         return new ResponseEntity(new SingleResponse<>(response), HttpStatus.OK);

@@ -25,8 +25,8 @@ public interface QnaCommentMapper {
         response.content( comment.getContent() );
         response.qnaId( comment.getQna().getQnaId() );
         response.createdAt( comment.getCreatedAt() );
-
         response.nickName( comment.getMember().getUserNickname() );
+        response.memberId( comment.getMember().getMemberId());
         response.profileImgUrl( comment.getMember().getImgURL() );
 
         return response.build();

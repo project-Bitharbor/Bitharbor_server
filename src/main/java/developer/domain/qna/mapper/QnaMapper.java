@@ -16,8 +16,8 @@ public interface QnaMapper {
 
     Qna qnaPatchDtoToQna(QnaDto.Patch requestBody);
 
-    // CommunityDto.Response communityToCommunityResponseDto(Community community);
-    default QnaDto.Response qnaToQnaResponseDto(developer.domain.qna.entity.Qna qna) {
+    QnaDto.CommentResponse qnaToQnaCommentResponseDto(Qna qna);
+    default QnaDto.Response qnaToQnaResponseDto(Qna qna) {
         if ( qna == null ) {
             return null;
         }
@@ -53,7 +53,7 @@ public interface QnaMapper {
         modifiedAt = qna.getModifiedAt();
         userNickname = qna.getMember().getUserNickname();
 
-        QnaDto.Response response = new QnaDto.Response( userNickname, qnaId, title, body, imgURL,category,tags, view, comments, commentCount,postTime, createdAt, modifiedAt );
+        QnaDto.Response response = new QnaDto.Response( userNickname, qnaId, title, body, imgURL,category,tags, view, commentCount,postTime, createdAt, modifiedAt );
 
         return response;
     }
