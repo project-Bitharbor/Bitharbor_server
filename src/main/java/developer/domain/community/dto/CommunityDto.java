@@ -48,7 +48,6 @@ public class CommunityDto {
         private String category;
         private List<String> tags;
         private Integer view;
-//        private List<CommunityCommentDto.Response> comments;
         private Integer commentCount;
         private String postTime;
         private LocalDateTime createdAt;
