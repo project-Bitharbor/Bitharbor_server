@@ -1,10 +1,7 @@
 package developer.domain.knowledge.mapper;
 
-import developer.domain.community.dto.CommunityDto;
-import developer.domain.community.entity.Community;
 import developer.domain.knowledge.dto.KnowledgeDto;
 import developer.domain.knowledge.entity.Knowledge;
-import developer.domain.knowledgeComment.dto.KnowledgeCommentDto;
 import org.mapstruct.Mapper;
 
 import java.time.LocalDateTime;
@@ -18,7 +15,7 @@ public interface KnowledgeMapper {
 
     Knowledge knowledgePatchDtoToKnowledge(KnowledgeDto.Patch requestBody);
 
-    // CommunityDto.Response communityToCommunityResponseDto(Community community);
+    KnowledgeDto.CommentResponse knowledgeToKnowledgeCommentResponseDto(Knowledge knowledge);
     default KnowledgeDto.Response knowledgeToKnowledgeResponseDto(Knowledge knowledge) {
         if ( knowledge == null ) {
             return null;
@@ -31,7 +28,6 @@ public interface KnowledgeMapper {
         String imgURL = null;
         String category = null;
         List<String> tags = null;
-        List<KnowledgeCommentDto.Response> comments = null;
         Integer commentCount = null;
         Integer view = null;
         String postTime = null;
@@ -55,7 +51,7 @@ public interface KnowledgeMapper {
         modifiedAt = knowledge.getModifiedAt();
         userNickname = knowledge.getMember().getUserNickname();
 
-        KnowledgeDto.Response response = new KnowledgeDto.Response( userNickname, knowledgeId, title, body, imgURL,category,tags, view, comments, commentCount,postTime, createdAt, modifiedAt );
+        KnowledgeDto.Response response = new KnowledgeDto.Response( userNickname, knowledgeId, title, body, imgURL,category,tags, view, commentCount,postTime, createdAt, modifiedAt );
 
         return response;
     }

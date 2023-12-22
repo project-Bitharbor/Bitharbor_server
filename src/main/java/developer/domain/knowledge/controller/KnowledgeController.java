@@ -1,11 +1,6 @@
 package developer.domain.knowledge.controller;
 
 import com.google.gson.Gson;
-import developer.domain.community.dto.CommunityDto;
-import developer.domain.community.entity.Community;
-import developer.domain.community.mapper.CommunityMapper;
-import developer.domain.community.repository.CommunityRepository;
-import developer.domain.community.service.CommunityService;
 import developer.domain.knowledge.dto.KnowledgeDto;
 import developer.domain.knowledge.entity.Knowledge;
 import developer.domain.knowledge.mapper.KnowledgeMapper;
@@ -119,6 +114,15 @@ public class KnowledgeController {
         repository.save(find);
 
         KnowledgeDto.Response response = mapper.knowledgeToKnowledgeResponseDto(find);
+
+        return new ResponseEntity(new SingleResponse<>(response), HttpStatus.OK);
+    }
+
+    @GetMapping("/{knowledge-id}/comments")
+    public ResponseEntity getComments(@PathVariable("knowledge-id") @Positive long knowledgeId) {
+        Knowledge find = service.findPost(knowledgeId);
+
+        KnowledgeDto.CommentResponse response = mapper.knowledgeToKnowledgeCommentResponseDto(find);
         response.setComments(commentMapper.commentListToCommentResponseListDto(find.getKnowledgeComments()));
 
         return new ResponseEntity(new SingleResponse<>(response), HttpStatus.OK);

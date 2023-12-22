@@ -47,9 +47,8 @@ public class KnowledgeCommentDto {
         private String content;
         private long knowledgeId;
         private LocalDateTime createdAt;
-
         private String nickName;
-
+        private Long memberId;
         private String profileImgUrl;
         Response(){}
 

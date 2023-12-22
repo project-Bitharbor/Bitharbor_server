@@ -1,7 +1,5 @@
 package developer.domain.knowledgeComment.mapper;
 
-import developer.domain.communityComment.dto.CommunityCommentDto;
-import developer.domain.communityComment.entity.CommunityComment;
 import developer.domain.knowledgeComment.dto.KnowledgeCommentDto;
 import developer.domain.knowledgeComment.entity.KnowledgeComment;
 import org.mapstruct.Mapper;
@@ -27,8 +25,8 @@ public interface KnowledgeCommentMapper {
         response.content( comment.getContent() );
         response.knowledgeId( comment.getKnowledge().getKnowledgeId() );
         response.createdAt( comment.getCreatedAt() );
-
         response.nickName( comment.getMember().getUserNickname() );
+        response.memberId(comment.getMember().getMemberId());
         response.profileImgUrl( comment.getMember().getImgURL() );
 
         return response.build();
