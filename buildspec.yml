@@ -12,10 +12,10 @@ phases:
       - ./gradlew build
   post_build:
     commands:
-      - echo $(basename ./Bitharbor_server/build/libs/*.jar)
+      - echo $(basename ./build/libs/*.jar)
 artifacts:
   files:
-    - Bitharbor_server/build/libs/*.jar
-    - Bitharbor_server/scripts/**
-    - Bitharbor_server/appspec.yml
+    - build/libs/*.jar
+    - scripts/**
+    - appspec.yml
   discard-paths: yes
