@@ -10,6 +10,7 @@ phases:
       - cd DeployServer
       - chmod +x ./gradlew
       - ./gradlew build
+      - chmod +x scripts/deploy.sh
   post_build:
     commands:
       - echo $(basename ./build/libs/*.jar)
