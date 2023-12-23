@@ -117,7 +117,7 @@ public class QnaController {
         return new ResponseEntity(new SingleResponse<>(response), HttpStatus.OK);
     }
 
-    @GetMapping("/{qna-id}")
+    @GetMapping("/{qna-id}/comments")
     public ResponseEntity getComments(@PathVariable("qna-id") @Positive long qnaId) {
         Qna find = service.findPost(qnaId);
 
