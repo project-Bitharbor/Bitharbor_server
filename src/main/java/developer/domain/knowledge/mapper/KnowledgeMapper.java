@@ -16,8 +16,6 @@ public interface KnowledgeMapper {
 
     Knowledge knowledgePatchDtoToKnowledge(KnowledgeDto.Patch requestBody);
 
-//    KnowledgeDto.CommentResponse knowledgeToKnowledgeCommentResponseDto(Knowledge knowledge);
-
     default KnowledgeDto.CommentResponse knowledgeToKnowledgeCommentResponseDto(Knowledge knowledge) {
         if ( knowledge == null ) {
             return null;

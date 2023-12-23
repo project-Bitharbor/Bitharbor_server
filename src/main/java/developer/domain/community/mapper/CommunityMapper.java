@@ -15,7 +15,6 @@ public interface CommunityMapper {
 
     Community communityPatchDtoToCommunity(CommunityDto.Patch requestBody);
 
-//     CommunityDto.CommentResponse communityToCommunityCommentResponseDto(Community community);
     default CommunityDto.CommentResponse communityToCommunityCommentResponseDto(Community community) {
         if ( community == null ) {
             return null;
