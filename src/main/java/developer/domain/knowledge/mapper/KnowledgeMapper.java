@@ -2,6 +2,7 @@ package developer.domain.knowledge.mapper;
 
 import developer.domain.knowledge.dto.KnowledgeDto;
 import developer.domain.knowledge.entity.Knowledge;
+import developer.domain.knowledgeComment.dto.KnowledgeCommentDto;
 import org.mapstruct.Mapper;
 
 import java.time.LocalDateTime;
@@ -15,7 +16,19 @@ public interface KnowledgeMapper {
 
     Knowledge knowledgePatchDtoToKnowledge(KnowledgeDto.Patch requestBody);
 
-    KnowledgeDto.CommentResponse knowledgeToKnowledgeCommentResponseDto(Knowledge knowledge);
+//    KnowledgeDto.CommentResponse knowledgeToKnowledgeCommentResponseDto(Knowledge knowledge);
+
+    default KnowledgeDto.CommentResponse knowledgeToKnowledgeCommentResponseDto(Knowledge knowledge) {
+        if ( knowledge == null ) {
+            return null;
+        }
+
+        List<KnowledgeCommentDto.Response> comments = null;
+
+        KnowledgeDto.CommentResponse commentResponse = new KnowledgeDto.CommentResponse( comments );
+
+        return commentResponse;
+    }
     default KnowledgeDto.Response knowledgeToKnowledgeResponseDto(Knowledge knowledge) {
         if ( knowledge == null ) {
             return null;

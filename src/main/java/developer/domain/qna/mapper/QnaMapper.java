@@ -16,7 +16,18 @@ public interface QnaMapper {
 
     Qna qnaPatchDtoToQna(QnaDto.Patch requestBody);
 
-    QnaDto.CommentResponse qnaToQnaCommentResponseDto(Qna qna);
+//    QnaDto.CommentResponse qnaToQnaCommentResponseDto(Qna qna);
+    default QnaDto.CommentResponse qnaToQnaCommentResponseDto(Qna qna) {
+        if ( qna == null ) {
+            return null;
+        }
+
+        List<QnaCommentDto.Response> comments = null;
+
+        QnaDto.CommentResponse commentResponse = new QnaDto.CommentResponse( comments );
+
+        return commentResponse;
+    }
     default QnaDto.Response qnaToQnaResponseDto(Qna qna) {
         if ( qna == null ) {
             return null;

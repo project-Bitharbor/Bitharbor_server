@@ -15,7 +15,18 @@ public interface CommunityMapper {
 
     Community communityPatchDtoToCommunity(CommunityDto.Patch requestBody);
 
-     CommunityDto.CommentResponse communityToCommunityCommentResponseDto(Community community);
+//     CommunityDto.CommentResponse communityToCommunityCommentResponseDto(Community community);
+    default CommunityDto.CommentResponse communityToCommunityCommentResponseDto(Community community) {
+        if ( community == null ) {
+            return null;
+        }
+
+        List<CommunityCommentDto.Response> comments = null;
+
+        CommunityDto.CommentResponse commentResponse = new CommunityDto.CommentResponse( comments );
+
+        return commentResponse;
+    }
     default CommunityDto.Response communityToCommunityResponseDto(Community community) {
         if ( community == null ) {
             return null;
