@@ -6,6 +6,7 @@ import developer.domain.community.service.CommunityService;
 import developer.domain.communityComment.dto.CommunityCommentDto;
 import developer.domain.communityComment.entity.CommunityComment;
 import developer.domain.communityComment.mapper.CommunityCommentMapper;
+import developer.domain.communityComment.repository.CommunityCommentRepository;
 import developer.domain.communityComment.service.CommunityCommentService;
 import developer.domain.member.entity.Member;
 import developer.domain.member.service.MemberService;
@@ -34,6 +35,7 @@ public class CommunityCommentController {
 
     private final CommunityCommentService communityCommentService;
     private final CommunityCommentMapper mapper;
+    private final CommunityCommentRepository repository;
     private final CommunityService communityService;
     private final MemberService memberService;
      private final JwtToken jwtToken;
@@ -107,7 +109,8 @@ public class CommunityCommentController {
             communityCommentService.deleteComment(commentId);
             Community community = communityService.findPost(communityId);
 
-            community.setCommentCount(community.getCommentCount() - 1);
+//            community.setCommentCount(community.getCommentCount() - 1);
+            community.setCommentCount(repository.findCountCommentSize(communityId));
             communityService.updatePost(community,communityId);
 
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
