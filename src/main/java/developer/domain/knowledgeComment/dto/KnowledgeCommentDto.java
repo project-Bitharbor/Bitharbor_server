@@ -50,6 +50,7 @@ public class KnowledgeCommentDto {
         private String nickName;
         private Long memberId;
         private String profileImgUrl;
+        private String postTime;
         Response(){}
 
     }

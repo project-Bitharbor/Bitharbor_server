@@ -34,13 +34,15 @@ public class KnowledgeComment extends Auditable {
     @JsonIgnore
     private Member member;
 
+    private String postTime;
 
     @Builder
-    public KnowledgeComment(long commentId, String content, Knowledge knowledge, Member member) {
+    public KnowledgeComment(long commentId, String content, Knowledge knowledge, Member member, String postTime) {
         this.commentId = commentId;
         this.content = content;
         this.knowledge = knowledge;
         this.member = member;
+        this.postTime = postTime;
     }
 
     public long getCommentId() {
