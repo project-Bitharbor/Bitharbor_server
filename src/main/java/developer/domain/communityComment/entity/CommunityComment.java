@@ -27,19 +27,21 @@ public class CommunityComment extends Auditable {
     @JsonIgnore
     private Community community;
 
-
     @ManyToOne
     @JoinColumn(name = "memberId")
     @JsonIgnore
     private Member member;
 
+    private String postTime;
+
 
     @Builder
-    public CommunityComment(long commentId, String content, Community community, Member member) {
+    public CommunityComment(long commentId, String content, Community community, Member member, String postTime) {
         this.commentId = commentId;
         this.content = content;
         this.community = community;
         this.member = member;
+        this.postTime = postTime;
     }
 
     public long getCommunityId() {

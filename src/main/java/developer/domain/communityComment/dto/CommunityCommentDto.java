@@ -47,6 +47,7 @@ public class CommunityCommentDto {
         private String nickName;
         private Long memberId;
         private String profileImgUrl;
+        private String postTime;
         Response(){}
 
     }
