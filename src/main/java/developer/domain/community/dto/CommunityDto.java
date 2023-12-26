@@ -52,6 +52,7 @@ public class CommunityDto {
         private String postTime;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
+        private Integer postSize;
     }
 
     @Getter @Setter

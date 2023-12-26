@@ -26,7 +26,7 @@ public interface CommunityMapper {
 
         return commentResponse;
     }
-    default CommunityDto.Response communityToCommunityResponseDto(Community community) {
+    default CommunityDto.Response communityToCommunityResponseDto(Community community, Integer postSize) {
         if ( community == null ) {
             return null;
         }
@@ -63,7 +63,7 @@ public interface CommunityMapper {
         modifiedAt = community.getModifiedAt();
         userNickname = community.getMember().getUserNickname();
 
-        CommunityDto.Response response = new CommunityDto.Response( userNickname, memberId, communityId, title, body, imgURL,category,tags, view, commentCount,postTime, createdAt, modifiedAt );
+        CommunityDto.Response response = new CommunityDto.Response( userNickname, memberId, communityId, title, body, imgURL,category,tags, view, commentCount,postTime, createdAt, modifiedAt, postSize );
 
         return response;
     }

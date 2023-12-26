@@ -84,7 +84,7 @@ public class CommunityController {
         Community updatedPost = service.updatePost(newPatch,postId);
 
 
-        return new ResponseEntity(new SingleResponse<>(mapper.communityToCommunityResponseDto(updatedPost)),HttpStatus.OK);
+        return new ResponseEntity(new SingleResponse<>(mapper.communityToCommunityResponseDto(updatedPost,0)),HttpStatus.OK);
     }
 
     @GetMapping
@@ -95,9 +95,11 @@ public class CommunityController {
         Pageable pageable = PageRequest.of(page, size, Sort.by("communityId"));
         Page<Community> postPage = service.findAllPost(pageable);
 
+        Integer postSize = repository.postCount();
+
         List<CommunityDto.Response> response = postPage
                 .stream()
-                .map(post->mapper.communityToCommunityResponseDto(post))
+                .map(post->mapper.communityToCommunityResponseDto(post,postSize))
                 .collect(Collectors.toList());
 
         PageInfo pageInfo = new PageInfo(
@@ -118,9 +120,11 @@ public class CommunityController {
         Community find = service.findPost(communityId);
         find.setPostTime(calculateTimeDifference(find.getCreatedAt()));
         find.setView(find.getView() + 1);
-        repository.save(find);
 
-        CommunityDto.Response response = mapper.communityToCommunityResponseDto(find);
+        repository.save(find);
+        Integer postSize = repository.postCount();
+
+        CommunityDto.Response response = mapper.communityToCommunityResponseDto(find,postSize);
 //        response.setComments(commentMapper.commentListToCommentResponseListDto(find.getCommunityComments()));
 
         return new ResponseEntity(new SingleResponse<>(response), HttpStatus.OK);
