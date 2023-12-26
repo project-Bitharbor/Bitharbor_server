@@ -33,13 +33,15 @@ public class QnaComment extends Auditable {
     @JsonIgnore
     private Member member;
 
+    private String postTime;
 
     @Builder
-    public QnaComment(long commentId, String content, Qna qna, Member member) {
+    public QnaComment(long commentId, String content, Qna qna, Member member, String postTime) {
         this.commentId = commentId;
         this.content = content;
         this.qna = qna;
         this.member = member;
+        this.postTime = postTime;
     }
 
     public long getCommentId() {

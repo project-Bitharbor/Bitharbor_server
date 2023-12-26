@@ -5,6 +5,7 @@ import developer.domain.qnaComment.entity.QnaComment;
 import org.mapstruct.Mapper;
 import org.springframework.data.domain.Page;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +29,7 @@ public interface QnaCommentMapper {
         response.nickName( comment.getMember().getUserNickname() );
         response.memberId( comment.getMember().getMemberId());
         response.profileImgUrl( comment.getMember().getImgURL() );
+        response.postTime(calculateTimeDifference(comment.getCreatedAt()));
 
         return response.build();
     }
@@ -56,6 +58,17 @@ public interface QnaCommentMapper {
                 .collect(Collectors.toList());
 
         return response;
+    }
+
+    default String calculateTimeDifference(LocalDateTime createdAt) {
+        long hoursDifference = java.time.Duration.between(createdAt, LocalDateTime.now() ).toHours();
+        if (hoursDifference < 1) {
+            return "방금 전";
+        } else if (hoursDifference < 24) {
+            return hoursDifference + "시간 전";
+        } else {
+            return (hoursDifference / 24) + "일 전";
+        }
     }
 
 }
