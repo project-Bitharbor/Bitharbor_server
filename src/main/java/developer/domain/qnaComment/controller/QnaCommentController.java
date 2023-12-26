@@ -5,6 +5,7 @@ import developer.domain.member.entity.Member;
 import developer.domain.member.service.MemberService;
 import developer.domain.qnaComment.dto.QnaCommentDto;
 import developer.domain.qnaComment.entity.QnaComment;
+import developer.domain.qnaComment.repository.QnaCommentRepository;
 import developer.domain.qnaComment.service.QnaCommentService;
 import developer.global.exception.BusinessLogicException;
 import developer.global.exception.ExceptionCode;
@@ -34,6 +35,7 @@ public class QnaCommentController {
 
     private final QnaCommentService qnaCommentService;
     private final QnaCommentMapper mapper;
+    private final QnaCommentRepository repository;
     private final QnaService qnaService;
     private final MemberService memberService;
      private final JwtToken jwtToken;
@@ -54,7 +56,8 @@ public class QnaCommentController {
         qnaComment.setMember(requestMember);
         qnaCommentService.createComment(qnaComment);
 
-        qna.setCommentCount(qna.getCommentCount() + 1);
+//        qna.setCommentCount(qna.getCommentCount() + 1);
+        qna.setCommentCount(repository.findCountCommentSize(qnaId));
         qnaService.updatePost(qna,qnaId);
 
 
@@ -107,7 +110,8 @@ public class QnaCommentController {
             qnaCommentService.deleteComment(commentId);
             Qna qna = qnaService.findPost(qnaId);
 
-            qna.setCommentCount(qna.getCommentCount() - 1);
+//            qna.setCommentCount(qna.getCommentCount() - 1);
+            qna.setCommentCount(repository.findCountCommentSize(qnaId));
             qnaService.updatePost(qna,commentId);
 
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

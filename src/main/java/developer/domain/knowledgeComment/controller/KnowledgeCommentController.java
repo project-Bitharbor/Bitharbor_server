@@ -7,6 +7,7 @@ import developer.domain.knowledge.service.KnowledgeService;
 import developer.domain.knowledgeComment.dto.KnowledgeCommentDto;
 import developer.domain.knowledgeComment.entity.KnowledgeComment;
 import developer.domain.knowledgeComment.mapper.KnowledgeCommentMapper;
+import developer.domain.knowledgeComment.repository.KnowledgeCommentRepository;
 import developer.domain.knowledgeComment.service.KnowledgeCommentService;
 import developer.domain.member.entity.Member;
 import developer.domain.member.service.MemberService;
@@ -35,6 +36,7 @@ public class KnowledgeCommentController {
 
     private final KnowledgeCommentService knowledgeCommentService;
     private final KnowledgeCommentMapper mapper;
+    private final KnowledgeCommentRepository repository;
     private final KnowledgeService knowledgeService;
     private final MemberService memberService;
      private final JwtToken jwtToken;
@@ -55,7 +57,8 @@ public class KnowledgeCommentController {
         knowledgeComment.setMember(requestMember);
         knowledgeCommentService.createComment(knowledgeComment);
 
-        knowledge.setCommentCount(knowledge.getCommentCount() + 1);
+//        knowledge.setCommentCount(knowledge.getCommentCount() + 1);
+        knowledge.setCommentCount(repository.findCountCommentSize(knowledgeId));
         knowledgeService.updatePost(knowledge,knowledgeId);
 
 

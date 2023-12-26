@@ -56,7 +56,8 @@ public class CommunityCommentController {
         communityComment.setMember(requestMember);
         communityCommentService.createComment(communityComment);
 
-        community.setCommentCount(community.getCommentCount() + 1);
+//        community.setCommentCount(community.getCommentCount() + 1);
+        community.setCommentCount(repository.findCountCommentSize(communityId));
         communityService.updatePost(community,communityId);
 
 
