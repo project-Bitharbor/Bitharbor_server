@@ -89,7 +89,7 @@ public class CommunityController {
 
     @GetMapping
     public ResponseEntity getAllPost(@RequestParam(defaultValue = "0") int page,
-                                         @RequestParam(defaultValue = "100") int size) {
+                                         @RequestParam(defaultValue = "10") int size) {
         // default 값이 아닌 경우는 page 번호를 1번부터 받음.
         if (page != 0) page -= 1;
         Pageable pageable = PageRequest.of(page, size, Sort.by("communityId"));
