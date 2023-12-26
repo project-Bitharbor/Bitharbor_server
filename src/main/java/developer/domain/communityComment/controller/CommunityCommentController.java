@@ -108,7 +108,7 @@ public class CommunityCommentController {
             Community community = communityService.findPost(communityId);
 
             community.setCommentCount(community.getCommentCount() - 1);
-            communityService.updatePost(community,commentId);
+            communityService.updatePost(community,communityId);
 
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
