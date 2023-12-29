@@ -72,6 +72,12 @@ public class CommunityService {
 
     }
 
+    public Page<Community> findSearchPost(String body, Pageable pageable) {
+
+        return repository.findCommunityByTitleOrBody(body, pageable);
+
+    }
+
     public void deletePost (long postId,long memberId) {
 
         Community post = existsPost(postId);
