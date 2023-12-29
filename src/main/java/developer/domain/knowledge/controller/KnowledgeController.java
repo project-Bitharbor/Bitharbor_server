@@ -78,7 +78,7 @@ public class KnowledgeController {
 
         Knowledge updatedPost = service.updatePost(newPatch,knowledgeId);
 
-        return new ResponseEntity(new SingleResponse<>(mapper.knowledgeToKnowledgeResponseDto(updatedPost)), HttpStatus.OK);
+        return new ResponseEntity(new SingleResponse<>(mapper.knowledgeToKnowledgeResponseDto(updatedPost,0)), HttpStatus.OK);
     }
 
     @GetMapping
@@ -88,9 +88,11 @@ public class KnowledgeController {
         Pageable pageable = PageRequest.of(page, size, Sort.by("knowledgeId").descending());
         Page<Knowledge> postPage = service.findAllPost(pageable);
 
+        Integer postSize = repository.postCount();
+
         List<KnowledgeDto.Response> response = postPage
                 .stream()
-                .map(post->mapper.knowledgeToKnowledgeResponseDto(post))
+                .map(post->mapper.knowledgeToKnowledgeResponseDto(post,postSize))
                 .collect(Collectors.toList());
 
         PageInfo pageInfo = new PageInfo(
@@ -113,7 +115,9 @@ public class KnowledgeController {
         find.setView(find.getView() + 1);
         repository.save(find);
 
-        KnowledgeDto.Response response = mapper.knowledgeToKnowledgeResponseDto(find);
+        Integer postSize = repository.postCount();
+
+        KnowledgeDto.Response response = mapper.knowledgeToKnowledgeResponseDto(find,postSize);
 
         return new ResponseEntity(new SingleResponse<>(response), HttpStatus.OK);
     }

@@ -27,7 +27,7 @@ public interface KnowledgeMapper {
 
         return commentResponse;
     }
-    default KnowledgeDto.Response knowledgeToKnowledgeResponseDto(Knowledge knowledge) {
+    default KnowledgeDto.Response knowledgeToKnowledgeResponseDto(Knowledge knowledge, Integer postSize) {
         if ( knowledge == null ) {
             return null;
         }
@@ -62,7 +62,7 @@ public interface KnowledgeMapper {
         modifiedAt = knowledge.getModifiedAt();
         userNickname = knowledge.getMember().getUserNickname();
 
-        KnowledgeDto.Response response = new KnowledgeDto.Response( userNickname, knowledgeId, title, body, imgURL,category,tags, view, commentCount,postTime, createdAt, modifiedAt );
+        KnowledgeDto.Response response = new KnowledgeDto.Response( userNickname, knowledgeId, title, body, imgURL,category,tags, view, commentCount,postTime, createdAt, modifiedAt, postSize );
 
         return response;
     }
