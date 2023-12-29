@@ -143,11 +143,11 @@ public class CommunityController {
     @GetMapping("/search")
     public ResponseEntity getSearchPost(@RequestParam() int page,
                                      @RequestParam() int size,
-                                     @RequestParam() String body) {
+                                     @RequestParam() String keyword) {
         // default 값이 아닌 경우는 page 번호를 1번부터 받음.
         if (page != 0) page -= 1;
         Pageable pageable = PageRequest.of(page, size);
-        Page<Community> postPage = service.findSearchPost(body,pageable);
+        Page<Community> postPage = service.findSearchPost(keyword,pageable);
 
         Integer postSize = repository.postCount();
 
