@@ -77,7 +77,7 @@ public class QnaController {
 
         Qna updatedPost = service.updatePost(newPatch,qnaId);
 
-        return new ResponseEntity(new SingleResponse<>(mapper.qnaToQnaResponseDto(updatedPost)), HttpStatus.OK);
+        return new ResponseEntity(new SingleResponse<>(mapper.qnaToQnaResponseDto(updatedPost,0)), HttpStatus.OK);
     }
 
     @GetMapping
@@ -87,9 +87,11 @@ public class QnaController {
         Pageable pageable = PageRequest.of(page, size, Sort.by("qnaId").descending());
         Page<Qna> postPage = service.findAllPost(pageable);
 
+        Integer postSize = repository.postCount();
+
         List<QnaDto.Response> response = postPage
                 .stream()
-                .map(post->mapper.qnaToQnaResponseDto(post))
+                .map(post->mapper.qnaToQnaResponseDto(post,postSize))
                 .collect(Collectors.toList());
 
         PageInfo pageInfo = new PageInfo(
@@ -111,8 +113,9 @@ public class QnaController {
         find.setPostTime(calculateTimeDifference(find.getCreatedAt()));
         find.setView(find.getView() + 1);
         repository.save(find);
+        Integer postSize = repository.postCount();
 
-        QnaDto.Response response = mapper.qnaToQnaResponseDto(find);
+        QnaDto.Response response = mapper.qnaToQnaResponseDto(find,postSize);
 
         return new ResponseEntity(new SingleResponse<>(response), HttpStatus.OK);
     }

@@ -27,7 +27,7 @@ public interface QnaMapper {
 
         return commentResponse;
     }
-    default QnaDto.Response qnaToQnaResponseDto(Qna qna) {
+    default QnaDto.Response qnaToQnaResponseDto(Qna qna, Integer postSize) {
         if ( qna == null ) {
             return null;
         }
@@ -63,7 +63,7 @@ public interface QnaMapper {
         modifiedAt = qna.getModifiedAt();
         userNickname = qna.getMember().getUserNickname();
 
-        QnaDto.Response response = new QnaDto.Response( userNickname, qnaId, title, body, imgURL,category,tags, view, commentCount,postTime, createdAt, modifiedAt );
+        QnaDto.Response response = new QnaDto.Response( userNickname, qnaId, title, body, imgURL,category,tags, view, commentCount,postTime, createdAt, modifiedAt, postSize );
 
         return response;
     }
