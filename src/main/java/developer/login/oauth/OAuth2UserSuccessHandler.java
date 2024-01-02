@@ -96,10 +96,8 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 
         return UriComponentsBuilder
                 .newInstance()
-//                .scheme("https")
-//                .host("petching.net")
-                .scheme("http")
-                .host("localhost:8080")
+                .scheme("https")
+                .host("bit-barbor.vercel.app")
 //                .port(80)
 //                .path("/receive-token.html")
                 .queryParams(queryParams)
