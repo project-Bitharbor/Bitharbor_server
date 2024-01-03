@@ -23,7 +23,6 @@ public class CommunityDto {
         private String imgURL;
         @NotBlank
         private String category;
-        private List<String> tags;
     }
 
     @Getter @Setter
@@ -33,7 +32,6 @@ public class CommunityDto {
         private String body;
         private String imgURL;
         private String category;
-        private List<String> tags;
     }
 
     @Getter @Setter
@@ -46,7 +44,6 @@ public class CommunityDto {
         private String body;
         private String imgURL;
         private String category;
-        private List<String> tags;
         private Integer view;
         private Integer commentCount;
         private String postTime;

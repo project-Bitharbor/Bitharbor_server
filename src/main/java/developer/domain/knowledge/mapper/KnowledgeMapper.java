@@ -38,7 +38,6 @@ public interface KnowledgeMapper {
         String body = null;
         String imgURL = null;
         String category = null;
-        List<String> tags = null;
         Integer commentCount = null;
         Integer view = null;
         String postTime = null;
@@ -51,10 +50,6 @@ public interface KnowledgeMapper {
         body = knowledge.getBody();
         imgURL = knowledge.getImgURL();
         category = knowledge.getCategory();
-        List<String> list = knowledge.getTags();
-        if ( list != null ) {
-            tags = new ArrayList<String>( list );
-        }
         view = knowledge.getView();
         commentCount = knowledge.getCommentCount();
         postTime = knowledge.getPostTime();
@@ -62,7 +57,7 @@ public interface KnowledgeMapper {
         modifiedAt = knowledge.getModifiedAt();
         userNickname = knowledge.getMember().getUserNickname();
 
-        KnowledgeDto.Response response = new KnowledgeDto.Response( userNickname, knowledgeId, title, body, imgURL,category,tags, view, commentCount,postTime, createdAt, modifiedAt, postSize );
+        KnowledgeDto.Response response = new KnowledgeDto.Response( userNickname, knowledgeId, title, body, imgURL,category, view, commentCount,postTime, createdAt, modifiedAt, postSize );
 
         return response;
     }

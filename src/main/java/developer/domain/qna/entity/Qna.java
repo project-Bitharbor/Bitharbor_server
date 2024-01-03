@@ -31,8 +31,6 @@ public class Qna extends Auditable {
     private int view;
     @Column
     private String category;
-    @ElementCollection
-    private List<String> tags;
     @OneToMany(mappedBy = "qna", cascade = CascadeType.ALL)
     @JsonIgnore
     List<QnaComment> qnaComments = new ArrayList<>();

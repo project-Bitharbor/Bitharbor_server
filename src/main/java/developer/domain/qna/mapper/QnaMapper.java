@@ -38,7 +38,6 @@ public interface QnaMapper {
         String body = null;
         String imgURL = null;
         String category = null;
-        List<String> tags = null;
         List<QnaCommentDto.Response> comments = null;
         Integer commentCount = null;
         Integer view = null;
@@ -52,10 +51,6 @@ public interface QnaMapper {
         body = qna.getBody();
         imgURL = qna.getImgURL();
         category = qna.getCategory();
-        List<String> list = qna.getTags();
-        if ( list != null ) {
-            tags = new ArrayList<String>( list );
-        }
         view = qna.getView();
         commentCount = qna.getCommentCount();
         postTime = qna.getPostTime();
@@ -63,7 +58,7 @@ public interface QnaMapper {
         modifiedAt = qna.getModifiedAt();
         userNickname = qna.getMember().getUserNickname();
 
-        QnaDto.Response response = new QnaDto.Response( userNickname, qnaId, title, body, imgURL,category,tags, view, commentCount,postTime, createdAt, modifiedAt, postSize );
+        QnaDto.Response response = new QnaDto.Response( userNickname, qnaId, title, body, imgURL,category, view, commentCount,postTime, createdAt, modifiedAt, postSize );
 
         return response;
     }

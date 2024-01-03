@@ -57,8 +57,6 @@ public class KnowledgeService {
                 .ifPresent(findPost::setCategory);
         Optional.ofNullable(patch.getCategory())
                 .ifPresent(findPost::setCategory);
-        Optional.ofNullable(patch.getTags())
-                .ifPresent(findPost::setTags);
         return repository.save(findPost);
     }
 

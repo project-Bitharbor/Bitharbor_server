@@ -32,8 +32,6 @@ public class Knowledge extends Auditable {
     private int view;
     @Column
     private String category;
-    @ElementCollection
-    private List<String> tags;
     @OneToMany(mappedBy = "knowledge", cascade = CascadeType.ALL)
     @JsonIgnore
     List<KnowledgeComment> knowledgeComments = new ArrayList<>();

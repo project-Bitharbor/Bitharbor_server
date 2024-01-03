@@ -26,8 +26,6 @@ public class Community extends Auditable {
     private int view;
     @Column
     private String category;
-    @ElementCollection
-    private List<String> tags;
     @OneToMany(mappedBy = "community", cascade = CascadeType.ALL)
     @JsonIgnore
     List<CommunityComment> communityComments = new ArrayList<>();

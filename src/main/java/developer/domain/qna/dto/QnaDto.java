@@ -24,7 +24,6 @@ public class QnaDto {
         @NotBlank
         private String imgURL;
         private String category;
-        private List<String> tags;
     }
 
     @Getter @Setter
@@ -35,7 +34,6 @@ public class QnaDto {
         private String body;
         private String imgURL;
         private String category;
-        private List<String> tags;
     }
 
     @Getter @Setter
@@ -47,7 +45,6 @@ public class QnaDto {
         private String body;
         private String imgURL;
         private String category;
-        private List<String> tags;
         private Integer view;
         private Integer commentCount;
         private String postTime;

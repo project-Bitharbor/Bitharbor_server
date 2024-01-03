@@ -38,7 +38,6 @@ public interface CommunityMapper {
         String body = null;
         String imgURL = null;
         String category = null;
-        List<String> tags = null;
         Integer commentCount = null;
         Integer view = null;
         String postTime = null;
@@ -52,10 +51,6 @@ public interface CommunityMapper {
         body = community.getBody();
         imgURL = community.getImgURL();
         category = community.getCategory();
-        List<String> list = community.getTags();
-        if ( list != null ) {
-            tags = new ArrayList<String>( list );
-        }
         view = community.getView();
         commentCount = community.getCommentCount();
         postTime = community.getPostTime();
@@ -63,7 +58,7 @@ public interface CommunityMapper {
         modifiedAt = community.getModifiedAt();
         userNickname = community.getMember().getUserNickname();
 
-        CommunityDto.Response response = new CommunityDto.Response( userNickname, memberId, communityId, title, body, imgURL,category,tags, view, commentCount,postTime, createdAt, modifiedAt, postSize );
+        CommunityDto.Response response = new CommunityDto.Response( userNickname, memberId, communityId, title, body, imgURL,category, view, commentCount,postTime, createdAt, modifiedAt, postSize );
 
         return response;
     }
