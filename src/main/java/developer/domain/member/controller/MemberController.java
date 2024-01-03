@@ -2,6 +2,7 @@ package developer.domain.member.controller;
 
 import developer.domain.member.dto.MemberDto;
 import developer.domain.member.entity.Member;
+import developer.domain.member.entity.MemberProfile;
 import developer.domain.member.mapper.MemberMapper;
 import developer.domain.member.repository.MemberRepository;
 import developer.domain.member.service.MemberService;
@@ -42,6 +43,7 @@ public class MemberController {
     @PostMapping
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody) {
 
+        requestBody.setProfileImg(MemberProfile.getMemberProfile(requestBody.getProfileNum()).getProfile());
         Member member = mapper.memberPostDtoToMember(requestBody);
 
         if (memberRepository.existsByEmail(requestBody.getEmail())) {

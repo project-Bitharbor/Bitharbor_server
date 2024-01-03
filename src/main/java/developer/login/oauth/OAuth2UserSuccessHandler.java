@@ -76,7 +76,7 @@ public class OAuth2UserSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         member.setEmail(email);
         member.setSocialType(oauth);
         member.setUserNickname(name);
-        member.setImgURL(profileImg);
+        member.setProfileImg(profileImg);
         member.setRoles(customAuthorityUtils.createRoles(email));
 
         return memberRepository.save(member);

@@ -4,6 +4,7 @@ package developer.domain.member.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.util.Assert;
 
 import javax.validation.constraints.Email;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 
 public class MemberDto {
     @Getter
+    @Setter
     @NoArgsConstructor
     public static class Post {
         @NotBlank
@@ -29,6 +31,8 @@ public class MemberDto {
         private String userNickname;
         @NotBlank
         private String phoneNumber;
+        private String profileImg;
+        private Integer profileNum;
     }
 
     @Getter
@@ -63,6 +67,7 @@ public class MemberDto {
         private String phoneNumber;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
+        private String profileImg;
 
     }
 }
