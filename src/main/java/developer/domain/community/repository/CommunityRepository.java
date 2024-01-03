@@ -13,4 +13,7 @@ public interface CommunityRepository extends JpaRepository<Community,Long> {
 
     @Query(value = "SELECT * FROM community WHERE title LIKE %:keyword% OR body LIKE %:keyword%", nativeQuery = true)
     Page<Community> findCommunityByTitleOrBody(String keyword, Pageable pageable);
+
+    @Query(value = "SELECT * FROM community WHERE category = :category", nativeQuery = true)
+    Page<Community> findCommunityByCategory(String category, Pageable pageable);
 }

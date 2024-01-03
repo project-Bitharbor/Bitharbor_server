@@ -169,6 +169,35 @@ public class CommunityController {
 
     }
 
+    @GetMapping("/category")
+    public ResponseEntity getCategoryPost(@RequestParam() int page,
+                                          @RequestParam() int size,
+                                          @RequestParam() String category) {
+        // default 값이 아닌 경우는 page 번호를 1번부터 받음.
+        if (page != 0) page -= 1;
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Community> postPage = service.findCategoryPost(category,pageable);
+
+        Integer postSize = repository.postCount();
+
+        List<CommunityDto.Response> response = postPage
+                .stream()
+                .map(post->mapper.communityToCommunityResponseDto(post,postSize))
+                .collect(Collectors.toList());
+
+        PageInfo pageInfo = new PageInfo(
+                postPage.getNumber(),
+                postPage.getSize(),
+                postPage.getTotalElements(),
+                postPage.getTotalPages()
+        );
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-Page-Info", new Gson().toJson(pageInfo));
+
+        return ResponseEntity.ok().headers(headers).body(new MultiResponse<>(response,postPage));
+
+    }
+
 
     @DeleteMapping("/{community-id}")
     public ResponseEntity PatchPost(@PathVariable("community-id") @Positive long communityId,

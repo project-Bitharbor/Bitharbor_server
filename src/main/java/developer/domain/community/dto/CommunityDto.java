@@ -20,8 +20,8 @@ public class CommunityDto {
         private String title;
         @NotBlank(message = "내용은 필수 입력 사항입니다.")
         private String body;
-        @NotBlank
         private String imgURL;
+        @NotBlank
         private String category;
         private List<String> tags;
     }
