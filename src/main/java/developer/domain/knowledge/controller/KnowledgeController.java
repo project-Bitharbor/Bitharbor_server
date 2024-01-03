@@ -3,6 +3,7 @@ package developer.domain.knowledge.controller;
 import com.google.gson.Gson;
 import developer.domain.knowledge.dto.KnowledgeDto;
 import developer.domain.knowledge.entity.Knowledge;
+import developer.domain.knowledge.entity.RandomThumbnail;
 import developer.domain.knowledge.mapper.KnowledgeMapper;
 import developer.domain.knowledge.repository.KnowledgeRepository;
 import developer.domain.knowledge.service.KnowledgeService;
@@ -52,6 +53,10 @@ public class KnowledgeController {
 
         authorization = authorization.replaceAll("Bearer ","");
         Member member = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
+
+        if (post.getImgURL() == null) {
+            post.setImgURL(RandomThumbnail.getRandomThumbnail().getThumbmail());
+        }
 
         Knowledge newPost = mapper.knowledgePostDtoToKnowledge(post);
 
