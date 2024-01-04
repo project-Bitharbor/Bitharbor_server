@@ -137,6 +137,35 @@ public class KnowledgeController {
         return new ResponseEntity(new SingleResponse<>(response), HttpStatus.OK);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity getSearchPost(@RequestParam() int page,
+                                        @RequestParam() int size,
+                                        @RequestParam() String keyword) {
+        // default 값이 아닌 경우는 page 번호를 1번부터 받음.
+        if (page != 0) page -= 1;
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Knowledge> postPage = service.findSearchPost(keyword,pageable);
+
+        Integer postSize = repository.postCount();
+
+        List<KnowledgeDto.Response> response = postPage
+                .stream()
+                .map(post->mapper.knowledgeToKnowledgeResponseDto(post,postSize))
+                .collect(Collectors.toList());
+
+        PageInfo pageInfo = new PageInfo(
+                postPage.getNumber(),
+                postPage.getSize(),
+                postPage.getTotalElements(),
+                postPage.getTotalPages()
+        );
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-Page-Info", new Gson().toJson(pageInfo));
+
+        return ResponseEntity.ok().headers(headers).body(new MultiResponse<>(response,postPage));
+
+    }
+
     @DeleteMapping("/{knowledge-id}")
     public ResponseEntity PatchPost(@PathVariable("knowledge-id") @Positive long knowledgeId,
                                     @RequestHeader("Authorization") String authorization

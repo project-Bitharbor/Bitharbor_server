@@ -70,6 +70,12 @@ public class KnowledgeService {
 
     }
 
+    public Page<Knowledge> findSearchPost(String keyword, Pageable pageable) {
+
+        return repository.findKnowledgeByTitleOrBody(keyword, pageable);
+
+    }
+
     public void deletePost (long postId,long memberId) {
 
         Knowledge post = existsPost(postId);
