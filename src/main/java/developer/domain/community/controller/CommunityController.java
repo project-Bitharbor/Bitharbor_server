@@ -58,7 +58,10 @@ public class CommunityController {
         authorization = authorization.replaceAll("Bearer ","");
         Member member = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
 
+
         Community newPost = mapper.communityPostDtoToCommunity(post);
+
+        newPost.setPostTime(calculateTimeDifference(LocalDateTime.now()));
 
         newPost.setMember(member);
 
@@ -92,7 +95,7 @@ public class CommunityController {
                                          @RequestParam() int size) {
         // default 값이 아닌 경우는 page 번호를 1번부터 받음.
         if (page != 0) page -= 1;
-        Pageable pageable = PageRequest.of(page, size, Sort.by("communityId"));
+        Pageable pageable = PageRequest.of(page, size, Sort.by("communityId").descending());
         Page<Community> postPage = service.findAllPost(pageable);
 
         Integer postSize = repository.postCount();
@@ -146,7 +149,7 @@ public class CommunityController {
                                      @RequestParam() String keyword) {
         // default 값이 아닌 경우는 page 번호를 1번부터 받음.
         if (page != 0) page -= 1;
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size,Sort.by("community_id").descending());
         Page<Community> postPage = service.findSearchPost(keyword,pageable);
 
         Integer postSize = repository.postCount();
@@ -175,7 +178,7 @@ public class CommunityController {
                                           @RequestParam() String category) {
         // default 값이 아닌 경우는 page 번호를 1번부터 받음.
         if (page != 0) page -= 1;
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size,Sort.by("community_id").descending());
         Page<Community> postPage = service.findCategoryPost(category,pageable);
 
         Integer postSize = repository.postCount();
