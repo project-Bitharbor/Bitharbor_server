@@ -60,6 +60,7 @@ public class KnowledgeController {
 
         Knowledge newPost = mapper.knowledgePostDtoToKnowledge(post);
 
+        newPost.setPostTime(calculateTimeDifference(LocalDateTime.now()));
         newPost.setMember(member);
 
         Knowledge createdPost = service.savePost(newPost);

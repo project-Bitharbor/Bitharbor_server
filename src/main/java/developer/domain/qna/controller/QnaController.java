@@ -54,6 +54,8 @@ public class QnaController {
         Member member = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
 
         Qna newPost = mapper.qnaPostDtoToQna(post);
+
+        newPost.setPostTime(calculateTimeDifference(LocalDateTime.now()));
         newPost.setMember(member);
 
         Qna createdPost = service.savePost(newPost);

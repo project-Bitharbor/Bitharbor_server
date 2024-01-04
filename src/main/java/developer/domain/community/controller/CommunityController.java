@@ -62,7 +62,6 @@ public class CommunityController {
         Community newPost = mapper.communityPostDtoToCommunity(post);
 
         newPost.setPostTime(calculateTimeDifference(LocalDateTime.now()));
-
         newPost.setMember(member);
 
         Community createdPost = service.savePost(newPost);
