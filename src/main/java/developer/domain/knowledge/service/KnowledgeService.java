@@ -76,6 +76,12 @@ public class KnowledgeService {
 
     }
 
+    public Page<Knowledge> findCategoryPost(String keyword, Pageable pageable) {
+
+        return repository.findKnowledgeByCategory(keyword, pageable);
+
+    }
+
     public void deletePost (long postId,long memberId) {
 
         Knowledge post = existsPost(postId);
