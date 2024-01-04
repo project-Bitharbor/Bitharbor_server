@@ -72,6 +72,12 @@ public class QnaService {
 
     }
 
+    public Page<Qna> findCategoryPost(String category, Pageable pageable) {
+
+        return repository.findQnaByCategory(category, pageable);
+
+    }
+
     public void deletePost (long postId,long memberId) {
 
         Qna post = existsPost(postId);

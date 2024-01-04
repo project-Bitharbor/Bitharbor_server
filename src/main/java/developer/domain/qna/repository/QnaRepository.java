@@ -1,5 +1,6 @@
 package developer.domain.qna.repository;
 
+import developer.domain.community.entity.Community;
 import developer.domain.qna.entity.Qna;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,4 +14,7 @@ public interface QnaRepository extends JpaRepository<Qna,Long> {
 
     @Query(value = "SELECT * FROM qna WHERE title LIKE %:keyword% OR body LIKE %:keyword%", nativeQuery = true)
     Page<Qna> findQnaByTitleOrBody(String keyword, Pageable pageable);
+
+    @Query(value = "SELECT * FROM qna WHERE category = :category", nativeQuery = true)
+    Page<Qna> findQnaByCategory(String category, Pageable pageable);
 }
