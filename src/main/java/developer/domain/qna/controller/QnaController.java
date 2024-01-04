@@ -130,6 +130,35 @@ public class QnaController {
         return new ResponseEntity(new SingleResponse<>(response), HttpStatus.OK);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity getSearchPost(@RequestParam() int page,
+                                        @RequestParam() int size,
+                                        @RequestParam() String keyword) {
+        // default 값이 아닌 경우는 page 번호를 1번부터 받음.
+        if (page != 0) page -= 1;
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Qna> postPage = service.findSearchPost(keyword,pageable);
+
+        Integer postSize = repository.postCount();
+
+        List<QnaDto.Response> response = postPage
+                .stream()
+                .map(post->mapper.qnaToQnaResponseDto(post,postSize))
+                .collect(Collectors.toList());
+
+        PageInfo pageInfo = new PageInfo(
+                postPage.getNumber(),
+                postPage.getSize(),
+                postPage.getTotalElements(),
+                postPage.getTotalPages()
+        );
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-Page-Info", new Gson().toJson(pageInfo));
+
+        return ResponseEntity.ok().headers(headers).body(new MultiResponse<>(response,postPage));
+
+    }
+
     @DeleteMapping("/{qna-id}")
     public ResponseEntity PatchPost(@PathVariable("qna-id") @Positive long qnaId,
                                     @RequestHeader("Authorization") String authorization

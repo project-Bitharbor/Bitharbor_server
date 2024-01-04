@@ -1,7 +1,6 @@
 package developer.domain.qna.service;
 
 
-import developer.domain.community.entity.Community;
 import developer.domain.member.entity.Member;
 import developer.domain.member.service.MemberService;
 import developer.domain.qna.dto.QnaDto;
@@ -64,6 +63,12 @@ public class QnaService {
     public Page<Qna> findAllPost(Pageable pageable) {
 
         return repository.findAll(pageable);
+
+    }
+
+    public Page<Qna> findSearchPost(String keyword, Pageable pageable) {
+
+        return repository.findQnaByTitleOrBody(keyword, pageable);
 
     }
 
