@@ -76,9 +76,9 @@ public class KnowledgeService {
 
     }
 
-    public Page<Knowledge> findCategoryPost(String keyword, Pageable pageable) {
+    public Page<Knowledge> findCategoryPost(String category, Pageable pageable) {
 
-        return repository.findKnowledgeByCategory(keyword, pageable);
+        return repository.findKnowledgeByCategory(category, pageable);
 
     }
 
