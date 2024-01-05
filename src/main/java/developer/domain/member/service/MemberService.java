@@ -66,11 +66,6 @@ public class MemberService {
 
     public Member findMember(long memberId) {
 
-//        long loginMemberId = getLoginMemberId();
-//        if (loginMemberId != memberId) {
-//            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_MEMBER);
-//        }
-
         Member findMember = repository.findByMemberId(memberId);
 
         return findMember;
@@ -82,10 +77,6 @@ public class MemberService {
     }
 
     public void deleteMember(long memberId) {
-//        long loginMemberId = getLoginMemberId();
-//        if (loginMemberId != memberId) {
-//            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_MEMBER);
-//        }
 
         repository.deleteById(memberId);
     }

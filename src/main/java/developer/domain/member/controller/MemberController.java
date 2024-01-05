@@ -10,11 +10,14 @@ import developer.global.exception.BusinessLogicException;
 import developer.global.exception.ExceptionCode;
 import developer.global.response.SingleResponse;
 import developer.global.utils.URICreator;
+import developer.login.oauth.userInfo.JwtToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -39,6 +42,7 @@ public class MemberController {
     private final MemberMapper mapper;
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtToken jwtToken;
 
 
     @PostMapping
@@ -67,10 +71,16 @@ public class MemberController {
 
     @PatchMapping("/{member-id}")
     public ResponseEntity patchMember(@Valid @RequestBody MemberDto.Patch requestBody,
-                                      @PathVariable("member-id") Long memberId) {
+                                      @PathVariable("member-id") Long memberId,
+                                      @RequestHeader("Authorization") String authorization) {
 
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String currentUserName = authentication.getPrincipal().toString()
+        Member loginMember = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
+
+        if(loginMember.getMemberId() != memberId) {
+            String errorMessage = "권한이 없습니다! 확인하여주세요!";
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage);
+        }
+
         Member member = mapper.memberPatchDtoToMember(requestBody);
         member.setMemberId(memberId);
 
@@ -93,8 +103,18 @@ public class MemberController {
     }
 
     @GetMapping("/{member-id}")
-    public ResponseEntity getMember(@PathVariable("member-id") Long memberId) {
+    public ResponseEntity getMember(@PathVariable("member-id") Long memberId,
+                                    @RequestHeader("Authorization") String authorization) {
+
+        Member loginMember = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
+
+        if(loginMember.getMemberId() != memberId) {
+            String errorMessage = "권한이 없습니다! 확인하여주세요!";
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage);
+        }
+
         Member member = memberService.findMember(memberId);
+
         MemberDto.Response response= mapper.memberToMemberResponseDto(member);
         return new ResponseEntity<>(
                 new SingleResponse<>(response),
@@ -110,7 +130,14 @@ public class MemberController {
     }
 
     @DeleteMapping("/{member-id}")
-    public ResponseEntity deleteMembers(@PathVariable("member-id") Long memberId) {
+    public ResponseEntity deleteMembers(@PathVariable("member-id") Long memberId,
+                                        @RequestHeader("Authorization") String authorization) {
+        Member loginMember = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
+
+        if(loginMember.getMemberId() != memberId) {
+            String errorMessage = "권한이 없습니다! 확인하여주세요!";
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage);
+        }
         memberService.deleteMember(memberId);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
