@@ -70,7 +70,7 @@ public class CommunityService {
 
     public Page<Community> findSearchPost(String keyword, Pageable pageable) {
 
-        return repository.findCommunityByTitleOrBody(keyword, pageable);
+        return repository.findCommunityByTitleOrRealBody(keyword, pageable);
 
     }
 
