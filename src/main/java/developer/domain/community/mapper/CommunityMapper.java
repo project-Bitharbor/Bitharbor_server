@@ -18,9 +18,9 @@ public interface CommunityMapper {
         }
 
         String newBody = requestBody.getBody();
-        newBody.replaceAll("<img[^>]*>", "");
-        newBody.replaceAll("<p>","");
-        newBody.replaceAll("</p>","");
+        newBody = newBody.replaceAll("<img[^>]*>", "");
+        newBody = newBody.replaceAll("<p>","");
+        newBody = newBody.replaceAll("</p>","");
 
 
         Community.CommunityBuilder community = Community.builder();
