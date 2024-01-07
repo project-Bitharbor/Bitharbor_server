@@ -11,7 +11,28 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface CommunityMapper {
-    Community communityPostDtoToCommunity(CommunityDto.Post requestBody);
+//    Community communityPostDtoToCommunity(CommunityDto.Post requestBody);
+    default Community communityPostDtoToCommunity(CommunityDto.Post requestBody) {
+        if ( requestBody == null ) {
+            return null;
+        }
+
+        String newBody = requestBody.getBody();
+        newBody.replaceAll("<img[^>]*>", "");
+        newBody.replaceAll("<p>","");
+        newBody.replaceAll("</p>","");
+
+
+        Community.CommunityBuilder community = Community.builder();
+
+        community.title( requestBody.getTitle() );
+        community.body( requestBody.getBody() );
+        community.imgURL( requestBody.getImgURL() );
+        community.category( requestBody.getCategory() );
+        community.realBody(newBody);
+
+        return community.build();
+    }
 
     Community communityPatchDtoToCommunity(CommunityDto.Patch requestBody);
 

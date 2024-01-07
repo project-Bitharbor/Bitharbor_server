@@ -20,12 +20,14 @@ public class Community extends Auditable {
     private String title;
     @Column(nullable = false)
     private String body;
+    private String realBody;
     @Column(nullable = false)
     private String imgURL;
     @Column
     private int view;
     @Column
     private String category;
+
     @OneToMany(mappedBy = "community", cascade = CascadeType.ALL)
     @JsonIgnore
     List<CommunityComment> communityComments = new ArrayList<>();
