@@ -72,7 +72,7 @@ public class KnowledgeService {
 
     public Page<Knowledge> findSearchPost(String keyword, Pageable pageable) {
 
-        return repository.findKnowledgeByTitleOrBody(keyword, pageable);
+        return repository.findKnowledgeByTitleOrRealBody(keyword, pageable);
 
     }
 

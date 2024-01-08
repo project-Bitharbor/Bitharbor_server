@@ -39,6 +39,7 @@ public class KnowledgeDto {
     @AllArgsConstructor
     public static class Response {
         private String userNickname;
+        private Long memberId;
         private Long knowledgeId;
         private String title;
         private String body;

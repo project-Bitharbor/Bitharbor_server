@@ -53,6 +53,7 @@ public interface KnowledgeMapper {
         }
 
         String userNickname = null;
+        Long memberId = null;
         Long knowledgeId = null;
         String title = null;
         String body = null;
@@ -65,6 +66,7 @@ public interface KnowledgeMapper {
         LocalDateTime modifiedAt = null;
 
 
+        memberId = knowledge.getMember().getMemberId();
         knowledgeId = knowledge.getKnowledgeId();
         title = knowledge.getTitle();
         body = knowledge.getBody();
@@ -77,7 +79,7 @@ public interface KnowledgeMapper {
         modifiedAt = knowledge.getModifiedAt();
         userNickname = knowledge.getMember().getUserNickname();
 
-        KnowledgeDto.Response response = new KnowledgeDto.Response( userNickname, knowledgeId, title, body, imgURL,category, view, commentCount,postTime, createdAt, modifiedAt, postSize );
+        KnowledgeDto.Response response = new KnowledgeDto.Response( userNickname, memberId, knowledgeId, title, body, imgURL,category, view, commentCount,postTime, createdAt, modifiedAt, postSize );
 
         return response;
     }
