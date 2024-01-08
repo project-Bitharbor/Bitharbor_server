@@ -66,7 +66,7 @@ public class QnaService {
 
     public Page<Qna> findSearchPost(String keyword, Pageable pageable) {
 
-        return repository.findQnaByTitleOrBody(keyword, pageable);
+        return repository.findQnaByTitleOrRealBody(keyword, pageable);
 
     }
 

@@ -37,6 +37,7 @@ public class QnaDto {
     @AllArgsConstructor
     public static class Response {
         private String userNickname;
+        private Long memberId;
         private Long qnaId;
         private String title;
         private String body;

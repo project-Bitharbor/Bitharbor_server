@@ -52,6 +52,7 @@ public interface QnaMapper {
         }
 
         String userNickname = null;
+        Long memberId = null;
         Long qnaId = null;
         String title = null;
         String body = null;
@@ -66,6 +67,7 @@ public interface QnaMapper {
 
 
         qnaId = qna.getQnaId();
+        memberId = qna.getMember().getMemberId();
         title = qna.getTitle();
         body = qna.getBody();
         category = qna.getCategory();
@@ -76,7 +78,7 @@ public interface QnaMapper {
         modifiedAt = qna.getModifiedAt();
         userNickname = qna.getMember().getUserNickname();
 
-        QnaDto.Response response = new QnaDto.Response( userNickname, qnaId, title, body,category, view, commentCount,postTime, createdAt, modifiedAt, postSize );
+        QnaDto.Response response = new QnaDto.Response( userNickname, memberId, qnaId, title, body,category, view, commentCount,postTime, createdAt, modifiedAt, postSize );
 
         return response;
     }
