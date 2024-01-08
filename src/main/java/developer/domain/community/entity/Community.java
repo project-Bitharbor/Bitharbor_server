@@ -21,8 +21,6 @@ public class Community extends Auditable {
     @Column(nullable = false)
     private String body;
     private String realBody;
-    @Column(nullable = false)
-    private String imgURL;
     @Column
     private int view;
     @Column

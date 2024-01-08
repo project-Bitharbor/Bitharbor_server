@@ -20,7 +20,6 @@ public class CommunityDto {
         private String title;
         @NotBlank(message = "내용은 필수 입력 사항입니다.")
         private String body;
-        private String imgURL;
         @NotBlank
         private String category;
     }
@@ -30,7 +29,6 @@ public class CommunityDto {
         @Size(max = 250, message = "제목은 250자를 넘을 수 없습니다.")
         private String title;
         private String body;
-        private String imgURL;
         private String category;
     }
 
@@ -42,7 +40,6 @@ public class CommunityDto {
         private Long communityId;
         private String title;
         private String body;
-        private String imgURL;
         private String category;
         private Integer view;
         private Integer commentCount;

@@ -27,7 +27,6 @@ public interface CommunityMapper {
 
         community.title( requestBody.getTitle() );
         community.body( requestBody.getBody() );
-        community.imgURL( requestBody.getImgURL() );
         community.category( requestBody.getCategory() );
         community.realBody(newBody);
 
@@ -57,7 +56,6 @@ public interface CommunityMapper {
         Long communityId = null;
         String title = null;
         String body = null;
-        String imgURL = null;
         String category = null;
         Integer commentCount = null;
         Integer view = null;
@@ -70,7 +68,6 @@ public interface CommunityMapper {
         communityId = community.getCommunityId();
         title = community.getTitle();
         body = community.getBody();
-        imgURL = community.getImgURL();
         category = community.getCategory();
         view = community.getView();
         commentCount = community.getCommentCount();
@@ -79,7 +76,7 @@ public interface CommunityMapper {
         modifiedAt = community.getModifiedAt();
         userNickname = community.getMember().getUserNickname();
 
-        CommunityDto.Response response = new CommunityDto.Response( userNickname, memberId, communityId, title, body, imgURL,category, view, commentCount,postTime, createdAt, modifiedAt, postSize );
+        CommunityDto.Response response = new CommunityDto.Response( userNickname, memberId, communityId, title, body,category, view, commentCount,postTime, createdAt, modifiedAt, postSize );
 
         return response;
     }
