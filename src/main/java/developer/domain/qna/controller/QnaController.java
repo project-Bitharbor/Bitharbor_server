@@ -85,7 +85,7 @@ public class QnaController {
     @GetMapping
     public ResponseEntity getAllCarePost(@RequestParam() int page,
                                          @RequestParam() int size) {
-
+        if (page != 0) page -= 1;
         Pageable pageable = PageRequest.of(page, size, Sort.by("qnaId").descending());
         Page<Qna> postPage = service.findAllPost(pageable);
 

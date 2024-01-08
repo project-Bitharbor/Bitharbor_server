@@ -90,7 +90,7 @@ public class KnowledgeController {
     @GetMapping
     public ResponseEntity getAllCarePost(@RequestParam() int page,
                                          @RequestParam() int size) {
-
+        if (page != 0) page -= 1;
         Pageable pageable = PageRequest.of(page, size, Sort.by("knowledgeId").descending());
         Page<Knowledge> postPage = service.findAllPost(pageable);
 
