@@ -49,7 +49,6 @@ public interface QnaMapper {
         qnaId = qna.getQnaId();
         title = qna.getTitle();
         body = qna.getBody();
-        imgURL = qna.getImgURL();
         category = qna.getCategory();
         view = qna.getView();
         commentCount = qna.getCommentCount();
@@ -58,7 +57,7 @@ public interface QnaMapper {
         modifiedAt = qna.getModifiedAt();
         userNickname = qna.getMember().getUserNickname();
 
-        QnaDto.Response response = new QnaDto.Response( userNickname, qnaId, title, body, imgURL,category, view, commentCount,postTime, createdAt, modifiedAt, postSize );
+        QnaDto.Response response = new QnaDto.Response( userNickname, qnaId, title, body,category, view, commentCount,postTime, createdAt, modifiedAt, postSize );
 
         return response;
     }

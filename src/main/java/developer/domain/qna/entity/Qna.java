@@ -25,8 +25,6 @@ public class Qna extends Auditable {
     private String title;
     @Column(nullable = false)
     private String body;
-    @Column(nullable = false)
-    private String imgURL;
     @Column
     private int view;
     @Column

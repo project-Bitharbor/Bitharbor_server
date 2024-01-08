@@ -21,8 +21,6 @@ public class QnaDto {
         private String title;
         @NotBlank(message = "내용은 필수 입력 사항입니다.")
         private String body;
-        @NotBlank
-        private String imgURL;
         private String category;
     }
 
@@ -32,7 +30,6 @@ public class QnaDto {
         @Size(max = 250, message = "제목은 250자를 넘을 수 없습니다.")
         private String title;
         private String body;
-        private String imgURL;
         private String category;
     }
 
@@ -43,7 +40,6 @@ public class QnaDto {
         private Long qnaId;
         private String title;
         private String body;
-        private String imgURL;
         private String category;
         private Integer view;
         private Integer commentCount;

@@ -47,8 +47,6 @@ public class QnaService {
                 .ifPresent(findPost::setTitle);
         Optional.ofNullable(patch.getBody())
                 .ifPresent(findPost::setBody);
-        Optional.ofNullable(patch.getImgURL())
-                .ifPresent(findPost::setImgURL);
         Optional.ofNullable(patch.getCategory())
                 .ifPresent(findPost::setCategory);
         Optional.ofNullable(patch.getCategory())
