@@ -12,7 +12,27 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface KnowledgeMapper {
 
-    Knowledge knowledgePostDtoToKnowledge(KnowledgeDto.Post requestBody);
+//    Knowledge knowledgePostDtoToKnowledge(KnowledgeDto.Post requestBody);
+    default Knowledge knowledgePostDtoToKnowledge(KnowledgeDto.Post requestBody) {
+        if ( requestBody == null ) {
+            return null;
+        }
+
+        String newBody = requestBody.getBody();
+        newBody = newBody.replaceAll("<img[^>]*>", "");
+        newBody = newBody.replaceAll("<p>","");
+        newBody = newBody.replaceAll("</p>","");
+
+        Knowledge.KnowledgeBuilder knowledge = Knowledge.builder();
+
+        knowledge.title( requestBody.getTitle() );
+        knowledge.body( requestBody.getBody() );
+        knowledge.imgURL( requestBody.getImgURL() );
+        knowledge.category( requestBody.getCategory() );
+        knowledge.realBody(newBody);
+
+        return knowledge.build();
+    }
 
     Knowledge knowledgePatchDtoToKnowledge(KnowledgeDto.Patch requestBody);
 

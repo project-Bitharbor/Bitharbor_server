@@ -26,6 +26,7 @@ public class Knowledge extends Auditable {
     private String title;
     @Column(nullable = false)
     private String body;
+    private String realBody;
     @Column
     private String imgURL;
     @Column
