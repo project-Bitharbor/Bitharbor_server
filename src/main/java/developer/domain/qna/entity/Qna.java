@@ -25,6 +25,7 @@ public class Qna extends Auditable {
     private String title;
     @Column(nullable = false)
     private String body;
+    private String realBody;
     @Column
     private int view;
     @Column

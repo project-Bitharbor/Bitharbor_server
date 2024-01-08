@@ -83,8 +83,8 @@ public class QnaController {
     }
 
     @GetMapping
-    public ResponseEntity getAllCarePost(@RequestParam(defaultValue = "0") int page,
-                                         @RequestParam(defaultValue = "10") int size) {
+    public ResponseEntity getAllCarePost(@RequestParam() int page,
+                                         @RequestParam() int size) {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by("qnaId").descending());
         Page<Qna> postPage = service.findAllPost(pageable);
@@ -138,7 +138,7 @@ public class QnaController {
                                         @RequestParam() String keyword) {
         // default 값이 아닌 경우는 page 번호를 1번부터 받음.
         if (page != 0) page -= 1;
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size,Sort.by("qna_id").descending());
         Page<Qna> postPage = service.findSearchPost(keyword,pageable);
 
         Integer postSize = repository.postCount();
@@ -167,7 +167,7 @@ public class QnaController {
                                         @RequestParam() String category) {
         // default 값이 아닌 경우는 page 번호를 1번부터 받음.
         if (page != 0) page -= 1;
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size,Sort.by("qna_id").descending());
         Page<Qna> postPage = service.findCategoryPost(category,pageable);
 
         Integer postSize = repository.postCount();

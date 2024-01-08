@@ -12,7 +12,26 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface QnaMapper {
 
-    Qna qnaPostDtoToQna(QnaDto.Post requestBody);
+//    Qna qnaPostDtoToQna(QnaDto.Post requestBody);
+    default Qna qnaPostDtoToQna(QnaDto.Post requestBody) {
+        if ( requestBody == null ) {
+            return null;
+        }
+
+        String newBody = requestBody.getBody();
+        newBody = newBody.replaceAll("<img[^>]*>", "");
+        newBody = newBody.replaceAll("<p>","");
+        newBody = newBody.replaceAll("</p>","");
+
+        Qna.QnaBuilder qna = Qna.builder();
+
+        qna.title( requestBody.getTitle() );
+        qna.body( requestBody.getBody() );
+        qna.category( requestBody.getCategory() );
+        qna.realBody(newBody);
+
+        return qna.build();
+    }
 
     Qna qnaPatchDtoToQna(QnaDto.Patch requestBody);
 
