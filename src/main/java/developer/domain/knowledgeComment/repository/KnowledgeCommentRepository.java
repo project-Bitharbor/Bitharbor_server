@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface KnowledgeCommentRepository extends JpaRepository<KnowledgeComment, Long> {
-    @Query(value = "SELECT COUNT(*) FROM knowledge_comment WHERE know_id = ?1", nativeQuery = true)
+    @Query(value = "SELECT COUNT(*) FROM knowledge_comment WHERE knowledge_id = ?1", nativeQuery = true)
     Integer findCountCommentSize(Long knowId);
 }
