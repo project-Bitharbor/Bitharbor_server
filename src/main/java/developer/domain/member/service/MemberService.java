@@ -53,6 +53,8 @@ public class MemberService {
                 .ifPresent(findMember::setUserNickname);
         Optional.ofNullable(member.getPhoneNumber())
                 .ifPresent(findMember::setPhoneNumber);
+        Optional.ofNullable(member.getProfileImg())
+                .ifPresent(findMember::setProfileImg);
 
 
 //        변경된 비밀번호 암호화 해서 저장

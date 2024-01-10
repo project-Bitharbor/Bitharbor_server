@@ -81,6 +81,9 @@ public class MemberController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage);
         }
 
+        if (requestBody.getProfileNum() != null) {
+            requestBody.setProfileImg(MemberProfile.getMemberProfile(requestBody.getProfileNum()).getProfile());
+        }
         Member member = mapper.memberPatchDtoToMember(requestBody);
         member.setMemberId(memberId);
 

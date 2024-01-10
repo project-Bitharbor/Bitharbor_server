@@ -36,18 +36,19 @@ public class MemberDto {
     }
 
     @Getter
+    @Setter
     @NoArgsConstructor
     public static class Patch {
         private long memberId;
         private String currentPassword;
         private String password;
         private String checkPassword;
-        @NotBlank
         private String userName;
-        @NotBlank
         private String userNickname;
-        @NotBlank
         private String phoneNumber;
+        private String profileImg;
+        private Integer profileNum;
+
 
         public Patch addMemberId(Long memberId) {
             Assert.notNull(memberId, "member id must not be null.");
