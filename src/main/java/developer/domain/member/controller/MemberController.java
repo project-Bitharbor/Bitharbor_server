@@ -74,6 +74,7 @@ public class MemberController {
                                       @PathVariable("member-id") Long memberId,
                                       @RequestHeader("Authorization") String authorization) {
 
+        authorization = authorization.replaceAll("Bearer ","");
         Member loginMember = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
 
         if(loginMember.getMemberId() != memberId) {
@@ -109,6 +110,7 @@ public class MemberController {
     public ResponseEntity getMember(@PathVariable("member-id") Long memberId,
                                     @RequestHeader("Authorization") String authorization) {
 
+        authorization = authorization.replaceAll("Bearer ","");
         Member loginMember = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
 
         if(loginMember.getMemberId() != memberId) {
@@ -135,6 +137,8 @@ public class MemberController {
     @DeleteMapping("/{member-id}")
     public ResponseEntity deleteMembers(@PathVariable("member-id") Long memberId,
                                         @RequestHeader("Authorization") String authorization) {
+
+        authorization = authorization.replaceAll("Bearer ","");
         Member loginMember = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
 
         if(loginMember.getMemberId() != memberId) {
