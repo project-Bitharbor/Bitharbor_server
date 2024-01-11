@@ -1,6 +1,5 @@
 package developer.domain.community.service;
 
-import developer.domain.community.dto.CommunityDto;
 import developer.domain.community.entity.Community;
 import developer.domain.community.mapper.CommunityMapper;
 import developer.domain.community.repository.CommunityRepository;

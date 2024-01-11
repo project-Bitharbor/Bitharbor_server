@@ -1,7 +1,6 @@
 package developer.domain.knowledgeComment.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import developer.domain.community.entity.Community;
 import developer.domain.knowledge.entity.Knowledge;
 import developer.domain.member.entity.Member;
 import developer.global.audit.Auditable;

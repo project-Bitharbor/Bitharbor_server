@@ -6,12 +6,10 @@ import developer.domain.communityComment.dto.CommunityCommentDto;
 import org.mapstruct.Mapper;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface CommunityMapper {
-//    Community communityPostDtoToCommunity(CommunityDto.Post requestBody);
     default Community communityPostDtoToCommunity(CommunityDto.Post requestBody) {
         if ( requestBody == null ) {
             return null;

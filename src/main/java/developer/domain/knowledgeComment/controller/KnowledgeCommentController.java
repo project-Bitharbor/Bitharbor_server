@@ -2,7 +2,6 @@ package developer.domain.knowledgeComment.controller;
 
 
 import developer.domain.knowledge.entity.Knowledge;
-import developer.domain.knowledge.mapper.KnowledgeMapper;
 import developer.domain.knowledge.service.KnowledgeService;
 import developer.domain.knowledgeComment.dto.KnowledgeCommentDto;
 import developer.domain.knowledgeComment.entity.KnowledgeComment;

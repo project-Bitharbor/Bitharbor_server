@@ -7,8 +7,6 @@ import developer.global.exception.ExceptionCode;
 import developer.login.jwt.util.CustomAuthorityUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
-//import org.springframework.mail.javamail.JavaMailSender;
-//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;

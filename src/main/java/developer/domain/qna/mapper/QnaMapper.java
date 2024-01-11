@@ -6,13 +6,11 @@ import developer.domain.qnaComment.dto.QnaCommentDto;
 import org.mapstruct.Mapper;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface QnaMapper {
 
-//    Qna qnaPostDtoToQna(QnaDto.Post requestBody);
     default Qna qnaPostDtoToQna(QnaDto.Post requestBody) {
         if ( requestBody == null ) {
             return null;

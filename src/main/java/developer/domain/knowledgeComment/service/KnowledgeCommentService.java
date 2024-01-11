@@ -1,8 +1,5 @@
 package developer.domain.knowledgeComment.service;
 
-
-import developer.domain.communityComment.entity.CommunityComment;
-import developer.domain.communityComment.repository.CommunityCommentRepository;
 import developer.domain.knowledgeComment.entity.KnowledgeComment;
 import developer.domain.knowledgeComment.repository.KnowledgeCommentRepository;
 import developer.global.exception.BusinessLogicException;

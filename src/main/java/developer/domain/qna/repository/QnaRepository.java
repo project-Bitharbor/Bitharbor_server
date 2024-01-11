@@ -1,6 +1,5 @@
 package developer.domain.qna.repository;
 
-import developer.domain.community.entity.Community;
 import developer.domain.qna.entity.Qna;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

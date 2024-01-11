@@ -3,7 +3,6 @@ package developer.domain.qna.service;
 
 import developer.domain.member.entity.Member;
 import developer.domain.member.service.MemberService;
-import developer.domain.qna.dto.QnaDto;
 import developer.domain.qna.entity.Qna;
 import developer.domain.qna.mapper.QnaMapper;
 import developer.domain.qna.repository.QnaRepository;

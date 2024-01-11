@@ -6,13 +6,11 @@ import developer.domain.knowledgeComment.dto.KnowledgeCommentDto;
 import org.mapstruct.Mapper;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface KnowledgeMapper {
 
-//    Knowledge knowledgePostDtoToKnowledge(KnowledgeDto.Post requestBody);
     default Knowledge knowledgePostDtoToKnowledge(KnowledgeDto.Post requestBody) {
         if ( requestBody == null ) {
             return null;

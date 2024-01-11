@@ -1,11 +1,7 @@
 package developer.domain.knowledge.service;
 
 
-import developer.domain.community.dto.CommunityDto;
 import developer.domain.community.entity.Community;
-import developer.domain.community.mapper.CommunityMapper;
-import developer.domain.community.repository.CommunityRepository;
-import developer.domain.knowledge.dto.KnowledgeDto;
 import developer.domain.knowledge.entity.Knowledge;
 import developer.domain.knowledge.mapper.KnowledgeMapper;
 import developer.domain.knowledge.repository.KnowledgeRepository;

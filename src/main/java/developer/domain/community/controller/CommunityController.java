@@ -9,8 +9,6 @@ import developer.domain.community.service.CommunityService;
 import developer.domain.communityComment.mapper.CommunityCommentMapper;
 import developer.domain.member.entity.Member;
 import developer.domain.member.service.MemberService;
-import developer.global.exception.BusinessLogicException;
-import developer.global.exception.ExceptionCode;
 import developer.global.response.MultiResponse;
 import developer.global.response.PageInfo;
 import developer.global.response.SingleResponse;
@@ -32,10 +30,7 @@ import javax.transaction.Transactional;
 import javax.validation.constraints.Positive;
 import java.net.URI;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
