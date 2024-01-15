@@ -29,7 +29,6 @@ public class UserLoginService implements UserDetailsService {
     }
 
     public class UserDetail extends Member implements UserDetails {
-        // todo : 수정
         UserDetail(Member member) {
             setMemberId(member.getMemberId());
             setEmail(member.getEmail());

@@ -80,15 +80,18 @@ public class MemberController {
         }
         Member member = mapper.memberPatchDtoToMember(requestBody);
         member.setMemberId(memberId);
-
-        if (!passwordEncoder.matches(member.getCurrentPassword(), memberRepository.findByMemberId(memberId).getPassword())) {
-            String errorMessage = "기존 비밀번호가 다릅니다. 비밀번호를 확인해주세요!";
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMessage);
+        if (member.getCurrentPassword()!= null) {
+            if (!passwordEncoder.matches(member.getCurrentPassword(), memberRepository.findByMemberId(memberId).getPassword())) {
+                String errorMessage = "기존 비밀번호가 다릅니다. 비밀번호를 확인해주세요!";
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMessage);
+            }
         }
 
-        if(!requestBody.getPassword().equals(requestBody.getCheckPassword()) ) {
-            String errorMessage = "확인 비밀번호가 다릅니다. 비밀번호를 확인해주세요!";
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMessage);
+        if (member.getPassword()!= null && member.getCurrentPassword() != null) {
+            if (!requestBody.getPassword().equals(requestBody.getCheckPassword())) {
+                String errorMessage = "확인 비밀번호가 다릅니다. 비밀번호를 확인해주세요!";
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMessage);
+            }
         }
 
         Member findedMember = memberService.updateMember(member);
@@ -170,4 +173,18 @@ public class MemberController {
             return "redirect:/verification-code?error=" + URLEncoder.encode(e.getMessage(), StandardCharsets.UTF_8);
         }
     }
+
+//    @PostMapping("/phone")
+//    public ResponseEntity<Void> phoneVerifyCode(@RequestParam("phoneNumber") String phoneNumber) {
+//        try {
+//            // 인증번호 발송
+//            memberService.phoneVerificationCode(phoneNumber);
+//
+//            // 인증번호 발송 성공 시 비밀번호 재설정 페이지로 이동
+//            return ResponseEntity.ok().build();
+//        } catch (IllegalArgumentException e) {
+//            // 인증번호 발송 실패 시 에러 응답
+//            return ResponseEntity.badRequest().build();
+//        }
+//    }
 }

@@ -1,5 +1,8 @@
 package developer.domain.member.service;
 
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 import developer.domain.member.entity.Member;
 import developer.domain.member.repository.MemberRepository;
 import developer.global.exception.BusinessLogicException;
@@ -21,18 +24,22 @@ public class MemberService {
 
     private final MemberRepository repository;
 
-     private final PasswordEncoder passwordEncoder;
-     private final CustomAuthorityUtils authorityUtils;
-      private final JavaMailSender javaMailSender;
+    private final PasswordEncoder passwordEncoder;
+    private final CustomAuthorityUtils authorityUtils;
+    private final JavaMailSender javaMailSender;
+
+//    private final String ACCOUNT_SID = "TWILO_ACCOUNT";
+//    private final String AUTH_TOKEN = "TWILO_AUTH";
+//    private final String TWILIO_PHONE_NUMBER = "TWILO_PHONE";
 
     public Member createMember(Member member) {
 
-         String encryptedPassword = passwordEncoder.encode(member.getPassword());
-         member.setPassword(encryptedPassword);
+        String encryptedPassword = passwordEncoder.encode(member.getPassword());
+        member.setPassword(encryptedPassword);
         member.setCheckPassword(encryptedPassword);
 
-         List<String> roles = authorityUtils.createRoles(member.getEmail());
-         member.setRoles(roles);
+        List<String> roles = authorityUtils.createRoles(member.getEmail());
+        member.setRoles(roles);
 
         return repository.save(member);
     }
@@ -61,7 +68,7 @@ public class MemberService {
             findMember.setPassword(encryptedPassword);
             findMember.setCheckPassword(encryptedPassword);
         }
-            return repository.save(findMember);
+        return repository.save(findMember);
     }
 
     public Member findMember(long memberId) {
@@ -140,6 +147,33 @@ public class MemberService {
         // 애플리케이션 URL 반환
         return "https://bit-harbor.vercel.app";
     }
+
+//    public void phoneVerificationCode(String phoneNumber) {
+//
+//        Member member = repository.findByPhoneNumber(phoneNumber)
+//                .orElseThrow(() -> new IllegalArgumentException("입력한 이메일 주소가 존재하지 않습니다."));
+//
+//            Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+//
+//            String verificationCode = generateVerificationCode();
+//
+//            // 인증 코드를 저장
+//            member.setVerificationCode(verificationCode);
+//
+//            String formattedPhoneNumber = phoneNumber.replaceAll("[^0-9]", "");  // 숫자만 남기기
+//            formattedPhoneNumber = "+82" + formattedPhoneNumber.substring(1);  // 국가 코드 추가
+//
+//            // Twilio를 사용하여 SMS 발송
+//            Message message = Message.creator(
+////                    new PhoneNumber(formattedPhoneNumber),
+//                    new PhoneNumber(PhoneNumber),
+//                    new PhoneNumber(TWILIO_PHONE_NUMBER),
+//                    "Your verification code is: " + verificationCode
+//            ).create();
+//
+//        System.out.println(message.getSid());
+//    }
+//}
 
 //    public long getLoginMemberId() {
 //        String loginEmail = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
