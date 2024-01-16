@@ -30,6 +30,7 @@ public class MemberDto {
         @NotBlank
         private String phoneNumber;
         private String profileImg;
+        private String bigProfileImg;
         private Integer profileNum;
     }
 
@@ -45,6 +46,7 @@ public class MemberDto {
         private String userNickname;
         private String phoneNumber;
         private String profileImg;
+        private String bigProfileImg;
         private Integer profileNum;
 
 
@@ -67,6 +69,7 @@ public class MemberDto {
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
         private String profileImg;
+        private String bigProfileImg;
 
     }
 }

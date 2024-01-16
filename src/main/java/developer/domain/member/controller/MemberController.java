@@ -42,6 +42,7 @@ public class MemberController {
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody) {
 
         requestBody.setProfileImg(MemberProfile.getMemberProfile(requestBody.getProfileNum()).getProfile());
+        requestBody.setBigProfileImg(MemberProfile.getMemberBigProfile(requestBody.getProfileNum()).getProfile());
         Member member = mapper.memberPostDtoToMember(requestBody);
 
         if (memberRepository.existsByEmail(requestBody.getEmail())) {
@@ -77,6 +78,10 @@ public class MemberController {
 
         if (requestBody.getProfileNum() != null) {
             requestBody.setProfileImg(MemberProfile.getMemberProfile(requestBody.getProfileNum()).getProfile());
+        }
+
+        if (requestBody.getProfileNum() != null) {
+            requestBody.setBigProfileImg(MemberProfile.getMemberBigProfile(requestBody.getProfileNum()).getProfile());
         }
         Member member = mapper.memberPatchDtoToMember(requestBody);
         member.setMemberId(memberId);

@@ -48,6 +48,7 @@ public class Member extends Auditable {
     private String phoneNumber;
 
     private String profileImg;
+    private String bigProfileImg;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     @JsonIgnore
