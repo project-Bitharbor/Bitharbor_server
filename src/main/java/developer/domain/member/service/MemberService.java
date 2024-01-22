@@ -63,13 +63,6 @@ public class MemberService {
         Optional.ofNullable(member.getBigProfileImg())
                 .ifPresent(findMember::setBigProfileImg);
 
-
-//        변경된 비밀번호 암호화 해서 저장
-        if (member.getPassword() != null) {
-            String encryptedPassword = passwordEncoder.encode(findMember.getPassword());
-            findMember.setPassword(encryptedPassword);
-            findMember.setCheckPassword(encryptedPassword);
-        }
         return repository.save(findMember);
     }
 
