@@ -76,6 +76,10 @@ public class MemberController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage);
         }
 
+        log.error("current Password: " + requestBody.getCurrentPassword());
+        log.error("Password: " + requestBody.getPassword());
+        log.error("checkPassword: " + requestBody.getCheckPassword());
+
         if (requestBody.getProfileNum() != null) {
             requestBody.setProfileImg(MemberProfile.getMemberProfile(requestBody.getProfileNum()).getProfile());
         }

@@ -34,7 +34,7 @@ public class JwtAuthenticationProcessingFilter extends UsernamePasswordAuthentic
         LoginDto loginDto = objectMapper.readValue(request.getInputStream(), LoginDto.class);
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
-
+        log.error("credential : " + authenticationToken.getCredentials());
         return authenticationManager.authenticate(authenticationToken);
     }
 
