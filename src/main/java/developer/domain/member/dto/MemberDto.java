@@ -41,8 +41,8 @@ public class MemberDto {
         @NotBlank
         @Email
         private String email;
-        @NotBlank
-        private String sub;
+//        @NotBlank
+//        private String sub;
         @NotBlank
         private String name;
         private String picture;

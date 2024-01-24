@@ -19,8 +19,8 @@ public interface MemberMapper {
         Member.MemberBuilder member = Member.builder();
 
         member.email( requestBody.getEmail() );
-        member.password(requestBody.getSub());
-        member.checkPassword(requestBody.getSub());
+        member.password("1234");
+        member.checkPassword("1234");
         member.userNickname(requestBody.getName());
         member.userName(requestBody.getName());
         member.profileImg(requestBody.getPicture());
