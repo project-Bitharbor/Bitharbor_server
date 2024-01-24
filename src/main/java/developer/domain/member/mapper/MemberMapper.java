@@ -11,6 +11,26 @@ import java.util.List;
 public interface MemberMapper {
     Member memberPostDtoToMember(MemberDto.Post requestBody);
 
+    default Member memberOauthPostDtoToMember(MemberDto.OauthPost requestBody) {
+        if ( requestBody == null ) {
+            return null;
+        }
+
+        Member.MemberBuilder member = Member.builder();
+
+        member.email( requestBody.getEmail() );
+        member.password(requestBody.getSub());
+        member.checkPassword(requestBody.getSub());
+        member.userNickname(requestBody.getName());
+        member.userName(requestBody.getName());
+        member.profileImg(requestBody.getPicture());
+        member.bigProfileImg(requestBody.getPicture());
+        member.phoneNumber("010-0000-0000");
+
+
+        return member.build();
+    }
+
     Member memberPatchDtoToMember(MemberDto.Patch requestBody);
 
     MemberDto.Response memberToMemberResponseDto(Member member);

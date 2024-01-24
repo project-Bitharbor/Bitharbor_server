@@ -37,6 +37,20 @@ public class MemberDto {
     @Getter
     @Setter
     @NoArgsConstructor
+    public static class OauthPost {
+        @NotBlank
+        @Email
+        private String email;
+        @NotBlank
+        private String sub;
+        @NotBlank
+        private String name;
+        private String picture;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
     public static class Patch {
         private long memberId;
         private String currentPassword;
