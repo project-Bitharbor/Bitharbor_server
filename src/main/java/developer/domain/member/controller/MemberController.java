@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URLEncoder;
@@ -65,33 +66,33 @@ public class MemberController {
     }
 
     @PostMapping("/oauth")
-    public ResponseEntity postOauthMember(@Valid @RequestBody MemberDto.OauthPost requestBody) {
+    public void postOauthMember(@Valid @RequestBody MemberDto.OauthPost requestBody, HttpServletResponse response) {
+        log.error(requestBody.getName());
+        log.error(requestBody.getEmail());
+        log.error(requestBody.getSub());
+        log.error(requestBody.getPicture());
+
         Member member = mapper.memberOauthPostDtoToMember(requestBody);
+
         if (!memberRepository.existsByEmail(requestBody.getEmail())) {
             Member OauthMember = memberService.createMember(member);
             String accessToken = jwtToken.delegateAccessToken(OauthMember);
             String refreshToken = jwtToken.delegateRefreshToken(OauthMember);
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Authorization", accessToken);
-            headers.add("Refresh-Token", refreshToken);
+            response.setHeader("Authorization", accessToken);
+            response.setHeader("Refresh-Token", refreshToken);
 
             URI uri = URICreator.createUri("/members", OauthMember.getMemberId());
-
-            return ResponseEntity.created(uri).headers(headers).build();
         }
         else {
             Member OauthMember = memberRepository.findByEmail(member.getEmail()).get();
             String accessToken = jwtToken.delegateAccessToken(OauthMember);
             String refreshToken = jwtToken.delegateRefreshToken(OauthMember);
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Authorization", accessToken);
-            headers.add("Refresh-Token", refreshToken);
+            response.setHeader("Authorization", accessToken);
+            response.setHeader("Refresh-Token", refreshToken);
 
             URI uri = URICreator.createUri("/members", OauthMember.getMemberId());
-
-            return ResponseEntity.created(uri).headers(headers).build();
         }
     }
 
