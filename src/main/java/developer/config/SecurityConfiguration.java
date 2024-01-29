@@ -60,16 +60,16 @@ public class SecurityConfiguration {
                         .antMatchers("/members").permitAll()
                         .antMatchers(HttpMethod.GET, "/members/**").permitAll()
                         .antMatchers("/members/login").permitAll()
-                        .antMatchers("/members/**").permitAll()
+                        .antMatchers("/members/**").hasRole("MEMBER")
 
                         .antMatchers(HttpMethod.GET, "/community/**").permitAll()
-                        .antMatchers("/community/**").permitAll()
+                        .antMatchers("/community/**").hasRole("MEMBER")
 
                         .antMatchers(HttpMethod.GET, "/knowledge/**").permitAll()
-                        .antMatchers("/knowledge/**").permitAll()
+                        .antMatchers("/knowledge/**").hasRole("MEMBER")
 
                         .antMatchers(HttpMethod.GET, "/qna/**").permitAll()
-                        .antMatchers("/qna/**").permitAll()
+                        .antMatchers("/qna/**").hasRole("MEMBER")
 
                         .anyRequest().permitAll()
                         .and()
