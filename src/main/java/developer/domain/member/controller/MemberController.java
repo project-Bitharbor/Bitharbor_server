@@ -8,7 +8,6 @@ import developer.domain.member.repository.MemberRepository;
 import developer.domain.member.service.MemberService;
 import developer.global.response.SingleResponse;
 import developer.global.utils.URICreator;
-import developer.login.jwt.filter.JwtAuthenticationProcessingFilter;
 import developer.login.oauth.userInfo.JwtToken;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URLEncoder;

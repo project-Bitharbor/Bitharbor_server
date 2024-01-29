@@ -17,9 +17,6 @@ public class CommunityCommentDto {
         @NotBlank(message="content is not null")
         private String content;
 
-/*        @NotBlank(message = "userId not null, JWT 구현이후 token 으로 바꿀 예정입니다.")
-        private long userId;*/
-
         Post() {}
 
 

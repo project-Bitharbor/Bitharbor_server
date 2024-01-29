@@ -122,7 +122,6 @@ public class CommunityController {
         Integer postSize = repository.postCount();
 
         CommunityDto.Response response = mapper.communityToCommunityResponseDto(find,postSize);
-//        response.setComments(commentMapper.commentListToCommentResponseListDto(find.getCommunityComments()));
 
         return new ResponseEntity(new SingleResponse<>(response), HttpStatus.OK);
     }
@@ -209,6 +208,7 @@ public class CommunityController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
+    // 시간별 게시물 작성시간 표기 메서드(작성시간 기준)
     public String calculateTimeDifference(LocalDateTime createdAt) {
         long hoursDifference = java.time.Duration.between(createdAt, LocalDateTime.now() ).toHours();
         if (hoursDifference < 1) {

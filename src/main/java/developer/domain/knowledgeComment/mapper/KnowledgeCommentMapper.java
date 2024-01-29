@@ -60,6 +60,7 @@ public interface KnowledgeCommentMapper {
         return response;
     }
 
+    // 시간별 게시물 작성시간 표기 메서드(작성시간 기준)
     default String calculateTimeDifference(LocalDateTime createdAt) {
         long hoursDifference = java.time.Duration.between(createdAt, LocalDateTime.now() ).toHours();
         if (hoursDifference < 1) {

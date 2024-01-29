@@ -56,7 +56,6 @@ public class CommunityCommentController {
         communityComment.setMember(requestMember);
         communityCommentService.createComment(communityComment);
 
-//        community.setCommentCount(community.getCommentCount() + 1);
         community.setCommentCount(repository.findCountCommentSize(communityId));
         communityService.updatePost(community,communityId);
 
@@ -110,7 +109,6 @@ public class CommunityCommentController {
             communityCommentService.deleteComment(commentId);
             Community community = communityService.findPost(communityId);
 
-//            community.setCommentCount(community.getCommentCount() - 1);
             community.setCommentCount(repository.findCountCommentSize(communityId));
             communityService.updatePost(community,communityId);
 

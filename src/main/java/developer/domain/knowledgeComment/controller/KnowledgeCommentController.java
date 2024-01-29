@@ -56,7 +56,6 @@ public class KnowledgeCommentController {
         knowledgeComment.setMember(requestMember);
         knowledgeCommentService.createComment(knowledgeComment);
 
-//        knowledge.setCommentCount(knowledge.getCommentCount() + 1);
         knowledge.setCommentCount(repository.findCountCommentSize(knowledgeId));
         knowledgeService.updatePost(knowledge,knowledgeId);
 

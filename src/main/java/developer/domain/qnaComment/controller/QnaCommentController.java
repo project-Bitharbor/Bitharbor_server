@@ -56,7 +56,6 @@ public class QnaCommentController {
         qnaComment.setMember(requestMember);
         qnaCommentService.createComment(qnaComment);
 
-//        qna.setCommentCount(qna.getCommentCount() + 1);
         qna.setCommentCount(repository.findCountCommentSize(qnaId));
         qnaService.updatePost(qna,qnaId);
 
@@ -110,7 +109,6 @@ public class QnaCommentController {
             qnaCommentService.deleteComment(commentId);
             Qna qna = qnaService.findPost(qnaId);
 
-//            qna.setCommentCount(qna.getCommentCount() - 1);
             qna.setCommentCount(repository.findCountCommentSize(qnaId));
             qnaService.updatePost(qna,commentId);
 

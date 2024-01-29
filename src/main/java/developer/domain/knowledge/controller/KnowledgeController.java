@@ -209,6 +209,7 @@ public class KnowledgeController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
+    // 시간별 게시물 작성시간 표기 메서드(작성시간 기준)
     public String calculateTimeDifference(LocalDateTime createdAt) {
         long hoursDifference = java.time.Duration.between(createdAt, LocalDateTime.now() ).toHours();
         if (hoursDifference < 1) {

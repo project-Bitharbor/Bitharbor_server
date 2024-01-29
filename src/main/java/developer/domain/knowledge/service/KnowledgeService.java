@@ -99,8 +99,5 @@ public class KnowledgeService {
             throw new BusinessLogicException(ExceptionCode.POST_NOT_WRITE);
         }
     }
-    public Page<Community> findUserCarePost (Pageable pageable, List<Community> carePosts) {
 
-        return new PageImpl<>(carePosts, pageable, carePosts.size());
-    }
 }

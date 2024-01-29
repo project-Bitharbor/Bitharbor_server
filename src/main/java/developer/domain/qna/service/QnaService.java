@@ -96,8 +96,4 @@ public class QnaService {
             throw new BusinessLogicException(ExceptionCode.POST_NOT_WRITE);
         }
     }
-    public Page<Qna> findUserQna (Pageable pageable, List<Qna> carePosts) {
-
-        return new PageImpl<>(carePosts, pageable, carePosts.size());
-    }
 }
