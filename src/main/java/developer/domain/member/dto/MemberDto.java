@@ -72,6 +72,15 @@ public class MemberDto {
         }
     }
 
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    public  static class Find {
+        private String email;
+        private String verificationCode;
+        private String phoneNumber;
+    }
+
     @AllArgsConstructor
     @Getter
     public static class Response {

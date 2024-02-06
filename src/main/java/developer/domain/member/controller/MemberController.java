@@ -204,11 +204,38 @@ public class MemberController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+//    @PostMapping("/findingId")
+//    public ResponseEntity<Void> sendingIdVerifyCode(@Valid @RequestBody MemberDto.Find requestBody) {
+//        try {
+//            // 인증번호 발송
+//            memberService.sendIdVerificationCode(requestBody.getEmail(), requestBody.getPhoneNumber());
+//
+//            // 인증번호 발송 성공 시 비밀번호 재설정 페이지로 이동
+//            return ResponseEntity.ok().build();
+//        } catch (IllegalArgumentException e) {
+//            // 인증번호 발송 실패 시 에러 응답
+//            return ResponseEntity.badRequest().build();
+//        }
+//    }
+//
+//
+//    @PostMapping("/verify-Id-code")
+//    public ResponseEntity checkingIdVerifyCode(@Valid @RequestBody MemberDto.Find requestBody) {
+//
+//        Member member = memberService.verifyIdCode(requestBody.getEmail(), requestBody.getVerificationCode());
+//        if (verifyId) {
+//            return ResponseEntity.ok().build();
+//        }
+//        else  {
+//            return ResponseEntity.badRequest().build();
+//        }
+//    }
+
     @PostMapping("/findingPW")
-    public ResponseEntity<Void> sendingVerifyCode(@RequestParam("email") String email) {
+    public ResponseEntity<Void> sendingPWVerifyCode(@Valid @RequestBody MemberDto.Find requestBody) {
         try {
             // 인증번호 발송
-            memberService.sendVerificationCode(email);
+            memberService.sendPWVerificationCode(requestBody.getEmail());
 
             // 인증번호 발송 성공 시 비밀번호 재설정 페이지로 이동
             return ResponseEntity.ok().build();
@@ -218,17 +245,18 @@ public class MemberController {
         }
     }
 
-    @PostMapping("/verify-code")
-    public String checkingVerifyCode(@RequestParam("email") String email,
-                                     @RequestParam("verificationCode") String verificationCode) {
+    @PostMapping("/verify-PW-code")
+    public ResponseEntity checkingPWVerifyCode(@Valid @RequestBody MemberDto.Find requestBody) {
+
         try {
             // 인증번호 확인
-            memberService.verifyCode(email, verificationCode);
-
-            return "password-reset"; // 인증번호 검증 성공 시 비밀번호 재설정 페이지로 이동
+            memberService.verifyPWCode(requestBody.getEmail(), requestBody.getVerificationCode());
+            return ResponseEntity.ok().build();
+//            return "password-reset"; // 인증번호 검증 성공 시 비밀번호 재설정 페이지로 이동
         } catch (IllegalArgumentException e) {
             // 인증번호 검증 실패 시 에러 메시지와 함께 인증번호 확인 페이지로 이동
-            return "redirect:/verification-code?error=" + URLEncoder.encode(e.getMessage(), StandardCharsets.UTF_8);
+//            return "redirect:/verification-code?error=" + URLEncoder.encode(e.getMessage(), StandardCharsets.UTF_8);
+            return ResponseEntity.badRequest().build();
         }
     }
 

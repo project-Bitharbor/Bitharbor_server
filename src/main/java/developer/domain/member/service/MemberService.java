@@ -3,6 +3,7 @@ package developer.domain.member.service;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
+import developer.domain.member.dto.MemberDto;
 import developer.domain.member.entity.Member;
 import developer.domain.member.repository.MemberRepository;
 import developer.global.exception.BusinessLogicException;
@@ -15,12 +16,15 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class MemberService {
+    private Map<String, String> tempStorage = new HashMap<>();
 
     private final MemberRepository repository;
 
@@ -90,12 +94,40 @@ public class MemberService {
         return findId;
     }
 
-    // Todo: 비밀번호 찾기 로직
+    public void sendIdVerificationCode(String email, String phoneNumber) {
 
-    public void sendVerificationCode(String email) {
+        // 인증번호 생성 및 저장
+        String verificationCode = generateVerificationCode();
+
+        tempStorage.put(email,verificationCode);
+        tempStorage.put("phoneNumber",phoneNumber);
+
+        // 이메일 발송
+        String appUrl = getAppUrl(); // 애플리케이션 URL 가져오기
+        String message = "인증번호: " + verificationCode + "\n" + appUrl;
+        sendEmail(email, "인증번호 발송", message);
+    }
+
+    // 인증번호 확인 로직
+    public boolean verifyIdCode(String email, String verificationCode) {
+        String storedCode = tempStorage.get(email);
+        if (storedCode != null && storedCode.equals(verificationCode)) {
+            // 인증번호 일치
+            tempStorage.remove(email); // 인증번호 사용 후 삭제
+            tempStorage.remove("phoneNumber");
+            tempStorage = new HashMap<>();
+            return true;
+        } else {
+            // 인증번호 불일치
+            return false;
+        }
+    }
+
+    public void sendPWVerificationCode(String email) {
+
         // 사용자 정보 가져오기
         Member member = repository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("입력한 이메일 주소가 존재하지 않습니다."));
+                    .orElseThrow(() -> new IllegalArgumentException("입력한 이메일 주소가 존재하지 않습니다."));
 
         // 인증번호 생성 및 저장
         String verificationCode = generateVerificationCode();
@@ -107,8 +139,7 @@ public class MemberService {
         String message = "인증번호: " + verificationCode + "\n" + appUrl;
         sendEmail(email, "인증번호 발송", message);
     }
-
-    public void verifyCode(String email, String verificationCode) {
+    public void verifyPWCode(String email, String verificationCode) {
         // 사용자 정보 가져오기
         Member member = repository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("입력한 이메일 주소가 존재하지 않습니다."));
