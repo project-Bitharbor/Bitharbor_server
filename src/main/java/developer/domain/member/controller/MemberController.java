@@ -145,7 +145,7 @@ public class MemberController {
             }
         }
 
-        if (member.getPassword()!= null && member.getCurrentPassword() != null) {
+        if (member.getPassword()!= null && member.getCheckPassword() != null) {
             if (!requestBody.getPassword().equals(requestBody.getCheckPassword())) {
                 String errorMessage = "확인 비밀번호가 다릅니다. 비밀번호를 확인해주세요!";
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMessage);
@@ -158,6 +158,24 @@ public class MemberController {
         return new ResponseEntity<>(
                 new SingleResponse<>(response),
                 HttpStatus.OK);
+    }
+
+    @PatchMapping("/changePW")
+    public ResponseEntity patchMember(@Valid @RequestBody MemberDto.PatchPW requestBody) {
+
+        if (requestBody.getPassword()!= null && requestBody.getCheckPassword() != null) {
+            if (!requestBody.getPassword().equals(requestBody.getCheckPassword())) {
+                String errorMessage = "확인 비밀번호가 다릅니다. 비밀번호를 확인해주세요!";
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMessage);
+            }
+        }
+        Member findMember = memberRepository.findByEmail(requestBody.getEmail()).get();
+        Member member = mapper.memberPatchPWDtoToMember(requestBody);
+        member.setMemberId(findMember.getMemberId());
+
+        memberService.updateMember(member);
+
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{member-id}")

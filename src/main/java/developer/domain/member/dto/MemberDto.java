@@ -53,6 +53,7 @@ public class MemberDto {
     @NoArgsConstructor
     public static class Patch {
         private long memberId;
+        private String email;
         private String currentPassword;
         private String password;
         private String checkPassword;
@@ -70,6 +71,17 @@ public class MemberDto {
 
             return this;
         }
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    public static class PatchPW {
+
+        private String email;
+        private String password;
+        private String checkPassword;
+
     }
 
     @Getter

@@ -69,6 +69,10 @@ public class MemberService {
         Optional.ofNullable(member.getBigProfileImg())
                 .ifPresent(findMember::setBigProfileImg);
 
+        String encryptedPassword = passwordEncoder.encode(findMember.getPassword());
+        findMember.setPassword(encryptedPassword);
+        findMember.setCheckPassword(encryptedPassword);
+
         return repository.save(findMember);
     }
 

@@ -64,6 +64,7 @@ public class SecurityConfiguration {
                         .antMatchers("/members/verify-Id-code").permitAll()
                         .antMatchers("/members/findingPW").permitAll()
                         .antMatchers("/members/verify-PW-code").permitAll()
+                        .antMatchers("/members/changePW").permitAll()
                         .antMatchers("/members/**").hasRole("MEMBER")
 
                         .antMatchers(HttpMethod.GET, "/community/**").permitAll()

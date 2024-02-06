@@ -32,6 +32,7 @@ public interface MemberMapper {
     }
 
     Member memberPatchDtoToMember(MemberDto.Patch requestBody);
+    Member memberPatchPWDtoToMember(MemberDto.PatchPW requestBody);
 
     MemberDto.Response memberToMemberResponseDto(Member member);
 
