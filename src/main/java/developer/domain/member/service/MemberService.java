@@ -10,6 +10,7 @@ import developer.global.exception.BusinessLogicException;
 import developer.global.exception.ExceptionCode;
 import developer.login.jwt.util.CustomAuthorityUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -23,6 +24,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MemberService {
     private Map<String, String> tempStorage = new HashMap<>();
 
@@ -109,17 +111,19 @@ public class MemberService {
     }
 
     // 인증번호 확인 로직
-    public boolean verifyIdCode(String email, String verificationCode) {
+    public Member verifyIdCode(String email, String verificationCode) {
+
         String storedCode = tempStorage.get(email);
+        Member member = repository.findByPhoneNumber(tempStorage.get("phoneNumber"));
         if (storedCode != null && storedCode.equals(verificationCode)) {
             // 인증번호 일치
             tempStorage.remove(email); // 인증번호 사용 후 삭제
             tempStorage.remove("phoneNumber");
             tempStorage = new HashMap<>();
-            return true;
+            return member;
         } else {
             // 인증번호 불일치
-            return false;
+            return null;
         }
     }
 
@@ -136,7 +140,7 @@ public class MemberService {
 
         // 이메일 발송
         String appUrl = getAppUrl(); // 애플리케이션 URL 가져오기
-        String message = "인증번호: " + verificationCode + "\n" + appUrl;
+        String message = "인증번호: " + verificationCode + "\n" + appUrl ;
         sendEmail(email, "인증번호 발송", message);
     }
     public void verifyPWCode(String email, String verificationCode) {

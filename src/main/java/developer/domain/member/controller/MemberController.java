@@ -204,32 +204,35 @@ public class MemberController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-//    @PostMapping("/findingId")
-//    public ResponseEntity<Void> sendingIdVerifyCode(@Valid @RequestBody MemberDto.Find requestBody) {
-//        try {
-//            // 인증번호 발송
-//            memberService.sendIdVerificationCode(requestBody.getEmail(), requestBody.getPhoneNumber());
-//
-//            // 인증번호 발송 성공 시 비밀번호 재설정 페이지로 이동
-//            return ResponseEntity.ok().build();
-//        } catch (IllegalArgumentException e) {
-//            // 인증번호 발송 실패 시 에러 응답
-//            return ResponseEntity.badRequest().build();
-//        }
-//    }
-//
-//
-//    @PostMapping("/verify-Id-code")
-//    public ResponseEntity checkingIdVerifyCode(@Valid @RequestBody MemberDto.Find requestBody) {
-//
-//        Member member = memberService.verifyIdCode(requestBody.getEmail(), requestBody.getVerificationCode());
-//        if (verifyId) {
-//            return ResponseEntity.ok().build();
-//        }
-//        else  {
-//            return ResponseEntity.badRequest().build();
-//        }
-//    }
+    @PostMapping("/findingId")
+    public ResponseEntity<Void> sendingIdVerifyCode(@Valid @RequestBody MemberDto.Find requestBody) {
+        try {
+            // 인증번호 발송
+            memberService.sendIdVerificationCode(requestBody.getEmail(), requestBody.getPhoneNumber());
+
+            // 인증번호 발송 성공 시 비밀번호 재설정 페이지로 이동
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            // 인증번호 발송 실패 시 에러 응답
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+
+    @PostMapping("/verify-Id-code")
+    public ResponseEntity checkingIdVerifyCode(@Valid @RequestBody MemberDto.Find requestBody) {
+
+        Member member = memberService.verifyIdCode(requestBody.getEmail(), requestBody.getVerificationCode());
+        log.error("email : " + member.getEmail());
+        if (member == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        else  {
+            return new ResponseEntity<>(
+                    new SingleResponse<>(mapper.memberToMemberResponseDto(member)),
+                    HttpStatus.OK);
+        }
+    }
 
     @PostMapping("/findingPW")
     public ResponseEntity<Void> sendingPWVerifyCode(@Valid @RequestBody MemberDto.Find requestBody) {
