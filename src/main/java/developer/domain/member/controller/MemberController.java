@@ -65,10 +65,6 @@ public class MemberController {
 
     @PostMapping("/oauth")
     public ResponseEntity postOauthMember(@Valid @RequestBody MemberDto.OauthPost requestBody) {
-        log.error("name =" + requestBody.getName());
-        log.error("email =" + requestBody.getEmail());
-        log.error("picture =" + requestBody.getPicture());
-//        log.error("sub =" + requestBody.getSub());
 
         Member member = mapper.memberOauthPostDtoToMember(requestBody);
         if (!memberRepository.existsByEmail(requestBody.getEmail())) {
@@ -80,11 +76,6 @@ public class MemberController {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Authorization", accessToken);
             headers.add("Refresh-Token", refreshToken);
-
-            log.error("accessToken =" + accessToken);
-            log.error("refreshToken =" + refreshToken);
-            log.error("Authorization =" + headers.get("Authorization"));
-            log.error("Refresh-Token =" + headers.get("Refresh-Token"));
 
             URI uri = URICreator.createUri("/members", OauthMember.getMemberId());
 
@@ -99,11 +90,6 @@ public class MemberController {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Authorization", accessToken);
             headers.add("Refresh-Token", refreshToken);
-
-            log.error("accessToken =" + accessToken);
-            log.error("refreshToken =" + refreshToken);
-            log.error("Authorization =" + headers.get("Authorization"));
-            log.error("Refresh-Token =" + headers.get("Refresh-Token"));
 
             URI uri = URICreator.createUri("/members", OauthMember.getMemberId());
 
@@ -124,10 +110,6 @@ public class MemberController {
             String errorMessage = "권한이 없습니다! 확인하여주세요!";
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage);
         }
-
-        log.error("current Password: " + requestBody.getCurrentPassword());
-        log.error("Password: " + requestBody.getPassword());
-        log.error("checkPassword: " + requestBody.getCheckPassword());
 
         if (requestBody.getProfileNum() != null) {
             requestBody.setProfileImg(MemberProfile.getMemberProfile(requestBody.getProfileNum()).getProfile());
@@ -240,8 +222,7 @@ public class MemberController {
     @PostMapping("/verify-Id-code")
     public ResponseEntity checkingIdVerifyCode(@Valid @RequestBody MemberDto.Find requestBody) {
 
-        Member member = memberService.verifyIdCode(requestBody.getEmail(), requestBody.getVerificationCode());
-        log.error("email : " + member.getEmail());
+        Member member = memberService.verifyIdCode(requestBody.getEmail(), requestBody.getVerificationCode(), requestBody.getPhoneNumber());
         if (member == null) {
             return ResponseEntity.badRequest().build();
         }
