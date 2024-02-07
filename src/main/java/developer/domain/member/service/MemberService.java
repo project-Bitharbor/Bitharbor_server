@@ -102,11 +102,13 @@ public class MemberService {
 
     public void sendIdVerificationCode(String email, String phoneNumber) {
 
+        Member member = repository.findByPhoneNumber(phoneNumber)
+                .orElseThrow(() -> new IllegalArgumentException("입력한 핸드폰 번호가 존재하지 않습니다."));
+
         // 인증번호 생성 및 저장
         String verificationCode = generateVerificationCode();
 
         tempStorage.put(email,verificationCode);
-        tempStorage.put("phoneNumber",phoneNumber);
 
         // 이메일 발송
         String appUrl = getAppUrl(); // 애플리케이션 URL 가져오기
@@ -115,10 +117,13 @@ public class MemberService {
     }
 
     // 인증번호 확인 로직
-    public Member verifyIdCode(String email, String verificationCode) {
+    public Member verifyIdCode(String email, String verificationCode, String phoneNumber) {
 
         String storedCode = tempStorage.get(email);
-        Member member = repository.findByPhoneNumber(tempStorage.get("phoneNumber"));
+
+        Member member = repository.findByPhoneNumber(phoneNumber)
+                .orElseThrow(() -> new IllegalArgumentException("입력한 핸드폰 번호가 존재하지 않습니다."));
+
         if (storedCode != null && storedCode.equals(verificationCode)) {
             // 인증번호 일치
             tempStorage.remove(email); // 인증번호 사용 후 삭제
@@ -179,7 +184,7 @@ public class MemberService {
 
     private String getAppUrl() {
         // 애플리케이션 URL 반환
-        return "https://bit-harbor.vercel.app";
+        return "https://bit-harbor.vercel.app/members/findAccount";
     }
 
 //    public void phoneVerificationCode(String phoneNumber) {
