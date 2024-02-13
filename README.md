@@ -62,12 +62,6 @@
 ## 🖥 구현 이미지
 <br>
 
-![CreateNextApp-Chrome2024-02-1222-28-19-ezgif com-video-to-gif-converter](https://github.com/project-Bitharbor/Bitharbor_server/assets/120084774/9041b1fc-5399-461a-a60f-9d51a0ca06c6)
-
-
-
-![CreateNextApp-Chrome2024-02-1222-44-30-ezgif com-video-to-gif-converter](https://github.com/project-Bitharbor/Bitharbor_server/assets/120084774/208908f3-14e6-4dba-9aa1-193a942bcda0)
-
 
 
 | 기능           | 영상                                                                           |
