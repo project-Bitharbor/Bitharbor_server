@@ -54,7 +54,7 @@ public class KnowledgeController {
         authorization = authorization.replaceAll("Bearer ","");
         Member member = memberService.findMember(jwtToken.extractUserIdFromToken(authorization));
 
-        if (post.getImgURL() == null) {
+        if (post.getImgURL() == null || post.getImgURL().equals("")) {
             post.setImgURL(RandomThumbnail.getRandomThumbnail().getThumbmail());
         }
 
