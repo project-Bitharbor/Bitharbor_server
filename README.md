@@ -63,7 +63,6 @@
 <br>
 
 
-
 | 기능           | 영상                                                                           |
 | ---------------------- | -------------------------------------------------------------------------------------- |
 | 메인 | ![ezgif-5-51d0999497](https://github.com/project-Bitharbor/Bitharbor_server/assets/120084774/82015437-d999-4e94-bedf-85c884b51937)|
@@ -74,8 +73,8 @@
 | 글 수정 |![ezgif-5-c648ecb4b1](https://github.com/project-Bitharbor/Bitharbor_server/assets/120084774/66c3311f-900c-4e01-8234-298e9cf322e7)|
 | 글 삭제 |![ezgif-5-c648ecb4b1](https://github.com/project-Bitharbor/Bitharbor_server/assets/120084774/9041b1fc-5399-461a-a60f-9d51a0ca06c6)|
 | 회원 조회 |![ezgif-5-c648ecb4b1](https://github.com/project-Bitharbor/Bitharbor_server/assets/120084774/208908f3-14e6-4dba-9aa1-193a942bcda0)|
-| 회원 수정 |()|
-| 회원 탈퇴 |()|
+| 회원 수정 |![ezgif-5-c648ecb4b1](https://github.com/project-Bitharbor/Bitharbor_server/assets/120084774/ac8740f6-cc09-45da-ace9-d780c7797aec)|
+| 회원 탈퇴 |![ezgif-5-c648ecb4b1](https://github.com/project-Bitharbor/Bitharbor_server/assets/120084774/56a02654-55fa-4b42-9131-a86d87960927)|
 
 
 ## 🚩 커밋 컨벤션
