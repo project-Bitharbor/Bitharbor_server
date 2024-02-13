@@ -63,15 +63,15 @@
 <br>
 
 
-| 기능           | 영상                                                                           |
-| ---------------------- | -------------------------------------------------------------------------------------- |
-| 메인 | ![ezgif-5-51d0999497](https://github.com/project-Bitharbor/Bitharbor_server/assets/120084774/82015437-d999-4e94-bedf-85c884b51937)|
+| 기능                               | 영상                                                                           |
+| ---------------------------------- | -------------------------------------------------------------------------------------- |
+| 메인페이지 | ![ezgif-5-51d0999497](https://github.com/project-Bitharbor/Bitharbor_server/assets/120084774/82015437-d999-4e94-bedf-85c884b51937)|
 | 회원가입 | ![ezgif-5-a41f4e3696](https://github.com/project-Bitharbor/Bitharbor_server/assets/120084774/73a10c9c-22c0-43d2-9bf1-291ffa8f8691)|
 | 로그인 |![ezgif-5-c648ecb4b1](https://github.com/project-Bitharbor/Bitharbor_server/assets/120084774/495b6031-0e76-4536-8693-15291e2c3691)|
-| 글 조회 |![ezgif-5-c648ecb4b1](https://github.com/project-Bitharbor/Bitharbor_server/assets/120084774/28f40199-8f74-4d60-a291-7e90fe6d197b)|
-| 글 등록 |![ezgif-5-c648ecb4b1](https://github.com/project-Bitharbor/Bitharbor_server/assets/120084774/467f67d3-8c8a-401b-9d52-e4010e75ee4f)|
-| 글 수정 |![ezgif-5-c648ecb4b1](https://github.com/project-Bitharbor/Bitharbor_server/assets/120084774/66c3311f-900c-4e01-8234-298e9cf322e7)|
-| 글 삭제 |![ezgif-5-c648ecb4b1](https://github.com/project-Bitharbor/Bitharbor_server/assets/120084774/9041b1fc-5399-461a-a60f-9d51a0ca06c6)|
+| 게시글 조회 |![ezgif-5-c648ecb4b1](https://github.com/project-Bitharbor/Bitharbor_server/assets/120084774/28f40199-8f74-4d60-a291-7e90fe6d197b)|
+| 게시글 등록 |![ezgif-5-c648ecb4b1](https://github.com/project-Bitharbor/Bitharbor_server/assets/120084774/467f67d3-8c8a-401b-9d52-e4010e75ee4f)|
+| 게시글 수정 |![ezgif-5-c648ecb4b1](https://github.com/project-Bitharbor/Bitharbor_server/assets/120084774/66c3311f-900c-4e01-8234-298e9cf322e7)|
+| 게시글 삭제 |![ezgif-5-c648ecb4b1](https://github.com/project-Bitharbor/Bitharbor_server/assets/120084774/9041b1fc-5399-461a-a60f-9d51a0ca06c6)|
 | 회원 조회 |![ezgif-5-c648ecb4b1](https://github.com/project-Bitharbor/Bitharbor_server/assets/120084774/208908f3-14e6-4dba-9aa1-193a942bcda0)|
 | 회원 수정 |![ezgif-5-c648ecb4b1](https://github.com/project-Bitharbor/Bitharbor_server/assets/120084774/ac8740f6-cc09-45da-ace9-d780c7797aec)|
 | 회원 탈퇴 |![ezgif-5-c648ecb4b1](https://github.com/project-Bitharbor/Bitharbor_server/assets/120084774/56a02654-55fa-4b42-9131-a86d87960927)|
