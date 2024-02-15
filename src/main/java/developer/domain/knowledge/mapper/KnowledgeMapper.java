@@ -62,9 +62,13 @@ public interface KnowledgeMapper {
         String postTime = null;
         LocalDateTime createdAt = null;
         LocalDateTime modifiedAt = null;
+        Long profileNum = null;
+
+        String profileImg = knowledge.getMember().getProfileImg();
 
 
         memberId = knowledge.getMember().getMemberId();
+        profileNum = Long.parseLong(profileImg.substring(profileImg.length()-5,profileImg.length()-4));
         knowledgeId = knowledge.getKnowledgeId();
         title = knowledge.getTitle();
         body = knowledge.getBody();
@@ -77,7 +81,8 @@ public interface KnowledgeMapper {
         modifiedAt = knowledge.getModifiedAt();
         userNickname = knowledge.getMember().getUserNickname();
 
-        KnowledgeDto.Response response = new KnowledgeDto.Response( userNickname, memberId, knowledgeId, title, body, imgURL,category, view, commentCount,postTime, createdAt, modifiedAt, postSize );
+
+        KnowledgeDto.Response response = new KnowledgeDto.Response( userNickname, memberId, profileNum, knowledgeId, title, body, imgURL,category, view, commentCount,postTime, createdAt, modifiedAt, postSize );
 
         return response;
     }

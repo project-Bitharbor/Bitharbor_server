@@ -38,6 +38,7 @@ public class QnaDto {
     public static class Response {
         private String userNickname;
         private Long memberId;
+        private Long profileNum;
         private Long qnaId;
         private String title;
         private String body;

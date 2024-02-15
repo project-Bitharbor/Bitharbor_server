@@ -62,10 +62,14 @@ public interface QnaMapper {
         String postTime = null;
         LocalDateTime createdAt = null;
         LocalDateTime modifiedAt = null;
+        Long profileNum = null;
+
+        String profileImg = qna.getMember().getProfileImg();
 
 
         qnaId = qna.getQnaId();
         memberId = qna.getMember().getMemberId();
+        profileNum = Long.parseLong(profileImg.substring(profileImg.length()-5,profileImg.length()-4));
         title = qna.getTitle();
         body = qna.getBody();
         category = qna.getCategory();
@@ -76,7 +80,7 @@ public interface QnaMapper {
         modifiedAt = qna.getModifiedAt();
         userNickname = qna.getMember().getUserNickname();
 
-        QnaDto.Response response = new QnaDto.Response( userNickname, memberId, qnaId, title, body,category, view, commentCount,postTime, createdAt, modifiedAt, postSize );
+        QnaDto.Response response = new QnaDto.Response( userNickname, memberId, profileNum, qnaId, title, body,category, view, commentCount,postTime, createdAt, modifiedAt, postSize );
 
         return response;
     }

@@ -60,9 +60,13 @@ public interface CommunityMapper {
         String postTime = null;
         LocalDateTime createdAt = null;
         LocalDateTime modifiedAt = null;
+        Long profileNum = null;
+
+        String profileImg = community.getMember().getProfileImg();
 
 
         memberId = community.getMember().getMemberId();
+        profileNum = Long.parseLong(profileImg.substring(profileImg.length()-5,profileImg.length()-4));
         communityId = community.getCommunityId();
         title = community.getTitle();
         body = community.getBody();
@@ -74,7 +78,7 @@ public interface CommunityMapper {
         modifiedAt = community.getModifiedAt();
         userNickname = community.getMember().getUserNickname();
 
-        CommunityDto.Response response = new CommunityDto.Response( userNickname, memberId, communityId, title, body,category, view, commentCount,postTime, createdAt, modifiedAt, postSize );
+        CommunityDto.Response response = new CommunityDto.Response( userNickname, memberId, profileNum, communityId, title, body,category, view, commentCount,postTime, createdAt, modifiedAt, postSize );
 
         return response;
     }
