@@ -23,8 +23,9 @@ public class Knowledge extends Auditable {
     private Long knowledgeId;
     @Column(nullable = false)
     private String title;
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String body;
+    @Column(columnDefinition = "LONGTEXT")
     private String realBody;
     @Column
     private String imgURL;

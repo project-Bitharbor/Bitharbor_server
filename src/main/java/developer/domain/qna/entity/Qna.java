@@ -23,8 +23,9 @@ public class Qna extends Auditable {
     private Long qnaId;
     @Column(nullable = false)
     private String title;
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String body;
+    @Column(columnDefinition = "LONGTEXT")
     private String realBody;
     @Column
     private int view;

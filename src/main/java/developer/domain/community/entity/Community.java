@@ -18,8 +18,9 @@ public class Community extends Auditable {
     private Long communityId;
     @Column(nullable = false)
     private String title;
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String body;
+    @Column(columnDefinition = "LONGTEXT")
     private String realBody;
     @Column
     private int view;
