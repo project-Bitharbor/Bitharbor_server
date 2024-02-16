@@ -43,6 +43,7 @@ public class CommunityCommentDto {
         private LocalDateTime createdAt;
         private String nickName;
         private Long memberId;
+        private Long profileNum;
         private String profileImgUrl;
         private String postTime;
         Response(){}

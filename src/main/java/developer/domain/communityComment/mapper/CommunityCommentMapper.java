@@ -20,6 +20,8 @@ public interface CommunityCommentMapper {
             return null;
         }
 
+        String profileImg = comment.getMember().getProfileImg();
+
         CommunityCommentDto.Response.ResponseBuilder response = CommunityCommentDto.Response.builder();
 
         response.commentId( comment.getCommentId() );
@@ -28,6 +30,7 @@ public interface CommunityCommentMapper {
         response.createdAt( comment.getCreatedAt() );
         response.nickName( comment.getMember().getUserNickname() );
         response.memberId(comment.getMember().getMemberId());
+        response.profileNum(Long.parseLong(profileImg.substring(profileImg.length()-5,profileImg.length()-4)));
         response.profileImgUrl( comment.getMember().getProfileImg() );
         response.postTime(calculateTimeDifference(comment.getCreatedAt()));
 

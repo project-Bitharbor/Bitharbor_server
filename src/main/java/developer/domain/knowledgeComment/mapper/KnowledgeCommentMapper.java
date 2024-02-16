@@ -20,6 +20,8 @@ public interface KnowledgeCommentMapper {
             return null;
         }
 
+        String profileImg = comment.getMember().getProfileImg();
+
         KnowledgeCommentDto.Response.ResponseBuilder response = KnowledgeCommentDto.Response.builder();
 
         response.commentId( comment.getCommentId() );
@@ -28,6 +30,7 @@ public interface KnowledgeCommentMapper {
         response.createdAt( comment.getCreatedAt() );
         response.nickName( comment.getMember().getUserNickname() );
         response.memberId(comment.getMember().getMemberId());
+        response.profileNum(Long.parseLong(profileImg.substring(profileImg.length()-5,profileImg.length()-4)));
         response.profileImgUrl( comment.getMember().getProfileImg() );
         response.postTime(calculateTimeDifference(comment.getCreatedAt()));
 

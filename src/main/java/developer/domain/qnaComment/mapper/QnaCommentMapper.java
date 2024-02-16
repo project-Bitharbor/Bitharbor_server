@@ -19,6 +19,7 @@ public interface QnaCommentMapper {
         if ( comment == null ) {
             return null;
         }
+        String profileImg = comment.getMember().getProfileImg();
 
         QnaCommentDto.Response.ResponseBuilder response = QnaCommentDto.Response.builder();
 
@@ -28,6 +29,7 @@ public interface QnaCommentMapper {
         response.createdAt( comment.getCreatedAt() );
         response.nickName( comment.getMember().getUserNickname() );
         response.memberId( comment.getMember().getMemberId());
+        response.profileNum(Long.parseLong(profileImg.substring(profileImg.length()-5,profileImg.length()-4)));
         response.profileImgUrl( comment.getMember().getProfileImg() );
         response.postTime(calculateTimeDifference(comment.getCreatedAt()));
 
